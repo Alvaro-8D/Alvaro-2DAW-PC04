@@ -3,29 +3,46 @@
 <BODY>
 <?php
     $ip="192.18.16.204";
+    $ip2="10.33.161.2";
 
-    $a = 192;
-    $b = 18;
-    $c = 16;
-    $d = 204;
+    function binario ($ip) {
+        $a = 0; $b = 0; $c = 0; $d = 0;
+        $n = 0; // contador para el switch
+        $num = strtok($ip,".");
 
-    $a2 = substr($ip,0,3);
-    print ("------------------->".$a2."<br><br>");
-    $b2;
-    $c2;
-    $d2;
+        while ($num !== false) {
+            $n++;
+            switch ($n) {
+                case 1:
+                    $a = $num;
+                    break;
+                case 2:
+                    $b = $num;
+                    break;
+                case 3:
+                    $c = $num;
+                    break;
+                case 4:
+                    $d = $num;
+                    break;
+                default:
+                    print("<h1>ERROR</h1>");
+                    break;
+            }
+            $num = strtok(".");
+        }
+
+        print("<h2>".$ip." traducido a binario es ..... </h2>");
+        print("<h3>".transforma($a).".".transforma($b).".".transforma($c).".".transforma($d)."</h3>");
+    }
     
     function transforma (&$dec)
     {
         $bin = "";
-        while ($dec >= 1) {
-            print ($dec."  > ".($dec%2)."<br>");
+        while ($dec >= 1) { // transforma de decimal a binario
             $bin = ($dec%2).$bin;
-            $dec = (int)($dec/2);
-
-            
+            $dec = (int)($dec/2);   
         }
-        print("<br>");
 
         while (8 > strlen($bin)) { // añade "0" hasta que sean 8 bit
             $bin = "0".$bin;
@@ -33,9 +50,9 @@
 
         return $bin;
     }
-    
-    print(transforma($a).".".transforma($b).".".transforma($c).".".transforma($d));
-    
+
+    binario($ip);
+    binario($ip2);
 
 ?>
 </BODY>
