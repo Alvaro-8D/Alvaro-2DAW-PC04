@@ -33,9 +33,9 @@
         }
 
         print("<h2>".$ip." traducido a binario es ..... </h2>");
-        print("<h3>".transforma($a).".".transforma($b).".".transforma($c).".".transforma($d)."</h3>");
+        printf("<h3> %s.%s.%s.%s </h3>",transforma($a),transforma($b),transforma($c),transforma($d));
     }
-    
+
     function transforma (&$dec)
     {
         $bin = "";
