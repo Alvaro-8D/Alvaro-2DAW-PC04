@@ -3,22 +3,80 @@
 <BODY>
 <?php
 
-$num="48";
+$num="316";
 $base="16";
 
-function transforma ($dec,$b)
+function letra($resto){
+    switch ($resto) {
+            case 10:
+                $resto = "A";
+                break;
+            case 11:
+                $resto = "B";
+                break;
+            case 12:
+                $resto = "C";
+                break;
+            case 13:
+                $resto = "D";
+                break;
+            case 14:
+                $resto = "E";
+                break;
+            case 15:
+                $resto = "F";
+                break;
+            default:
+                $resto = $resto;
+                break;
+        } 
+
+        return $resto;
+}
+
+function transforma ($dec,$base)
 {
-    $bin = "";
-    while ($dec >= 1) { 
-        $bin = ($dec%$b).$bin;
-        $dec = (int)($dec/$b);   
+    $cociente = $dec;
+    $resto = 0;
+    $resul = "";
+
+    
+    if ($dec < 16) {
+        $resul = letra($dec); 
     }
-    return $bin;
+    else {
+
+        if ($cociente >= 16) {
+
+            do {
+                
+                $resto = $cociente%$base;
+                $cociente = (int) ($cociente/$base);
+                $resto = letra($resto); 
+                $cociente = letra($cociente);
+
+                if ($cociente >= 16) {
+                    $resul = $resto.$resul;
+                }
+                
+            } while ($cociente >= 16);
+
+            $resul = $cociente.$resto.$resul;
+            
+        } 
+        else {
+            $resul = $cociente.$resto.$resul;
+        }       
+
+        
+    }
+    return $resul;
 }
 
 echo "Numero ",$num," en base ",$base," = ",transforma($num,$base);
 
 
 ?>
+
 </BODY>
 </HTML>
