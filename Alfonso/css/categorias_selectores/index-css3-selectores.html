@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>CSS3: Nuevos selectores en acción</title>
+  <link rel="stylesheet" href="Copia.css" />
+</head>
+<body>
+
+  <header>
+    <h1>CSS3 · Nuevos selectores</h1>
+    <p class="nota">Pasa por las secciones y observa los estilos aplicados por selector.</p>
+  </header>
+
+  <!-- :root -->
+  <section id="root">
+    <h2>1) :root</h2>
+    <p>Se usan variables CSS definidas en <code>:root</code>.</p>
+    <div class="tarjeta">Color principal aplicado desde :root → var(--primario)</div>
+  </section>
+
+  <!-- Selectores de atributo ^= *= $= -->
+  <section id="attrs">
+    <h2>2) Selectores de atributo avanzados (^=, *=, $=)</h2>
+    <ul>
+      <li><a href="https://ejemplo.com/docs/intro">docs/intro</a></li>
+      <li><a href="mailto:profesor@centro.edu">profesor@centro.edu</a></li>
+      <li><a href="https://escuela.edu/recursos/guia.pdf">guia.pdf</a></li>
+      <li><a href="http://blog.curso.dev/post-1">post-1</a></li>
+      <li><a href="https://ejemplo.com/ayuda#faq">ayuda#faq</a></li>
+    </ul>
+    <p class="hint">Enfatizamos enlaces que <em>empiezan</em> por https, los que <em>contienen</em> “escuela”, y los que <em>terminan</em> en “.pdf”.</p>
+  </section>
+
+  <!-- :not() -->
+  <section id="not">
+    <h2>3) :not(selector)</h2>
+    <p class="bloque">Elemento normal</p>
+    <p class="bloque especial">Elemento con clase <code>.especial</code></p>
+    <p class="bloque">Otro elemento normal</p>
+    <p class="hint">Estilo aplicado a <code>.bloque:not(.especial)</code>.</p>
+  </section>
+
+  <!-- :nth-child(), :nth-last-child(), :nth-of-type(), :first-of-type, :last-of-type, :only-child, :only-of-type -->
+  <section id="nth">
+    <h2>4) Pseudo-clases estructurales</h2>
+    <div class="lista-1">
+      <h3>Lista A (nth-child / nth-last-child)</h3>
+      <ul>
+        <li>ítem 1</li>
+        <li>ítem 2</li>
+        <li>ítem 3</li>
+        <li>ítem 4</li>
+        <li>ítem 5</li>
+      </ul>
+      <p class="hint">Resaltamos pares con <code>li:nth-child(even)</code> y el penúltimo con <code>li:nth-last-child(2)</code>.</p>
+    </div>
+
+    <div class="lista-2">
+      <h3>Lista B (nth-of-type / first-of-type / last-of-type)</h3>
+      <div class="wrap">
+        <p>Parrafo 1</p>
+        <span>Un span suelto</span>
+        <p>Parrafo 2</p>
+        <p>Parrafo 3</p>
+      </div>
+      <p class="hint">Marcamos <code>p:nth-of-type(2)</code>, <code>p:first-of-type</code> y <code>p:last-of-type</code>.</p>
+    </div>
+
+    <div class="solo">
+      <h3>Only child / only of type</h3>
+      <div class="caja">
+        <em>Único hijo</em>
+      </div>
+      <div class="caja">
+        <em>Hijo 1</em><strong>Hijo 2</strong>
+      </div>
+      <p class="hint">La primera caja resalta <code>em:only-child</code>. También podrías probar <code>:only-of-type</code>.</p>
+    </div>
+  </section>
+
+  <!-- :empty -->
+  <section id="empty">
+    <h2>5) :empty</h2>
+    <div class="grid">
+      <div class="celda"></div>
+      <div class="celda">Con contenido</div>
+      <div class="celda"> </div>
+      <div class="celda"></div>
+    </div>
+    <p class="hint">Las celdas realmente vacías (<code>:empty</code>) se sombrean. Ojo: espacios cuentan como contenido.</p>
+  </section>
+
+  <!-- :target -->
+  <section id="target">
+    <h2>6) :target</h2>
+    <p><a href="#objetivo">Ir a #objetivo</a> · <a href="#target">Quitar objetivo</a></p>
+    <article id="objetivo" class="panel">
+      Soy el objetivo del hash de la URL (#objetivo). Al activarme, cambio estilo.
+    </article>
+  </section>
+
+  <!-- Formularios: :checked, :enabled, :disabled, :required, :optional, :valid, :invalid -->
+  <section id="forms">
+    <h2>7) Formularios y estados</h2>
+
+    <fieldset>
+      <legend>Checked / Enabled / Disabled</legend>
+      <label><input type="checkbox" checked /> Acepto condiciones</label>
+      <label><input type="radio" name="nivel" value="1" checked /> Nivel 1</label>
+      <label><input type="radio" name="nivel" value="2" /> Nivel 2</label>
+      <label><input type="text" placeholder="Activo (enabled)" /></label>
+      <label><input type="text" placeholder="Deshabilitado" disabled /></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Required / Optional / Valid / Invalid</legend>
+      <form novalidate>
+        <label>Email (required):
+          <input type="email" required placeholder="profesor@centro.edu" />
+        </label>
+        <label>Teléfono (opcional, patrón simple):
+          <input type="tel" pattern="\\d{9}" placeholder="9 dígitos" />
+        </label>
+        <button type="submit">Probar</button>
+      </form>
+      <p class="hint">Prueba a escribir para ver <code>:valid</code>/<code>:invalid</code> y <code>:required</code>/<code>:optional</code>.</p>
+    </fieldset>
+  </section>
+
+  <!-- :lang() -->
+  <section id="lang">
+    <h2>8) :lang()</h2>
+    <p lang="es">Esto está en español.</p>
+    <p lang="en">This is in English.</p>
+    <p lang="fr">Ceci est en français.</p>
+    <p class="hint">Se colorea según <code>:lang(es)</code>, <code>:lang(en)</code>, <code>:lang(fr)</code>.</p>
+  </section>
+
+  <!-- ::before / ::after (doble colon) -->
+  <section id="pseudo">
+    <h2>9) Pseudo-elementos CSS3 (notación ::)</h2>
+    <ul class="etiquetas">
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>JS</li>
+    </ul>
+    <p class="hint">Usamos <code>::before</code>/<code>::after</code> con la notación de doble colon.</p>
+  </section>
+
+  <footer>
+    <p>Demostración creada para clase — CSS Selectors Level 3.</p>
+  </footer>
+</body>
+</html>

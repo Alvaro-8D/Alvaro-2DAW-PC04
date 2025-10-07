@@ -1,0 +1,290 @@
+/* =========================================================
+   1) Variables globales con :root
+   - :root apunta al elemento raíz del documento (html)
+   - Definimos variables CSS reutilizables con --nombre
+   ========================================================= */
+:root {
+  --primario: #2563eb;   /* Azul principal para acentos */
+  --acento: #16a34a;     /* Verde de acento */
+  --suave: #e5e7eb;      /* Gris suave para fondos */
+  --texto: #111827;      /* Color de texto base (gris muy oscuro) */
+  --warn: #ef4444;       /* Rojo para avisos/errores */
+  --ok: #10b981;         /* Verde para estados correctos */
+  --amarillo: #f59e0b;   /* Amarillo para resaltar */
+  --borde: #cbd5e1;      /* Gris de bordes */
+  --focus: #6366f1;      /* Morado para estados de foco */
+}
+
+/* =========================================================
+   2) Normalización y tipografía base
+   - box-sizing: border-box -> padding/border no aumentan el ancho total
+   - Definimos tipografía, color y espaciado general
+   ========================================================= */
+* { box-sizing: border-box; }
+
+body {
+  font-family: system-ui, Segoe UI, Roboto, Arial, sans-serif; /* Fuente legible y común */
+  margin: 0;                    /* Quitamos márgenes por defecto del body */
+  color: var(--texto);          /* Usamos color de texto base */
+  line-height: 1.5;             /* Altura de línea para mejor legibilidad */
+  background: #fff;             /* Fondo blanco limpio */
+}
+
+/* Espaciado horizontal responsivo con clamp:
+   - mínimo 1rem, ideal 3vw (según ancho), máximo 2rem */
+header, section, footer { padding: 1.2rem clamp(1rem, 3vw, 2rem); }
+
+/* Márgenes verticales sutiles en títulos */
+h1, h2, h3 { margin: .2rem 0 .6rem; }
+
+/* =========================================================
+   3) Encabezado
+   - Degradado con el color principal
+   - Texto en blanco para contraste
+   ========================================================= */
+header {
+  background: linear-gradient(90deg, var(--primario), #60a5fa);
+  color: #fff;
+}
+
+/* Texto auxiliar con ligera transparencia */
+.nota { opacity: .9; }
+
+/* =========================================================
+   4) Tarjetas/llamadas de atención
+   - Contenedor con borde y fondo suave
+   ========================================================= */
+.tarjeta {
+  border: 2px solid var(--primario);
+  padding: .8rem;
+  border-radius: .6rem; /* Esquinas redondeadas */
+  background: #eff6ff;  /* Azul muy claro */
+}
+
+/* =========================================================
+   5) Selectores de atributo avanzados (CSS3)
+   - ^=  -> valor de atributo que EMPIEZA por...
+   - *=  -> valor de atributo que CONTIENE...
+   - $=  -> valor de atributo que TERMINA en...
+   ========================================================= */
+/* Resalta enlaces seguros (https) poniéndolos en negrita */
+#attrs a[href^="https://"] { font-weight: 700; }
+
+/* Colorea enlaces cuyo href contiene la palabra "escuela" */
+#attrs a[href*="escuela"] { color: var(--acento); }
+
+/* Estiliza enlaces que apuntan a PDFs (terminan en .pdf) */
+#attrs a[href$=".pdf"] {
+  padding: .15rem .4rem;
+  border: 1px dashed var(--borde);
+  background: #fff7ed; /* Fondo crema para advertir "descarga" */
+}
+
+/* =========================================================
+   6) :not() — Excluir elementos que cumplan una condición
+   - Aplicamos estilo a .bloque que NO tenga la clase .especial
+   ========================================================= */
+#not .bloque {
+  display: inline-block;
+  padding: .4rem .6rem;
+  margin: .25rem .25rem .5rem 0;
+  border: 1px solid var(--borde);
+  border-radius: .4rem;
+}
+
+/* Estilo por defecto para .bloque NO especial */
+#not .bloque:not(.especial) {
+  background: #f0f9ff;
+  outline: 2px solid #bae6fd; /* Contorno sutil */
+}
+
+/* Estilo diferenciado para .bloque.especial */
+#not .bloque.especial {
+  background: #fef2f2;
+  outline: 2px solid #fecaca;
+}
+
+/* =========================================================
+   7) Pseudo-clases estructurales (CSS3)
+   - :nth-child(even)        -> hijos pares (2º, 4º, ...)
+   - :nth-last-child(2)      -> penúltimo hijo
+   - :nth-of-type(n)         -> en función del TIPO (p, li, etc.)
+   - :first-of-type / :last-of-type
+   - :only-child / :only-of-type
+   ========================================================= */
+
+/* --- Lista A: pares y penúltimo --- */
+/* Colorea de gris claro los elementos pares de la lista */
+#nth .lista-1 li:nth-child(even) { background: #f1f5f9; }
+
+/* Resalta el penúltimo elemento de la lista con un contorno amarillo */
+#nth .lista-1 li:nth-last-child(2) { outline: 2px solid var(--amarillo); }
+
+/* --- Lista B: selección por tipo de elemento --- */
+/* Marco del contenedor de párrafos */
+#nth .lista-2 .wrap { border: 1px solid var(--borde); padding: .5rem; }
+
+/* Ajustes de espaciado para cada <p> */
+#nth .lista-2 .wrap p { margin: .2rem 0; padding: .1rem .2rem; }
+
+/* Selecciona el segundo párrafo (según su TIPO, ignora otros nodos) */
+#nth .lista-2 .wrap p:nth-of-type(2) { background: #fef9c3; }
+
+/* Marca visualmente el primer y el último párrafo del contenedor */
+#nth .lista-2 .wrap p:first-of-type { border-left: 4px solid var(--primario); }
+#nth .lista-2 .wrap p:last-of-type { border-left: 4px solid var(--acento); }
+
+/* --- Only child / only of type --- */
+/* Caja de ejemplo para probar only-child/only-of-type */
+#nth .solo .caja {
+  border: 1px dashed var(--borde);
+  padding: .4rem;
+  margin-bottom: .4rem;
+}
+
+/* Si <em> es el ÚNICO hijo dentro de .caja, se resalta */
+#nth .solo .caja em:only-child {
+  background: #ecfeff;
+  outline: 2px solid #a5f3fc;
+  padding: .1rem .2rem;
+}
+
+/* =========================================================
+   8) :empty — Elementos sin contenido
+   - :empty solo coincide si NO hay texto, ni espacios, ni hijos
+   ========================================================= */
+#empty .grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr)); /* Cuadrícula flexible */
+  gap: .5rem;
+}
+
+/* Celdas base */
+#empty .celda { min-height: 50px; border: 1px solid var(--borde); }
+
+/* Celdas realmente vacías resaltadas en verde claro */
+#empty .celda:empty { background: #f0fdf4; outline: 2px solid #bbf7d0; }
+
+/* =========================================================
+   9) :target — Vinculado al hash de la URL (#id)
+   - Cuando el id del elemento coincide con el hash, se activa
+   ========================================================= */
+#target .panel {
+  padding: .6rem;
+  border: 1px solid var(--borde);
+  border-radius: .4rem;
+  background: #fff;
+}
+
+/* Estilo de "enfoque" cuando el panel es el objetivo (#objetivo) */
+#target .panel:target {
+  outline: 3px solid var(--focus);
+  background: #eef2ff;
+}
+
+/* =========================================================
+   10) Formularios y estados (CSS3)
+   - :checked     -> inputs marcados (checkbox/radio)
+   - :enabled     -> control habilitado
+   - :disabled    -> control deshabilitado
+   - :required    -> campo obligatorio
+   - :optional    -> campo opcional
+   - :valid       -> valor válido según tipo/patrón
+   - :invalid     -> valor inválido
+   - :focus       -> foco de teclado/accesibilidad
+   ========================================================= */
+fieldset { margin-bottom: .8rem; border: 1px solid var(--borde); }
+legend { padding: 0 .4rem; }
+label { display: block; margin: .35rem 0; }
+input, button {
+  font: inherit;
+  padding: .35rem .5rem;
+  border: 1px solid var(--borde);
+  border-radius: .35rem;
+}
+
+/* Resalta cualquier input marcado (checkbox/radio) */
+#forms input:checked { outline: 2px solid var(--acento); }
+
+/* Si usas un <span> inmediatamente después del input marcado, lo pones en negrita */
+#forms input[type="checkbox"]:checked + span,
+#forms input[type="radio"]:checked + span { font-weight: 700; }
+
+/* Estado visual de controles habilitados/deshabilitados */
+#forms input:enabled { background: #ffffff; }
+#forms input:disabled { background: #f3f4f6; color: #9ca3af; }
+
+/* Obligatorios con borde de color; opcionales con borde discontinuo */
+#forms input:required { border-color: var(--primario); }
+#forms input:optional { border-style: dashed; }
+
+/* Validez del valor introducido (el formulario puede tener novalidate,
+   pero los navegadores igualmente aplican estas pseudo-clases) */
+#forms input:valid  { box-shadow: 0 0 0 2px inset rgba(16,185,129,.3); }  /* Verde suave */
+#forms input:invalid{ box-shadow: 0 0 0 2px inset rgba(239,68,68,.25); }  /* Rojo suave */
+
+/* Estado de foco: importante para accesibilidad con teclado */
+#forms input:focus, #forms button:focus {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px; /* separa el contorno del borde */
+}
+
+/* =========================================================
+   11) :lang() — Estilos por idioma del contenido
+   - Útil en sitios multilingües
+   ========================================================= */
+#lang p:lang(es) { background: #fef2f2; } /* Español */
+#lang p:lang(en) { background: #eff6ff; } /* Inglés */
+#lang p:lang(fr) { background: #f0f9ff; } /* Francés */
+
+/* =========================================================
+   12) Pseudo-elementos con doble colon (::)
+   - ::before / ::after añaden contenido decorativo
+   - Notación :: se normaliza en CSS3
+   ========================================================= */
+#pseudo .etiquetas {
+  display: flex; 
+  gap: .4rem; 
+  padding: 0; 
+  list-style: none; /* Quitamos viñetas por defecto */
+}
+
+/* Estilo básico de cada etiqueta (pill) */
+#pseudo .etiquetas li {
+  position: relative;
+  padding: .25rem .6rem;
+  border: 1px solid var(--borde);
+  border-radius: 999px; /* Forma de píldora */
+}
+
+/* ::before añade un prefijo "#" a cada etiqueta */
+#pseudo .etiquetas li::before {
+  content: "#";
+  margin-right: .25rem;
+  opacity: .6;
+}
+
+/* ::after añade un sufijo decorativo " · tag" */
+#pseudo .etiquetas li::after {
+  content: " · tag";
+  opacity: .5;
+}
+
+/* =========================================================
+   13) Bloques de ayuda y layout menor
+   - .hint: caja de “consejo” contextual
+   - separadores sutiles entre secciones
+   ========================================================= */
+.hint {
+  font-size: .9rem;
+  color: #374151;
+  background: var(--suave);
+  padding: .35rem .5rem;
+  border-left: 3px solid var(--primario); /* banda lateral */
+  border-radius: .25rem;
+  margin-top: .4rem;
+}
+
+/* Línea separadora entre secciones y pie con color suave */
+section { border-bottom: 1px solid #f3f4f6; }
+footer { font-size: .9rem; color: #6b7280; }

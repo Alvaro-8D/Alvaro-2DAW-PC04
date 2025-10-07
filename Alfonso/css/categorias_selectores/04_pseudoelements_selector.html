@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  /*Permiten aplicar estilos a partes específicas de un elemento.*/
+    /* Primera letra en grande */
+    p::first-letter {
+      font-size: 30px;
+      color: red;
+    }
+
+    /* Primera línea */
+    p::first-line {
+      text-transform: uppercase;
+    }
+
+    /* Antes del elemento */
+    h1::before {
+      content: "👉 ";
+      color: green;
+    }
+
+    /* Después del elemento */
+    h1::after {
+      content: " ✔";
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+  <h1>Título</h1>
+  <p>Este es un párrafo de ejemplo para ver cómo se modifica la primera letra y la primera línea.</p>
+</body>
+</html>

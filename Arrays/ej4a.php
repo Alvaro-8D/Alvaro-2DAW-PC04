@@ -3,22 +3,13 @@
 <BODY>
 <?php
 
-    $binarios;
-
-    $columna = "";
-    $columna2 = "";
-    $columna3 = "";
-    $fila = "";
-    $fila2 = "";
-    $cmd = "";
-
     $j = 1;
     for ($i=19; $i >= 0; $i--) {  
         $binarios[$i] = sprintf("%b",$j);
         $j ++;
     }
 
-    for ($i=0; $i < 20; $i++) { 
+    for ($i=0; $i < 20; $i++) {     // Añadir un foreach
         $columna = "<td> ".$i." </td>";
         $columna2 = "<td> ".$binarios[$i]." </td>";
         $columna3 = "<td> ".base_convert($binarios[$i],2,8)." </td>";

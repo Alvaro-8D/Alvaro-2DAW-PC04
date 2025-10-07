@@ -3,15 +3,6 @@
 <BODY>
 <?php
 
-    $binarios;
-
-    $columna = "";
-    $columna2 = "";
-    $columna3 = "";
-    $fila = "";
-    $fila2 = "";
-    $cmd = "";
-
     for ($i=0; $i < 20; $i++) {  
         $binarios[$i] = sprintf("%b",$i);
     }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+ /*Permiten seleccionar elementos en base a atributos y valores de esos atributos.
+  [atributo] → cualquier elemento que tenga ese atributo.
+  [atributo="valor"] → valor exacto.
+  ^= → empieza con.
+  $= → termina con.
+  *= → contiene.
+  */
+    /* Todos los enlaces con atributo target */
+    a[target] {
+      color: red;
+    }
+
+    /* Exacto */
+    input[type="text"] {
+      border: 2px solid blue;
+    }
+
+    /* Comienza con */
+    a[href^="https"] {
+      font-weight: bold;
+    }
+
+    /* Termina con */
+    a[href$=".pdf"] {
+      color: green;
+    }
+
+    /* Contiene */
+    a[href*="google"] {
+      background: yellow;
+    }
+  </style>
+</head>
+<body>
+  <a href="https://google.com" target="_blank">Google</a><br>
+  <a href="documento.pdf">Archivo PDF</a><br>
+  <a href="http://ejemplo.com">Página ejemplo</a><br>
+  <input type="text" placeholder="Escribe algo...">
+</body>
+</html>

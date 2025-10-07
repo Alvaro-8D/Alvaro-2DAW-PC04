@@ -18,7 +18,7 @@
         $j+=2;
     }
 
-    for ($i=0; $i < 20; $i++) { 
+    for ($i=0; $i < count($impares); $i++) { 
         $columna = "<td> ".$i." </td>";
         $columna2 = "<td> ".$impares[$i]." </td>";
         $suma = ($impares[$i]+$suma);

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  /* Se aplican en base a la posición de los elementos en el HTML.*/
+  
+    /* Descendiente: selecciona <em> dentro de <p> */
+    p em {
+      color: green;
+    }
+
+    /* Hijo directo */
+    div > p {
+      border: 1px solid black;
+    }
+
+    /* Hermano adyacente */
+    h2 + p {
+      color: orange;
+    }
+
+    /* Todos los hermanos */
+    h2 ~ p {
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <p>Texto con <em>énfasis</em>.</p>
+  </div>
+  <h2>Título</h2>
+  <p>Este párrafo será naranja (hermano adyacente).</p>
+  <p>Y este será cursiva (hermano general).</p>
+</body>
+</html>

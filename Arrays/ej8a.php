@@ -9,7 +9,7 @@
     print("<h3>a. Mostrar el alumno con mayor nota</h3>");
     $anterior = (-1);
     $anterior2;
-    foreach ($alumnos as $key => $value) {
+    foreach ($alumnos as $key => $value) {  
         if ($value > $anterior) {
             $anterior = $value;
             $anterior2 = $key;
