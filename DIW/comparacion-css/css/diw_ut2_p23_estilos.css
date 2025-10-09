@@ -1,39 +1,61 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f6f8fa;
+:root {
+  --primario: #0d47a1;
+  --acento: #c62828;
 }
 
-h1 {
-  color: #0d47a1;
+body {
+  font-family: Inter, system-ui, sans-serif;
+  background: #f5f7fb;
+  color: #222;
+}
+
+.cabecera {
+  border-bottom: 2px solid var(--primario);
+}
+
+.titulo {
+  color: var(--primario);
   margin-bottom: 0.25rem;
 }
 
-p {
-  color: #555;
+.slogan {
+  color: #607d8b;
 }
 
-div {
-  border: 1px solid #ccc;
-  padding: 1rem;
-  border-radius: 8px;
+/* Componentes */
+.tarjeta {
   background: #fff;
+  border: 1px solid #dfe3eb;
+  border-radius: 12px;
+  padding: 18px;
+  margin: 14px 0;
 }
 
-h2 {
-  color: #1b5e20;
+.destacado {
+  background: #e8f0fe;
 }
 
-a {
+.boton {
   display: inline-block;
   padding: 0.5rem 1rem;
+  border: 1px solid var(--primario);
   text-decoration: none;
-  border: 1px solid #1b5e20;
 }
 
-li.item-a {
-  font-weight: bold;
+.item {
+  margin-bottom: 0.35rem;
 }
 
-li.item-b {
-  color: #c62828;
+.importante {
+  color: var(--acento);
+  font-weight: 700;
+}
+
+/* Ejemplo de especificidad */
+.tarjeta .importante {
+  text-decoration: underline;
+}
+
+#contenido .importante {
+  letter-spacing: 0.5px;
 }
