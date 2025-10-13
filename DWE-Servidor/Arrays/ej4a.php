@@ -8,11 +8,11 @@
         $binarios[$i] = sprintf("%b",$j);
         $j ++;
     }
-
-    for ($i=0; $i < 20; $i++) {     // Añadir un foreach
+$fila2 = "";
+    foreach ($binarios as $i => $value) {
         $columna = "<td> ".$i." </td>";
-        $columna2 = "<td> ".$binarios[$i]." </td>";
-        $columna3 = "<td> ".base_convert($binarios[$i],2,8)." </td>";
+        $columna2 = "<td> ".$value." </td>";
+        $columna3 = "<td> ".base_convert($value,2,8)." </td>";
         $fila = "<tr>".$columna.$columna2.$columna3."</tr>";
         $fila2 = $fila2.$fila;
         $cmd = "<table border=\"1px\"> <thead> <td>Índice</td>  <td>Valor</td>  <td>Octal</td> </thead>".$fila2." </table>";

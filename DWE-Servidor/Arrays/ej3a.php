@@ -6,8 +6,8 @@
     for ($i=0; $i < 20; $i++) {  
         $binarios[$i] = sprintf("%b",$i);
     }
-
-    for ($i=0; $i < 20; $i++) { 
+    $fila2 = "";
+    for ($i=0; $i < count($binarios); $i++) { 
         $columna = "<td> ".$i." </td>";
         $columna2 = "<td> ".$binarios[$i]." </td>";
         $columna3 = "<td> ".base_convert($binarios[$i],2,8)." </td>";

@@ -13,7 +13,7 @@
     $cmd = "";
 
     $j = 1;
-    for ($i=0; $i < 5; $i++) {  
+    for ($i=0; $i < 20; $i++) {  
         $impares[$i] = $j;
         $j+=2;
     }
@@ -31,28 +31,31 @@
     print($cmd);
 
     //  media de los valores que están en las posiciones pares y las posiciones impares
-
+    $media1 = 0;
+    $media2 = 0;
     for ($i=0; $i < count($impares); $i ++) {    
         if ($i%2 == 0){
-            $media1 += $impares[$i];
+            $media1 += $impares[$i]; // PARES
         }
         else{
-            $media2 += $impares[$i]; 
+            $media2 += $impares[$i]; // IMPARES
         }
     }
-
+    $m1 = $media1;
+    $m2 = $media2;
+    
     if (count($impares)%2 == 0){
         $media1 = $media1/(count($impares)/2);
         $media2 = $media2/(count($impares)/2);
     }
     else{
-        $media1 = $media1/(count($impares)/2);
         $media2 = $media2/((int)(count($impares)/2));
-        echo $media2," = ",$media2,"/","(",count($impares),"/",2,")<br>";
+        $media1 = $media1/((int)(count($impares)/2)+1);
+        echo $media1," = ",$media1,"/","(",count($impares),"/",2,")<br>";
     }
 
-    echo "Media de Posiciones Impares del Array: ",$media2,"<br>";
-    echo "Media de Posiciones Pares del Array: ",$media1,"<br>";
+    echo "Media de Posiciones Impares del Array: ",$m2," / ",((int)(count($impares)/2))," = ",$media2,"<br>";
+    echo "Media de Posiciones Pares del Array: ",$m1," / ",((int)(count($impares)/2)+1)," = ",$media1,"<br>";
 
 
 ?>

@@ -8,7 +8,7 @@
     $cadena3 = array("Desarrollo Web ES", "Desarrollo Web EC", "Desarrollo Interfaces","Inglés");
 
     array_splice($cadena2, 2, 1);
-
+// COPIAR EL EJ 5 YA ARREGLADO Y HACER DE NUEVO EL EJ 6 PERO BIEN HECHO
     
 // REHACER ESTO PARA QUE SIRVA PARA UN ARRAY CON CUALQUIER LONGITUD
     print("<h3>a. Unir los 3 arrays en uno único sin utilizar funciones de arrays</h3>");
