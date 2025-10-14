@@ -3,8 +3,7 @@
 <BODY>
 <?php
 
-    $alumnos = array("Pablo"=>5,"Carlos" => 4,"Miguel" => 9,"Rizwan" => 6,"Charlie" => 8,);
-    $alu = array();
+    $alumnos = array("Pablo"=>5,"Carlos" => 4,"Miguel" => 9,"Rizwan" => 6,"Charlie" => 8);
     
     print("<h3>a. Mostrar el alumno con mayor nota</h3>");
     $anterior = (-1);
@@ -18,7 +17,7 @@
     print(" Alumno con MÁS nota  --> ".$anterior2." con ".$anterior."<br>");
 
     print("<h3>b. Mostrar el alumno con menor nota</h3>");
-    $anterior = 100000;
+    $anterior = 100;
     $anterior2;
     foreach ($alumnos as $key => $value) {
         if ($value < $anterior) {
