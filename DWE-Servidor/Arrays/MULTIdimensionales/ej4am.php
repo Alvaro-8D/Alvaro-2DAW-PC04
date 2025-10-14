@@ -17,20 +17,20 @@
 
     print($cmd);
 
-    echo ">>--------- Por Filas ----------><br>";
+    $n=-1;
+    echo ">>--------- Elemento Mayor ----------><br>";
     foreach ($tabla as $key1 => $seccion) {
         foreach ($seccion as $key2 => $value) {
-            echo "(",$key1,",",$key2,") = ",$value,"<br>";
+            if ($n < $value) {
+                $n = $value;
+                $n1=$key1; // Guarda la fila
+                $n2=$key2; // Guarda la columna
+                
+            }
         }
     }
+    echo "(",$n1,",",$n2,") = ",$n,"<br>";
     
-    echo ">>-------- Por Columnas --------><br>";
-    for ($i=0; $i < count($tabla[0]); $i++) {  
-        $suma=0;
-        for ($j=0; $j < count($tabla); $j++) {  
-            echo "(",$j,",",$i,") = ",$tabla[$j][$i],"<br>";
-        }
-    }
     
 ?>
 
