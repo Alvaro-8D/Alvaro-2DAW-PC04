@@ -26,7 +26,6 @@
     
     echo ">>-------- Por Columnas --------><br>";
     for ($i=0; $i < count($tabla[0]); $i++) {  
-        $suma=0;
         for ($j=0; $j < count($tabla); $j++) {  
             echo "(",$j,",",$i,") = ",$tabla[$j][$i],"<br>";
         }
