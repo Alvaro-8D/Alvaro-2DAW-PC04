@@ -13,8 +13,7 @@
                     "Diego" => array("Matematicas"=>7,"Fisica"=>5,"Tecnologia"=>6,"Biologia"=>6),
                     "Elena" => array("Matematicas"=>8,"Fisica"=>10,"Tecnologia"=>9,"Biologia"=>7),
                     "Raul" => array("Matematicas"=>3,"Fisica"=>5,"Tecnologia"=>4,"Biologia"=>6));
-    
-    echo ">>-------- Resultados -------->";
+
     $guardado = array("nota"=>-1,"nombre"=>"","asignatura"=>"Matematicas");
     foreach ($alumnos as $i => $sec) {
        if($guardado["nota"] < $sec[$guardado["asignatura"]]){
@@ -60,17 +59,28 @@
     <br>",$guardado["nombre"]," con un ",$guardado["nota"]," en ",$guardado["asignatura"],"<br>";
 // >-------------------------FALTAAAAAAAAAAAA--------------------------------------------------------------------------------<
 
-    $guardado = array("nota"=>0,"nombre"=>"","asignatura"=>"");
-    foreach ($alumnos[$guardado["nombre"]] as $i => $sec) {
-       
+    $materias = array("Matematicas"=>0,"Fisica"=>0,"Tecnologia"=>0,"Biologia"=>0); // Guarda medias por materia
+    foreach ($alumnos as $i => $sec) {
+       foreach ($sec as $j => $value) {
+            $materias[$j] += $value;
+       }
     }
-    echo "<br>e. Mostrar la media por materia de todos los alumnos:
-    <br>";
+    echo "<br>e. Mostrar la media por materia de todos los alumnos:<br>";
+    foreach ($materias as $i => $sec) {
+       echo "Media de ",$i," = ",($sec/count($alumnos)),"<br>";
+    }
+    
+    
 // >----------------------------FALTAAAAAAAAAAAA-----------------------------------------------------------------------------<
-
-
     echo "<br>f. Mostrar la media por alumno para todas las materias:
     <br>";
+    foreach ($alumnos as $i => $sec) {
+        $notalum = 0;
+       foreach ($sec as $j => $value) {
+            $notalum += $value;
+       }
+       echo "Media de ",$i," = ",($notalum/count($alumnos["Pablo"])),"<br>";
+    }
 
     
 ?>

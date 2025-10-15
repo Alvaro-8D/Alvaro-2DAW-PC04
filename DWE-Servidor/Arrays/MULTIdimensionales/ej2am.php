@@ -2,11 +2,9 @@
 <HEAD><TITLE>  EJ2AM Arrays</TITLE></HEAD>
 <BODY>
 <?php
-
+    include '../../Otros/funciones.php'; // inlucye verTabla()
     $f = 3; // filas del array
     $c = 3; // columnas del array
-    $pares;
-    $fila = "";
 
     $k = 2;
     for ($i=0; $i < $f; $i++) {  
@@ -27,17 +25,7 @@
         $pares[($j+1)][$i] = "<p><b>".$suma2."</b></p>";
     }
 
-    
-    foreach ($pares as $key1 => $seccion) {
-        $columna = "";
-        foreach ($seccion as $key2 => $value) {
-            $columna = $columna."<td> ".$value." </td>";
-        }
-        $fila = $fila."<tr>".$columna."</tr>";
-    }
-    $cmd = "<table border=\"1px\">".$fila." </table>";
-
-    print($cmd);
+    verTabla($pares);
 ?>
 
 

@@ -2,20 +2,9 @@
 <HEAD><TITLE>  EJ3AM Arrays</TITLE></HEAD>
 <BODY>
 <?php
-
+    include '../../Otros/funciones.php'; // inlucye verTabla()
     $tabla = array(array(2, 4, 6, 9, 7),array(8, 10, 12, 1, 12),array(14, 16, 88, 3, 15));
-    $fila = "";  
-
-    foreach ($tabla as $key1 => $seccion) {
-        $columna = "";
-        foreach ($seccion as $key2 => $value) {
-            $columna = $columna."<td style=\"padding: 5px;border-width: 2px;\"> ".$value." </td>";
-        }
-        $fila = $fila."<tr>".$columna."</tr>";
-    }
-    $cmd = "<table border=\"1px\" style=\"border-collapse: collapse;\">".$fila." </table>";
-
-    print($cmd);
+    verTabla($tabla);
 
     echo ">>--------- Por Filas ----------><br>";
     foreach ($tabla as $key1 => $seccion) {
