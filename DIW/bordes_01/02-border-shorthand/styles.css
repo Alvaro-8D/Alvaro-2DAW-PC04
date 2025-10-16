@@ -1,0 +1,11 @@
+.box { width: 140px; height: 60px; display:grid; place-items:center; margin:10px 0; }
+
+.box.one{
+    border: 12px solid rgb(168, 220, 0);
+}
+.box.two{
+    border: 2px dotted rgb(220, 176, 0);
+}
+.box.three{
+    border: 50px double rgb(0, 220, 161);
+}

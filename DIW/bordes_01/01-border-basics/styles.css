@@ -1,0 +1,17 @@
+.card { width: 140px; height: 70px; display:grid; place-items:center; margin:12px 0; background:#f9fafb; }
+
+.card.a{
+    border-style: dotted;
+    border-width: 10px;
+    border-color: rgba(155, 0, 0, 0.889);
+}
+.card.b{
+    border-style: dashed;
+    border-width: 3px;
+    border-color: rgb(255, 128, 0);
+}
+.card.c{
+    border-style: ridge;
+    border-width: 40px;
+    border-color: rgb(6, 162, 6);
+}
