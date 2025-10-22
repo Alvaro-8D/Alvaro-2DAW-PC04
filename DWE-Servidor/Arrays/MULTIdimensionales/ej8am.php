@@ -43,15 +43,18 @@ Leyenda:
 
     tabla[filas][columnas]
 */ 
+echo "<h3>",count($tabla2),"</h3>";
     for ($fila=0; $fila < count($tabla1); $fila++) { 
         for ($columna=0; $columna < count($tabla2[0]); $columna++) { 
             /* ************ ZONA ERROR ********** */
             $ja = $fila; // filas
             $jb = $columna; // columnas
             for ($i=0; $i < count($tabla1); $i++) { 
-              $tabla4[$fila][$columna]= $tabla1[$ja][$i] * $tabla2[$i][$jb];  
+              $tabla4[$fila][$columna]= $tabla1[$ja][$i] * $tabla2[$jb][$i];  
+              echo "<br><< ",$tabla1[$ja][$i]," * ",$tabla2[$i][$jb]," >>"; // Nota: No lee la última columna, y no la suma
             }
             /* ************ ZONA ERROR ********** */
+            echo "<br> ·······················································";
         }
     }
 
