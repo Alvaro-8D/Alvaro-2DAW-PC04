@@ -13,5 +13,10 @@
         print($cmd);
     }
 
-    
+    function limpiar_campos($data) { // Evita la inyeccion de código
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 ?>
