@@ -1,1 +1,5 @@
-.note { padding:12px; background:#fef3c7;  }
+.note { 
+    padding:12px; background:#fef3c7; 
+    border-inline-start: solid #f0c209 6px;
+    direction: ltr; /* ltr: izquierda > derecha , rtl: derecha > izquierda */
+}
