@@ -1,0 +1,14 @@
+.box { width: 120px; height: 50px; background:#cde; display:grid; place-items:center; border:1px solid #9ab;}
+.box.one{
+    margin: 50px 100px;
+}
+.box.two{
+    margin: 5px 5px 200px;
+}
+.box.three{
+    margin: 1px 10px 50px 150px;
+}
+
+
+
+
