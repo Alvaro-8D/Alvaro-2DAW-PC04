@@ -50,18 +50,24 @@
                         $cartas3[$i] = $baraja[($i+($numcartas*2))];
                         $cartas4[$i] = $baraja[($i+($numcartas*3))];
                     }
-                    echo "<h2>Jugador 1:</h2>";verTabla($cartas1,true);
-                    echo "<h2>Jugador 2:</h2>";verTabla($cartas2,true);
-                    echo "<h2>Jugador 3:</h2>";verTabla($cartas3,true);
-                    echo "<h2>Jugador 4:</h2>";verTabla($cartas4,true);
+                    echo "<h2>",$j1["nombre"],":</h2>";verTabla($cartas1,true);
+                    echo "<h2>",$j2["nombre"],":</h2>";verTabla($cartas2,true);
+                    echo "<h2>",$j3["nombre"],":</h2>";verTabla($cartas3,true);
+                    echo "<h2>",$j4["nombre"],":</h2>";verTabla($cartas4,true);
+
+
+                    $j1["puntos"] = sumar_puntos($cartas1);
+                    $j2["puntos"] = sumar_puntos($cartas2);
+                    $j3["puntos"] = sumar_puntos($cartas3);
+                    $j4["puntos"] = sumar_puntos($cartas4);
 
                 }
 
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                    $j1 = limpiar_campos($_POST['nombre1']);
-                    $j2 = limpiar_campos($_POST['nombre2']);
-                    $j3 = limpiar_campos($_POST['nombre3']);
-                    $j4 = limpiar_campos($_POST['nombre4']);
+                    $j1["nombre"] = limpiar_campos($_POST['nombre1']);
+                    $j2["nombre"] = limpiar_campos($_POST['nombre2']);
+                    $j3["nombre"] = limpiar_campos($_POST['nombre3']);
+                    $j4["nombre"] = limpiar_campos($_POST['nombre4']);
                     $numcartas = limpiar_campos($_POST['numcartas']);
                     $cantApostada = limpiar_campos($_POST['apuesta']);
                     

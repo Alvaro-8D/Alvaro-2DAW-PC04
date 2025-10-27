@@ -50,7 +50,20 @@
         return "<img style=\"width: 70px;\" src=\"images/".$nombreCarta.".PNG\">";
     }
 
-
+    function sumar_puntos($lista){
+        $puntuacion = 0;
+        foreach ($lista as $key => $value) {
+            $recorte = substr($value,0,1);
+            if ($recorte == "J"||$recorte == "Q"||$recorte == "K") {
+                $j = 0.5;
+            }
+            else {
+                $j = $recorte;
+            }
+            $puntuacion += $j;
+        }
+        return $puntuacion;
+    }
 
 
 
