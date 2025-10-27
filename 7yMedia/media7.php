@@ -43,19 +43,17 @@
 
                 function main($j1,$j2,$j3,$j4,$numcartas,$cantApostada){ // funcion principal del programa
                     $numjugadores = 4;
-                    $cartas1 = $cartas2 = $cartas3 = $cartas4 = ""; // son el array de cartas de cada jugador
-                    $baraja = generar_cartas(); // baraja de cartas desordenadas
-                    $n = 1;$n2 = 0;
-                    foreach ($baraja as $key => $value) { //reparte las cartas barajeadas a los jugadores
-                        ${"cartas".$n}[$key]=$value;
-                        if($n2>=($numcartas-1)){
-                            break;
-                        }elseif($n<$Snumcartas){
-                            $n++;
-                        }else{$n = 1;$n2++}
-                        
-
+                    $baraja = generar_cartas(); // Baraja de cartas desordenadas
+                    for ($i=0; $i < $numcartas; $i++) { // Reparte las cartas a cada jugador
+                        $cartas1[$i] = $baraja[$i];
+                        $cartas2[$i] = $baraja[($i+($numcartas))];
+                        $cartas3[$i] = $baraja[($i+($numcartas*2))];
+                        $cartas4[$i] = $baraja[($i+($numcartas*3))];
                     }
+                    echo "<h2>Jugador 1:</h2>";verTabla($cartas1,true);
+                    echo "<h2>Jugador 2:</h2>";verTabla($cartas2,true);
+                    echo "<h2>Jugador 3:</h2>";verTabla($cartas3,true);
+                    echo "<h2>Jugador 4:</h2>";verTabla($cartas4,true);
 
                 }
 
@@ -67,8 +65,15 @@
                     $numcartas = limpiar_campos($_POST['numcartas']);
                     $cantApostada = limpiar_campos($_POST['apuesta']);
                     
-
-                    main($j1,$j2,$j3,$j4,$numcartas,$cantApostada);
+                    if ($numcartas < 1) {
+                        echo "<h1> Para poder jugar necesitas AL MENOS 1 CARTA PARA CADA JUGADOR </h1>";
+                    } 
+                    elseif ($numcartas > 10) {
+                        echo "<h1> No hay suficiente cartas para todos los jugadores, USA MENOS CARTAS </h1>";
+                    }
+                    else {
+                         main($j1,$j2,$j3,$j4,$numcartas,$cantApostada);
+                    }  
                 }
             ?>
 	    </div>

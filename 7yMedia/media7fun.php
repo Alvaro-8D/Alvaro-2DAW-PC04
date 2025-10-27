@@ -6,15 +6,19 @@
         return $data;
     }
 
-    function verTabla($tabla){ // Muestra Una Tabla
+    function verTabla($tabla,$foto = false){ // Muestra Una Tabla  
         $columna = "";
         foreach ($tabla as $key1 => $value) {
-            $columna = $columna."<td style=\"padding: 5px;border-width: 2px;width:19px;\"> ".$value." </td>";
+            if($foto){ // aquí muestra la foto de las cartas
+                $columna = $columna."<td style=\"padding: 5px;border-width: 2px;width:19px;\"> ".mostrar_carta($value)." </td>";
+            }else{ //aqui solo muestra los valores de la tabla
+                $columna = $columna."<td style=\"padding: 5px;border-width: 2px;width:19px;\"> ".$value." </td>";
+            }
         }
         $cmd = "<table border=\"1px\" style=\"border-collapse: collapse;\">".
         "<tr style=\"padding: 5px;border-width: 2px;width:19px;\">".$columna."</tr></table>";
 
-        print($cmd);
+        print($cmd);  
     }
 
     function generar_cartas(){
@@ -33,14 +37,17 @@
                     $j = $i;
                     break;
             } 
-            $baraja[($j."C")] = "<img style=\"width: 70px;\" src=\"images/".$j."C.PNG\">";
-            $baraja[($j."D")] = "<img style=\"width: 70px;\" src=\"images/".$j."D.PNG\">";
-            $baraja[($j."P")] = "<img style=\"width: 70px;\" src=\"images/".$j."P.PNG\">";
-            $baraja[($j."T")] = "<img style=\"width: 70px;\" src=\"images/".$j."T.PNG\">";
+            $baraja[$i] = $j."C";
+            $baraja[$i+10] = $j."D";
+            $baraja[$i+20] = $j."P";
+            $baraja[$i+30] = $j."T";
         }
         shuffle($baraja); // remueve y desordena la baraja
-        verTabla($baraja);
         return $baraja;
+    }
+
+    function mostrar_carta($nombreCarta){
+        return "<img style=\"width: 70px;\" src=\"images/".$nombreCarta.".PNG\">";
     }
 
 
