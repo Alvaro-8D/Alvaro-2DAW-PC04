@@ -18,7 +18,7 @@
     </form>
 
     <?php
-      include '../../Otros/funciones.php'; // incluye función limpiar_campos()
+      include '../funciones_formularios.php'; // incluye función limpiar_campos()
 
       function main(){
         $num = limpiar_campos($_POST['num']);
@@ -29,10 +29,12 @@
         printf("<br><br>Numero Binario: %b",$num);
       }
 
-      if ($_SERVER["REQUEST_METHOD"] == "POST") {
-             
-        main($num,$base1,$base2);
-    }
+      if ($_SERVER["REQUEST_METHOD"] == "POST") {      
+        main();
+      }
+
+      
+      verTabla(array(1,2,3,4,5,":D"),false);
     ?>
     
 </body>
