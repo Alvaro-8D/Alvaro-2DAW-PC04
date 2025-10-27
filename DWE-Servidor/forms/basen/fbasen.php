@@ -27,7 +27,9 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $num = limpiar_campos($_POST["num"]);
+        echo "<h3>",$num,"</h3>";    
         $base1 = (int) substr($num,strpos($num,"/")+1);
+        $num = (int) substr($num,0,strpos($num,"/"));
         $base2 = limpiar_campos($_POST["base"]);      
         ver($num,$base1,$base2);
     }
