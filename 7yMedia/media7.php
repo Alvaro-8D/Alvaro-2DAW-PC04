@@ -48,7 +48,11 @@
                     $n = 1;$n2 = 0;
                     foreach ($baraja as $key => $value) { //reparte las cartas barajeadas a los jugadores
                         ${"cartas".$n}[$key]=$value;
-                        if($n<4){$n++;}else{$n = 1;$n2++}
+                        if($n2>=($numcartas-1)){
+                            break;
+                        }elseif($n<$Snumcartas){
+                            $n++;
+                        }else{$n = 1;$n2++}
                         
 
                     }
