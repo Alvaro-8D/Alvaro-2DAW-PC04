@@ -55,12 +55,32 @@
                     echo "<h2>",$j3["nombre"],":</h2>";verTabla($cartas3,true);
                     echo "<h2>",$j4["nombre"],":</h2>";verTabla($cartas4,true);
 
-                    $j1["puntos"] = sumar_puntos($cartas1);
-                    $j2["puntos"] = sumar_puntos($cartas2);
-                    $j3["puntos"] = sumar_puntos($cartas3);
-                    $j4["puntos"] = sumar_puntos($cartas4);
+                    $j1["puntos"] = 1;//sumar_puntos($cartas1);
+                    $j2["puntos"] = 6.5;//sumar_puntos($cartas2);
+                    $j3["puntos"] = 6.5;//sumar_puntos($cartas3);
+                    $j4["puntos"] = 6;//sumar_puntos($cartas4);
 
+                    verTabla($j1);verTabla($j2);verTabla($j3);verTabla($j4);
+
+                    
+
+                    function sacar_ganadores($j1,$j2,$j3,$j4){
+                        $ganadores1 = array($j1["puntos"],$j2["puntos"],$j3["puntos"],$j4["puntos"]);
+                        $ganadores2 = array("j1","j2","j3","j4");
+                        echo "<h2> Ganadores1: ",max($ganadores1),"</h2>";
+                        for ($i=1; $i < 4/* Numero de Jugadores (4) */ */; $i++) { 
+                            $ganadores[${"j".$i}] = max($ganadores1);
+                        }
+
+                        //return $ganadores;
+                    }
+
+                    $ganadores = sacar_ganadores($j1,$j2,$j3,$j4); //Array con los nopmbres de los ganadores
+                    //verTabla($ganadores);
                 }
+
+
+
 
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $j1["nombre"] = limpiar_campos($_POST['nombre1']);
