@@ -32,9 +32,6 @@
       if ($_SERVER["REQUEST_METHOD"] == "POST") {      
         main();
       }
-
-      
-      verTabla(array(1,2,3,4,5,":D"),false);
     ?>
     
 </body>

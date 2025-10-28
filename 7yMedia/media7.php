@@ -55,7 +55,6 @@
                     echo "<h2>",$j3["nombre"],":</h2>";verTabla($cartas3,true);
                     echo "<h2>",$j4["nombre"],":</h2>";verTabla($cartas4,true);
 
-
                     $j1["puntos"] = sumar_puntos($cartas1);
                     $j2["puntos"] = sumar_puntos($cartas2);
                     $j3["puntos"] = sumar_puntos($cartas3);
@@ -83,7 +82,6 @@
                 }
             ?>
 	    </div>
-        <!-- <img style="width: 70px;" src="images/1C.PNG"> -->
         </div>
         </div>
         <br>
