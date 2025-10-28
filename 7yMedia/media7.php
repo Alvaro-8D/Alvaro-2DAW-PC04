@@ -41,47 +41,6 @@
             <?php 
                 include 'media7fun.php';
 
-                function main($j1,$j2,$j3,$j4,$numcartas,$cantApostada){ // funcion principal del programa
-                    $numjugadores = 4;
-                    $baraja = generar_cartas(); // Baraja de cartas desordenadas
-                    for ($i=0; $i < $numcartas; $i++) { // Reparte las cartas a cada jugador
-                        $cartas1[$i] = $baraja[$i];
-                        $cartas2[$i] = $baraja[($i+($numcartas))];
-                        $cartas3[$i] = $baraja[($i+($numcartas*2))];
-                        $cartas4[$i] = $baraja[($i+($numcartas*3))];
-                    }
-                    echo "<h2>",$j1["nombre"],":</h2>";verTabla($cartas1,true);//poner lo grafico de mostrar al final del programa (mostrar lo visual es lo último)
-                    echo "<h2>",$j2["nombre"],":</h2>";verTabla($cartas2,true);
-                    echo "<h2>",$j3["nombre"],":</h2>";verTabla($cartas3,true);
-                    echo "<h2>",$j4["nombre"],":</h2>";verTabla($cartas4,true);
-
-                    $j1["puntos"] = 1;//sumar_puntos($cartas1);
-                    $j2["puntos"] = 6.5;//sumar_puntos($cartas2);
-                    $j3["puntos"] = 6.5;//sumar_puntos($cartas3);
-                    $j4["puntos"] = 6;//sumar_puntos($cartas4);
-
-                    verTabla($j1);verTabla($j2);verTabla($j3);verTabla($j4);
-
-                    
-
-                    function sacar_ganadores($j1,$j2,$j3,$j4){ 
-                        $ganadores1 = array($j1["puntos"],$j2["puntos"],$j3["puntos"],$j4["puntos"]);
-                        $ganadores2 = array("j1","j2","j3","j4");
-                        echo "<h2> Ganadores1: ",max($ganadores1),"</h2>";
-                        for ($i=1; $i < 4/* Numero de Jugadores (4) */ */; $i++) { 
-                            $ganadores[${"j".$i}] = max($ganadores1);
-                        }
-
-                        //return $ganadores;
-                    }
-
-                    $ganadores = sacar_ganadores($j1,$j2,$j3,$j4); //Array con los nopmbres de los ganadores
-                    //verTabla($ganadores);
-                }
-
-
-
-
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $j1["nombre"] = limpiar_campos($_POST['nombre1']);
                     $j2["nombre"] = limpiar_campos($_POST['nombre2']);
@@ -89,15 +48,49 @@
                     $j4["nombre"] = limpiar_campos($_POST['nombre4']);
                     $numcartas = limpiar_campos($_POST['numcartas']);
                     $cantApostada = limpiar_campos($_POST['apuesta']);
-                    
-                    if ($numcartas < 1) {
-                        echo "<h1> Para poder jugar necesitas AL MENOS 1 CARTA PARA CADA JUGADOR </h1>";
+                
+                /* ******************* PROGRAMA ********************************************* */
+                    if ($numcartas <= 10 ||$numcartas >= 1) {
+                        //main($j1,$j2,$j3,$j4,$numcartas,$cantApostada);
+
+                        $numjugadores = 4;
+                        $baraja = generar_cartas(); // Baraja de cartas desordenadas
+                        for ($i=0; $i < $numcartas; $i++) { // Reparte las cartas a cada jugador
+                            $cartas1[$i] = $baraja[$i];
+                            $cartas2[$i] = $baraja[($i+($numcartas))];
+                            $cartas3[$i] = $baraja[($i+($numcartas*2))];
+                            $cartas4[$i] = $baraja[($i+($numcartas*3))];
+                        }
+                        echo "<h2>",$j1["nombre"],":</h2>";verTabla($cartas1,true);//poner lo grafico de mostrar al final del programa (mostrar lo visual es lo último)
+                        echo "<h2>",$j2["nombre"],":</h2>";verTabla($cartas2,true);
+                        echo "<h2>",$j3["nombre"],":</h2>";verTabla($cartas3,true);
+                        echo "<h2>",$j4["nombre"],":</h2>";verTabla($cartas4,true);
+
+                        $j1["puntos"] = 1;//sumar_puntos($cartas1);
+                        $j2["puntos"] = 6.5;//sumar_puntos($cartas2);
+                        $j3["puntos"] = 6.5;//sumar_puntos($cartas3);
+                        $j4["puntos"] = 6;//sumar_puntos($cartas4);
+
+                        verTabla($j1);verTabla($j2);verTabla($j3);verTabla($j4);
+
+                        
+
+                        function sacar_ganadores($j1,$j2,$j3,$j4){ 
+                            $ganadores1 = array($j1["puntos"],$j2["puntos"],$j3["puntos"],$j4["puntos"]);
+                            $ganadores2 = array("j1","j2","j3","j4");
+                            echo "<h2> Ganadores1: ",max($ganadores1),"</h2>";
+                    //     for ($i=1; $i < 4/* Numero de Jugadores (4) */ ; $i++) { 
+                    //         $ganadores[${"j".$i}] = max($ganadores1);
+                    //      }
+
+                            //return $ganadores;
+                        }
+
+                        $ganadores = sacar_ganadores($j1,$j2,$j3,$j4); //Array con los nopmbres de los ganadores
+                        //verTabla($ganadores);
                     } 
-                    elseif ($numcartas > 10) {
-                        echo "<h1> No hay suficiente cartas para todos los jugadores, USA MENOS CARTAS </h1>";
-                    }
-                    else {
-                         main($j1,$j2,$j3,$j4,$numcartas,$cantApostada);
+                    else { 
+                         echo "<h1> Para poder jugar necesitas ENTRE 1 Y 10 CARTAS (NI MÁS, NI MENOS) </h1>";
                     }  
                 }
             ?>
