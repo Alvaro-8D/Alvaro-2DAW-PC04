@@ -1,0 +1,208 @@
+<!Doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Página de Bienvenida</title>
+  <!-- Fuente Poppins de Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --orange: #ff8a00;
+      --white: #ffffff;
+      --muted: rgba(255,255,255,0.9);
+      --glass: rgba(255,255,255,0.08);
+      --shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    *{box-sizing:border-box}
+    html,body{
+      height:100%;
+      margin:0;
+      font-family:'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    body{
+      font-family: 'Courier New', Courier, monospace;
+      background-image: url(./alvaro/DWE-Servidor/Otros/hojas.jpeg);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px 20px;
+    }
+
+    /* Botón Home arriba izquierda */
+    .home-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: var(--orange);
+      color: var(--white);
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: var(--shadow);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .home-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .container{
+      max-width:1600px;
+      width:100%;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:40px;
+      align-items:start;
+    }
+
+    /* panel principal (izquierda) */
+    .hero{
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      padding:48px;
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(3px);
+    }
+
+    /* sección índice */
+    .indice{
+      background:rgba(255,255,255,0.08);
+      padding:20px;
+      border-radius:14px;
+      margin-bottom:20px;
+      box-shadow:var(--shadow);
+    }
+    .indice h3{
+      margin-top:0;
+      font-size:40px;
+      color:var(--orange);
+      text-align:left;
+      margin-bottom:15px;
+    }
+    .indice ul{
+      padding:0;
+      margin:0;
+      margin-left: 20px;
+    }
+    .indice ul li{
+      margin:10px 0;
+      font-size: 27px;
+    }
+    .indice ul li a{
+      color:var(--white);
+      text-decoration:none;
+      font-weight:500;
+      transition:color .2s ease;
+    }
+    .indice ul li a:hover{
+      color:var(--orange);
+    }
+
+    h1{font-size:48px;margin:10px 0 6px 0;line-height:1.1;font-weight:700}
+    h2{font-size:20px;margin:0 0 18px 0;color:var(--muted);font-weight:400}
+
+    .buttons{display:flex;gap:12px;margin-top:22px;font-size: 25px;}
+    .btn{
+      display:inline-block;padding:12px 18px;border-radius:12px;font-weight:600;text-decoration:none;
+      transition:transform .18s ease, box-shadow .18s ease;
+      cursor: pointer;
+    }
+    .btn-primary{background:var(--white);color:#333}
+    .btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.12)}
+
+    /* tarjeta derecha */
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      padding:28px;border-radius:14px;
+      text-align:center; box-shadow:var(--shadow);
+      backdrop-filter: blur(3px);
+    }
+    .avatar{
+      width:96px;height:96px;border-radius:16px;margin:0 auto 12px auto;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:24px
+    }
+
+    /* cuadro desplegable */
+    #toggle-perfil { display:none; }
+    .perfil-info {
+      display:none;
+      margin-top:18px;
+      padding:20px;
+      border-radius:12px;
+      background:rgba(255,255,255,0.1);
+      box-shadow: var(--shadow);
+      text-align:left;
+    }
+    #toggle-perfil:checked ~ .perfil-info {
+      display:block;
+    }
+
+    footer{margin-top:18px;font-size:12px;color:rgba(255,255,255,0.85);}
+
+    /* responsive */
+    @media (max-width:920px){
+      .container{grid-template-columns:1fr;}
+      h1{font-size:60px}
+    }
+    @media (max-width:520px){
+      h1{font-size:92px}
+      .brand{justify-content:center}
+    }
+  </style>
+</head>
+<body>
+  <!-- Botón Home -->
+  <a href="alvaro.php" class="home-btn">Home</a>
+
+  <div class="container">
+    <main class="hero" role="main" aria-labelledby="bienvenido">
+
+      <h1 id="bienvenido" style="font-size: 100px;">Bienvenido</h1>
+
+      <div class="buttons">
+        <a class="btn btn-primary" href="./alvaro/" id="practicas">Carpeta alvaro</a>
+        <a class="btn btn-primary" href="./alvaro/Bingo/" id="practicas">Carpeta Bingo</a>
+        <a class="btn btn-primary" href="./alvaro/7yMedia/" id="practicas">Carpeta 7yMedia</a>
+      </div>
+
+      <br>
+
+      <!-- Sección índice -->
+      <nav class="indice">
+        <h3>Carpetas de Prácticas</h3>
+        <ul>
+          <li><a href="./alvaro/DWE-Servidor/">DWE-Servidor</a></li>
+          <li><a href="./alvaro/DIW/">DIW</a></li>
+          <li><a href="./alvaro/Alfonso/">Ejemplos Alfonso</a></li>
+        </ul>
+      </nav>
+    </main>
+
+    <aside class="card" aria-labelledby="info">
+      <div class="avatar"><img class="avatar" src="./alvaro/DWE-Servidor/Otros/hollow.png" alt=""></div>
+      <h3 id="info" style="font-size: 30px;background-color: #ff8800c0;">Álvaro Claudio de las Mozas</h3>
+      <p style="margin-top:14px;font-size: 30px;background-color: #ff8800c0;">Ip Cop: 192.168.206.204</p>
+
+      <!-- Checkbox oculto -->
+      <input type="checkbox" id="toggle-perfil">
+      <!-- Botón que actúa como disparador -->
+      <label for="toggle-perfil" class="btn btn-primary">Ver perfil</label>
+
+      <!-- Contenido desplegable -->
+      <div class="perfil-info">
+        <p><img src="https://www.logo.wine/a/logo/GitHub/GitHub-Logo.wine.svg"
+          style="max-width: 100px;position: absolute;margin-top: -27px;margin-left: -27px;"></a>
+          <strong>&emsp;&emsp;&emsp;&emsp;GitHub:</strong>
+          <a style="text-decoration: underline;color: #ffffff;" 
+          href="https://github.com/Alvaro-8D/Alvaro-2DAW-PC04.git"> Mi Repositorio</a></p>
+      </div>
+    </aside>
+  </div>
+
+</body>
+</html>

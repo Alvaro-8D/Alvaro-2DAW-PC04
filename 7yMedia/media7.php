@@ -50,7 +50,7 @@
                         $cartas3[$i] = $baraja[($i+($numcartas*2))];
                         $cartas4[$i] = $baraja[($i+($numcartas*3))];
                     }
-                    echo "<h2>",$j1["nombre"],":</h2>";verTabla($cartas1,true);
+                    echo "<h2>",$j1["nombre"],":</h2>";verTabla($cartas1,true);//poner lo grafico de mostrar al final del programa (mostrar lo visual es lo último)
                     echo "<h2>",$j2["nombre"],":</h2>";verTabla($cartas2,true);
                     echo "<h2>",$j3["nombre"],":</h2>";verTabla($cartas3,true);
                     echo "<h2>",$j4["nombre"],":</h2>";verTabla($cartas4,true);
@@ -64,7 +64,7 @@
 
                     
 
-                    function sacar_ganadores($j1,$j2,$j3,$j4){
+                    function sacar_ganadores($j1,$j2,$j3,$j4){ 
                         $ganadores1 = array($j1["puntos"],$j2["puntos"],$j3["puntos"],$j4["puntos"]);
                         $ganadores2 = array("j1","j2","j3","j4");
                         echo "<h2> Ganadores1: ",max($ganadores1),"</h2>";
