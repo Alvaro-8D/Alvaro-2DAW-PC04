@@ -64,8 +64,21 @@
         }
         return $puntuacion;
     }
-
-
+    /* Descarta los jugadores con puntuación > 7.5 y saca todos los jugadores con la máxima puntuación */
+    function sacar_ganadores($j1,$j2,$j3,$j4){ 
+        $ganadores1 = array( "j1" => $j1["puntos"],"j2" => $j2["puntos"],"j3" => $j3["puntos"],"j4" => $j4["puntos"]);   
+        foreach ($ganadores1 as $key => $value) {
+            if ($value > 7.5) { unset($ganadores1[$key]);} // elimina jugadores con más de 7.5
+        }
+        if (empty($ganadores1) != 1) { // cuando hya 0 ganadores no rellena el array
+            foreach ($ganadores1 as $key => $value) {
+                if ($value == max($ganadores1)) {
+                    $ganadores2[$key] = $value; 
+                }      
+            }
+        }else{ $ganadores2 = "No hay ganadores";} 
+        return $ganadores2;
+    }
 
 
 

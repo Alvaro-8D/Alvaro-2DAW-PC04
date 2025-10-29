@@ -66,28 +66,37 @@
                         echo "<h2>",$j3["nombre"],":</h2>";verTabla($cartas3,true);
                         echo "<h2>",$j4["nombre"],":</h2>";verTabla($cartas4,true);
 
-                        $j1["puntos"] = 1;//sumar_puntos($cartas1);
-                        $j2["puntos"] = 6.5;//sumar_puntos($cartas2);
-                        $j3["puntos"] = 6.5;//sumar_puntos($cartas3);
-                        $j4["puntos"] = 6;//sumar_puntos($cartas4);
+                        $j1["puntos"] = 6.5;//sumar_puntos($cartas1);
+                        $j2["puntos"] = 7.5;//sumar_puntos($cartas2);
+                        $j3["puntos"] = 7.5;//sumar_puntos($cartas3);
+                        $j4["puntos"] = 7.5;//sumar_puntos($cartas4);
 
                         verTabla($j1);verTabla($j2);verTabla($j3);verTabla($j4);
+                        $ganadores = sacar_ganadores($j1,$j2,$j3,$j4); //Array con los nombres de los ganadores
 
-                        
-
-                        function sacar_ganadores($j1,$j2,$j3,$j4){ 
-                            $ganadores1 = array($j1["puntos"],$j2["puntos"],$j3["puntos"],$j4["puntos"]);
-                            $ganadores2 = array("j1","j2","j3","j4");
-                            echo "<h2> Ganadores1: ",max($ganadores1),"</h2>";
-                    //     for ($i=1; $i < 4/* Numero de Jugadores (4) */ ; $i++) { 
-                    //         $ganadores[${"j".$i}] = max($ganadores1);
-                    //      }
-
-                            //return $ganadores;
+                        if (is_string($ganadores)) {
+                            echo "<h3> No hay ganadores, los ",$cantApostada,"€ van al Bote</h3>";
+                        }else{
+                            echo "<br> <h4>";
+                            if (count($ganadores)==1) {
+                                echo ${key($ganadores)}["nombre"]." ha ganado la partida con una puntuación de ".$ganadores[key($ganadores)];
+                                echo "<br><br> El ganador ha obtenido ",$cantApostada,"€ de premio";
+                            } else {
+                                $nombres = ""; // Nombres de ganadores
+                                foreach ($ganadores as $key => $value) {
+                                    $nombres = $nombres.(${$key}["nombre"])." ,";
+                                }
+                                echo $nombres." han ganado la partida con una puntuación de ".$ganadores[key($ganadores)];
+                                echo "<br><br> Los ganadores han obtenido ",$cantApostada,"€ de premio";
+                            }   echo "</h4>";
                         }
 
-                        $ganadores = sacar_ganadores($j1,$j2,$j3,$j4); //Array con los nopmbres de los ganadores
-                        //verTabla($ganadores);
+                        function guardar_apuestas(){
+                            
+                        }
+
+                        guardar_apuestas();
+
                     } 
                     else { 
                          echo "<h1> Para poder jugar necesitas ENTRE 1 Y 10 CARTAS (NI MÁS, NI MENOS) </h1>";
