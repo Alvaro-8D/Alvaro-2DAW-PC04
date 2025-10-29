@@ -73,6 +73,18 @@
 
                         verTabla($j1);verTabla($j2);verTabla($j3);verTabla($j4);
                         $ganadores = sacar_ganadores($j1,$j2,$j3,$j4); //Array con los nombres de los ganadores
+                        print_r( max($ganadores));
+                        
+                        /* DAR DINERO A LOS GANADORES Y PONBER 0 DE DINERO A LOS PERDEDORES */
+                        if (max($ganadores) == 7.5) { 
+                            $cantApostada = $cantApostada*0.80;
+                            foreach ($ganadores as $key => $value) {
+                                ${$key}["dinero"] = $cantApostada/(count($ganadores));
+                            }
+                        }else{
+
+                        }
+                        
 
                         if (is_string($ganadores)) {
                             echo "<h3> No hay ganadores, los ",$cantApostada,"€ van al Bote</h3>";
@@ -91,8 +103,25 @@
                             }   echo "</h4>";
                         }
 
+                        
+                        function rellenar_fichero(){
+                            $contenido = "hola";
+
+
+
+
+
+                            $contenido = $contenido.PHP_EOL;
+                            return $contenido;
+                        }
+
                         function guardar_apuestas(){
-                            
+                            $nombreArchivo = date('dmYHis').".txt"; //apuestas_ddmmaahhmiss.txt 
+                            echo "<br><h3>",$nombreArchivo,"</h3>";
+                            $archivo = fopen($nombreArchivo,"a"); // abrir u crear archivo 
+                            $contenido = rellenar_fichero();
+                            fwrite($archivo,$contenido); // añade nuevo alumno al archivo
+                            fclose($archivo); /* cerrar archivo */
                         }
 
                         guardar_apuestas();
