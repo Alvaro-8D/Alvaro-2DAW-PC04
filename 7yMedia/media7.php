@@ -61,70 +61,49 @@
                             $cartas3[$i] = $baraja[($i+($numcartas*2))];
                             $cartas4[$i] = $baraja[($i+($numcartas*3))];
                         }
-                        echo "<h2>",$j1["nombre"],":</h2>";verTabla($cartas1,true);//poner lo grafico de mostrar al final del programa (mostrar lo visual es lo último)
-                        echo "<h2>",$j2["nombre"],":</h2>";verTabla($cartas2,true);
-                        echo "<h2>",$j3["nombre"],":</h2>";verTabla($cartas3,true);
-                        echo "<h2>",$j4["nombre"],":</h2>";verTabla($cartas4,true);
 
-                        $j1["puntos"] = 6.5;//sumar_puntos($cartas1);
-                        $j2["puntos"] = 7.5;//sumar_puntos($cartas2);
-                        $j3["puntos"] = 7.5;//sumar_puntos($cartas3);
-                        $j4["puntos"] = 7.5;//sumar_puntos($cartas4);
+                        $j1["puntos"] = sumar_puntos($cartas1);
+                        $j2["puntos"] = sumar_puntos($cartas2);
+                        $j3["puntos"] = sumar_puntos($cartas3);
+                        $j4["puntos"] = sumar_puntos($cartas4);
 
-                        verTabla($j1);verTabla($j2);verTabla($j3);verTabla($j4);
                         $ganadores = sacar_ganadores($j1,$j2,$j3,$j4); //Array con los nombres de los ganadores
-                        print_r( max($ganadores));
                         
-                        /* DAR DINERO A LOS GANADORES Y PONBER 0 DE DINERO A LOS PERDEDORES */
-                        if (max($ganadores) == 7.5) { 
-                            $cantApostada = $cantApostada*0.80;
-                            foreach ($ganadores as $key => $value) {
-                                ${$key}["dinero"] = $cantApostada/(count($ganadores));
-                            }
-                        }else{
-
+                    /* DAR DINERO A LOS GANADORES Y PONBER 0 DE DINERO A LOS PERDEDORES */
+                        $j1["dinero"] = $j2["dinero"] = $j3["dinero"] = $j4["dinero"] = 0;
+                        if (max($ganadores) == 7.5) {$cantApostada = $cantApostada*0.80;}else{ $cantApostada = $cantApostada*0.50;}
+                        foreach ($ganadores as $key => $value) {
+                            ${$key}["dinero"] = truncar($cantApostada/(count($ganadores)),2);
                         }
                         
-
+                    /* * * * * * * * GUARDAR para imprimir GANADORES Y BOTE * * * * * * * * */
                         if (is_string($ganadores)) {
-                            echo "<h3> No hay ganadores, los ",$cantApostada,"€ van al Bote</h3>";
+                            $textoGanar1 = "<h3> No hay ganadores, los ".$cantApostada."€ van al Bote</h3>";
                         }else{
-                            echo "<br> <h4>";
+                            $textoGanar2 = $textoGanar1 = "<br> <h4>";
                             if (count($ganadores)==1) {
-                                echo ${key($ganadores)}["nombre"]." ha ganado la partida con una puntuación de ".$ganadores[key($ganadores)];
-                                echo "<br><br> El ganador ha obtenido ",$cantApostada,"€ de premio";
+                                $textoGanar1 = $textoGanar1.(${key($ganadores)}["nombre"]." ha ganado la partida con una puntuación de ".$ganadores[key($ganadores)]);
+                                $textoGanar2 = $textoGanar2.("<br><br> El ganador ha obtenido ".$cantApostada."€ de premio");
                             } else {
                                 $nombres = ""; // Nombres de ganadores
                                 foreach ($ganadores as $key => $value) {
                                     $nombres = $nombres.(${$key}["nombre"])." ,";
                                 }
-                                echo $nombres." han ganado la partida con una puntuación de ".$ganadores[key($ganadores)];
-                                echo "<br><br> Los ganadores han obtenido ",$cantApostada,"€ de premio";
-                            }   echo "</h4>";
+                                $textoGanar1 = $textoGanar1.($nombres." han ganado la partida con una puntuación de ".$ganadores[key($ganadores)]);
+                                $textoGanar1 = $textoGanar1.("<br><br> Los ganadores han obtenido ".$cantApostada."€ de premio");
+                            }   
+                            $textoGanar1 = $textoGanar1."</h4>"; $textoGanar2 = $textoGanar2."</h4>";
                         }
+                    /* Guardar Apuestas en Fichero */
+                        guardar_apuestas($ganadores,$cantApostada,$j1,$j2,$j3,$j4); 
 
-                        
-                        function rellenar_fichero(){
-                            $contenido = "hola";
-
-
-
-
-
-                            $contenido = $contenido.PHP_EOL;
-                            return $contenido;
-                        }
-
-                        function guardar_apuestas(){
-                            $nombreArchivo = date('dmYHis').".txt"; //apuestas_ddmmaahhmiss.txt 
-                            echo "<br><h3>",$nombreArchivo,"</h3>";
-                            $archivo = fopen($nombreArchivo,"a"); // abrir u crear archivo 
-                            $contenido = rellenar_fichero();
-                            fwrite($archivo,$contenido); // añade nuevo alumno al archivo
-                            fclose($archivo); /* cerrar archivo */
-                        }
-
-                        guardar_apuestas();
+                    /* Ver Resultado Final */
+                        echo $textoGanar1;
+                        echo $textoGanar2;
+                        echo "<h2>",$j1["nombre"],":</h2>";verTabla($cartas1,true);
+                        echo "<h2>",$j2["nombre"],":</h2>";verTabla($cartas2,true);
+                        echo "<h2>",$j3["nombre"],":</h2>";verTabla($cartas3,true);
+                        echo "<h2>",$j4["nombre"],":</h2>";verTabla($cartas4,true);
 
                     } 
                     else { 

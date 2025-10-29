@@ -19,4 +19,9 @@
         $data = htmlspecialchars($data);
         return $data;
     }
+
+    /* TRUNCAR */
+    function truncar($num,$decimal = 0){
+        return ((int) ($num*(pow(10,$decimal))))/(pow(10,$decimal));
+    }
 ?>
