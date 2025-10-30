@@ -6,6 +6,11 @@
         return $data;
     }
 
+    /* TRUNCAR */
+    function truncar($num,$decimal = 0){
+        return ((int) ($num*(pow(10,$decimal))))/(pow(10,$decimal));
+    }
+
     function verTabla($tabla,$foto = false){ // Muestra Una Tabla  
         $columna = "";
         foreach ($tabla as $key1 => $value) {
@@ -80,7 +85,29 @@
         return $ganadores2;
     }
 
+    function rellenar_fichero($ganadores,$cantApostada,$j1,$j2,$j3,$j4){
+        $contenido = "";
+        array_push($j1,explode(" ",strtoupper($j1["nombre"])));
+        array_push($j2,explode(" ",strtoupper($j2["nombre"])));
+        array_push($j3,explode(" ",strtoupper($j3["nombre"])));
+        array_push($j4,explode(" ",strtoupper($j4["nombre"])));
 
+        $contenido = $contenido.$j1[0][0].$j1[0][1]."#".$j1["puntos"]."#".$j1["dinero"].PHP_EOL;
+        $contenido = $contenido.$j2[0][0].$j2[0][1]."#".$j2["puntos"]."#".$j2["dinero"].PHP_EOL;
+        $contenido = $contenido.$j3[0][0].$j3[0][1]."#".$j3["puntos"]."#".$j3["dinero"].PHP_EOL;
+        $contenido = $contenido.$j4[0][0].$j4[0][1]."#".$j4["puntos"]."#".$j4["dinero"].PHP_EOL;
+
+        $contenido = $contenido."TOTALPREMIOS#".count($ganadores)."#".$cantApostada.PHP_EOL;
+        return $contenido;
+    }
+
+    function guardar_apuestas($ganadores,$cantApostada,$j1,$j2,$j3,$j4){
+        $nombreArchivo = date('dmYHis').".txt"; //apuestas_ddmmaahhmiss.txt 
+        $archivo = fopen($nombreArchivo,"a"); // abrir u crear archivo */
+        $contenido = rellenar_fichero($ganadores,$cantApostada,$j1,$j2,$j3,$j4); 
+        fwrite($archivo,$contenido); // añade nuevo alumno al archivo
+        fclose($archivo); /* cerrar archivo */
+    }
 
 
 
