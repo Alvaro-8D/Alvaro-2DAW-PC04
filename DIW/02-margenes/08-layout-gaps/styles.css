@@ -1,2 +1,9 @@
 .grid {  }
-.card { background:#fff; border:1px solid #ddd; height:80px; display:grid; place-items:center; }
+.card { background:#ecdcb5; 
+    border:1px solid #ddd; 
+    height:80px; display:grid;
+    place-items:center; 
+    margin: 10px 20px 10px 40px;
+    
+}
+
