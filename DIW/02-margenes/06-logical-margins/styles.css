@@ -7,19 +7,19 @@
         margin-inline-start: 12px;
         margin-inline-end: 12px;}
 }
-/*
+
 @media only screen and (min-width: 768px) { /* Tablet */
-    /*.item { writing-mode: horizontal-tb; background:#eef; border:1px solid #99a; 
+    .item { writing-mode: horizontal-tb; background:#eef; border:1px solid #99a; 
         margin-block-start: 24px;
         margin-block-end: 24px;
         margin-inline-start: 12px;
         margin-inline-end: 12px;}
-} */
+} 
 
 @media only screen and (min-width: 992px) { /* Ordenador */
     .item { writing-mode: horizontal-tb; background:#eef; border:1px solid #99a; 
-        margin-block-start: 70px;
-        margin-block-end: 74px;
-        margin-inline-start: 72px;
-        margin-inline-end: 72px;}
+        margin-block-start: 300px;
+        margin-block-end: 374px;
+        margin-inline-start: 372px;
+        margin-inline-end: 372px;}
 }
