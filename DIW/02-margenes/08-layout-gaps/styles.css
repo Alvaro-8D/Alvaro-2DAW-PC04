@@ -1,2 +1,8 @@
-.grid {  }
-.card { background:#fff; border:1px solid #ddd; height:80px; display:grid; place-items:center; }
+.grid { grid:"card card" "card card" "card card" "card card"; grid-template-columns: 100px 100px 100px 100px;}
+.card { background:#ecdcb5; 
+    border:1px solid #ddd; 
+    height:80px; display:grid;
+    place-items:center; 
+    margin: 10px 20px 30px 40px;
+}
+

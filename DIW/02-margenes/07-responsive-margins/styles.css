@@ -1,2 +1,25 @@
 .wrap { background:#f0fff4; border:1px solid #9ae6b4; min-height:120px; }
+@media only screen and (max-width: 600px) { /* Movil */
+    .wrap {
+        margin-block-start: 50px;
+        margin-block-end: 50px;
+        margin-inline-start: 50px;
+        margin-inline-end: 50px;}
+}
+/* USAR HERRAMIENTAS DE DESARROLLADOR PARA VER COMO QUEDA LA PAGINA WEB EN DIFERENTES DISPOSITIVOS MOVILES */
+@media only screen and (min-width: 601px) { /* Tablet */
+    .wrap {
+        margin-block-start: 30px;
+        margin-block-end: 30px;
+        margin-inline-start: 30px;
+        margin-inline-end: 30px;}
+} 
+
+@media only screen and (min-width: 1200px) { /* Ordenador */
+    .wrap {
+        margin-block-start: 10px;
+        margin-block-end: 10px;
+        margin-inline-start: 10px;
+        margin-inline-end: 10px;}
+}
 
