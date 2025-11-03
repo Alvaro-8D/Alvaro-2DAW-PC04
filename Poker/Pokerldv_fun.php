@@ -90,6 +90,71 @@
         return $cadena;
     }
 
+    function detectar_ganadores($Ajugadores,$apuesta = false){
+        $Ajugadores2 = $cadena = array();
+        foreach ($Ajugadores as $key => $value) {
+            array_push($Ajugadores2, $value["puntuacion"]);
+        }
+        $Ajugadores2 = max($Ajugadores2);
+        foreach ($Ajugadores as $key => $value) {
+            if($value["puntuacion"] == $Ajugadores2){
+                array_push($cadena,$value["nombre"]);
+            }
+        }
+
+        if($apuesta){ //devuelve si se ha ganado con un trio, poker, pareja o doble pareja
+            $cadena = $Ajugadores2;
+        }
+        return $cadena;
+    }
+
+    function verResultado($premi_a_repartir,$nomGanadores,$Ajugadores){
+        if (!is_numeric($premi_a_repartir)) {
+            echo "<h2>",$nomGanadores," no se repartirán nada de dinero, pobrecillos</h2>";
+        } else {
+            echo "<h2>",$nomGanadores," se van a repartir un premio de ",$premi_a_repartir,"€</h2>";
+        }
+
+        foreach ($Ajugadores as $key => $value) {
+            switch ($value["puntuacion"]) {
+                    case 4:
+                        $loqueSaca = "Poker";
+                        break;
+                    case 3:
+                        $loqueSaca = "Trio";
+                        break;
+                    case 2:
+                        $loqueSaca = "Doble Pareja";
+                        break;
+                    case 1:
+                        $loqueSaca = "Pareja";
+                        break;
+                    default:
+                        $loqueSaca = "NINGUNA carta igual";
+                        break;
+                }
+            echo "<br><h4>",$value["nombre"],": Ha sacado ",$loqueSaca,"</h4>";
+            verTabla($value["mano"],true);
+
+        }
+        
+    }
+
+    function verTabla($tabla,$foto = false){ // Muestra Una Tabla  
+        $columna = "";
+        foreach ($tabla as $key1 => $value) {
+            if($foto){ // aquí muestra la foto de las cartas
+                $columna = $columna."<td style=\"padding: 5px;border-width: 2px;width:19px;\"><img src=\"./images/".$value.".PNG\"></td>";
+            }else{ //aqui solo muestra los valores de la tabla
+                $columna = $columna."<td style=\"padding: 5px;border-width: 2px;width:19px;\"> ".$value." </td>";
+            }
+        }
+        $cmd = "<table border=\"1px\" style=\"border-collapse: collapse;\">".
+        "<tr style=\"padding: 5px;border-width: 2px;width:19px;\">".$columna."</tr></table>";
+
+        print($cmd);  
+    }
+
 
 
 ?>

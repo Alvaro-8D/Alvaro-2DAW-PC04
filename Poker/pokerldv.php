@@ -47,19 +47,39 @@
             $Ajugadores[$i]["puntuacion"] = calcular_puntuacion($Ajugadores[$i]["mano"]);
         }
 
-        //var_dump($Ajugadores);
-         /* * * * * * Sacar ganadores * * * * * */
-
-        function detectar_ganadores($Ajugadores){
-            $cadena = "";
-            $Ajugadores2[]
-            max($Ajugadores2[])
-
-            return;
+        /* * * * * * Sacar ganadores * * * * * */
+        $ganadores = detectar_ganadores($Ajugadores); // array que contiene los nombres de los ganadores
+        $puntuacion_ganadora = detectar_ganadores($Ajugadores,true); //devuelve si se ha ganado con un trio, poker, pareja o doble pareja
+        $nomGanadores = "";
+        foreach ($ganadores as $key => $value) {
+            $nomGanadores = $nomGanadores.$value.", ";
         }
+        
 
-        $ganadores = detectar_ganadores($Ajugadores);
-
+        /* * * * * * Repartir Premio * * * * * */
+        foreach ($Ajugadores as $key => $value) {
+            foreach ($ganadores as $key2 => $value2) {
+                if($value["nombre"] == $value2){
+                    switch ($puntuacion_ganadora) {
+                        case 4:
+                            $Ajugadores[$key]["dinero"]= round($cantApostada/count($ganadores),2);
+                            $premi_a_repartir = round($cantApostada,2); // guardar dinero a repartir para imprimirlo
+                            break;
+                        case 3:
+                            $Ajugadores[$key]["dinero"]= round(($cantApostada * 0.70)/count($ganadores),2);
+                            $premi_a_repartir = round($cantApostada * 0.70,2);// guardar dinero a repartir para imprimirlo
+                            break;
+                        case 2:
+                            $Ajugadores[$key]["dinero"]= round(($cantApostada * 0.50)/count($ganadores),2);
+                            $premi_a_repartir = round($cantApostada * 0.50,2);// guardar dinero a repartir para imprimirlo
+                            break;
+                        default:
+                            $premi_a_repartir = "<h2>No se reparte premio</h2>"; // guardar dinero a repartir para imprimirlo
+                            break;
+                    }
+                }
+            }
+        }
     }
     
 
@@ -93,7 +113,10 @@
                     </form>
 		
 	</div>
-
+    <?php
+        /* * * * * * Ver Resultado * * * * * */
+        verResultado($premi_a_repartir,$nomGanadores,$Ajugadores);
+    ?>
 
 
             </div>
@@ -103,8 +126,6 @@
 
 
     </div>
-
-
 
 </body>
 
