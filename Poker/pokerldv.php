@@ -114,8 +114,10 @@
 		
 	</div>
     <?php
+     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         /* * * * * * Ver Resultado * * * * * */
         verResultado($premi_a_repartir,$nomGanadores,$Ajugadores);
+     }
     ?>
 
 
