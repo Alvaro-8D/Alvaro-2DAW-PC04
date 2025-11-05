@@ -35,8 +35,11 @@ img{ max-width:100%; height:auto; display:block; }
 .card{
   background: var(--card);
   /* TODO: padding interno de 16px */
+  padding: 16px;
   /* TODO: borde de 2px sólido con color var(--border) */
+  border: solid 2px var(--border);
   /* TODO: margin externo de 24px */
+    margin: 24px;
   border-radius: 12px;
 }
 .card h3{ margin: .5rem 0; }
