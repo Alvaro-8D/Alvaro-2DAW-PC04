@@ -36,18 +36,18 @@
         $fecha_nac = limpiar_campos($_POST["fecha_nacimiento"]);
         $localidad = limpiar_campos($_POST["localidad"]);
         
-        $alumno = str_pad($nombre,40," ",STR_PAD_RIGHT).str_pad($apellido1,40," ",STR_PAD_RIGHT).str_pad($apellido2,41," ",STR_PAD_RIGHT).str_pad($fecha_nac,9," ",STR_PAD_RIGHT).str_pad($localidad,26," ",STR_PAD_RIGHT);
+        $alumno = $nombre."##".$apellido1."##".$apellido2."##".$fecha_nac."##".$localidad;
 
-        $archivo = fopen("alumnos1.txt", "a");
+        $archivo = fopen("alumnos2.txt", "a");
         fwrite($archivo,($alumno."\n"));
-        $cadena = file_get_contents("alumnos1.txt");
-        echo "<pre>",$cadena,"</pre>"; // uso <pre></pre> para que respete los saltos de linea
+        $cadena = file("alumnos2.txt");
+        foreach ($cadena as $key => $value) {
+            $cadena[$key] = explode("##",$value);
+        }
+        verTabla($cadena,true);
+        echo "Se han impreso ",count($cadena)," lineas";
         fclose($archivo);
     }
-
-
-
-    
 ?>
 </body>
 </html>

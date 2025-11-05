@@ -38,10 +38,12 @@
         
         $alumno = str_pad($nombre,40," ",STR_PAD_RIGHT).str_pad($apellido1,40," ",STR_PAD_RIGHT).str_pad($apellido2,41," ",STR_PAD_RIGHT).str_pad($fecha_nac,9," ",STR_PAD_RIGHT).str_pad($localidad,26," ",STR_PAD_RIGHT);
 
+
         $archivo = fopen("alumnos1.txt", "a");
         fwrite($archivo,($alumno."\n"));
-        $cadena = file_get_contents("alumnos1.txt");
-        echo "<pre>",$cadena,"</pre>"; // uso <pre></pre> para que respete los saltos de linea
+        $cadena = file("alumnos1.txt");
+        verTabla($cadena,false);
+        echo "Se han impreso ",count($cadena)," lineas";
         fclose($archivo);
     }
 
