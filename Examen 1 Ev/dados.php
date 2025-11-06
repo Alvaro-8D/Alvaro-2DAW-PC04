@@ -2,19 +2,50 @@
     include 'dadosfunc.php';
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $nombre = limpiar_campos($_POST["nombre"]);
-        $apellido1 = limpiar_campos($_POST["apellido1"]);
-        $apellido2 = limpiar_campos($_POST["apellido2"]);
-        $fecha_nac = limpiar_campos($_POST["fecha_nacimiento"]);
-        $localidad = limpiar_campos($_POST["localidad"]);
-        
-        $alumno = str_pad($nombre,40," ",STR_PAD_RIGHT).str_pad($apellido1,40," ",STR_PAD_RIGHT).str_pad($apellido2,41," ",STR_PAD_RIGHT).str_pad($fecha_nac,9," ",STR_PAD_RIGHT).str_pad($localidad,26," ",STR_PAD_RIGHT);
+        $j1 = limpiar_campos($_POST["jug1"]);
+        $j2 = limpiar_campos($_POST["jug2"]);
+        $j3 = limpiar_campos($_POST["jug3"]);
+        $j4 = limpiar_campos($_POST["jug4"]);
+        $numDados = limpiar_campos($_POST["numdados"]);
 
-        $archivo = fopen("alumnos1.txt", "a");
-        fwrite($archivo,($alumno."\n"));
-        $cadena = file_get_contents("alumnos1.txt");
-        echo "<pre>",$cadena,"</pre>"; // uso <pre></pre> para que respete los saltos de linea
-        fclose($archivo);
+        if ($numDados >= 2 && $numDados <= 10) {
+            /* Inicializar Jugadores/Banca */
+            $Ajugadores = array($j1 => array("dados" => array(),"puntos" => 0),
+                                $j2 => array("dados" => array(),"puntos" => 0),
+                                $j3 => array("dados" => array(),"puntos" => 0),
+                                $j4 => array("dados" => array(),"puntos" => 0),
+                            "banca" => array("dados" => array(),"puntos" => 0));
+
+            /* Generar Dados */
+            foreach ($Ajugadores as $key => $value) {
+                $Ajugadores[$key]["dados"] = generarDados($numDados);
+            }
+            /* Sumar Dados */
+            foreach ($Ajugadores as $key => $value) {
+                if ($key == "banca") {
+                    $Ajugadores[$key]["puntos"] = sumarDados($Ajugadores[$key]["dados"],true);
+                }else {
+                    $Ajugadores[$key]["puntos"] = sumarDados($Ajugadores[$key]["dados"]);
+                }
+            }
+
+            /* Sacar Ganadores */
+            $ganadores = detectarGanador($Ajugadores);
+            
+            /* Formatear Resultado para Imprimirlo por pantalla */
+            $listaJugadores = formatearJugadores($Ajugadores);
+
+            /* Visualizar Datos por Pantalla en una Tabla */
+            verTabla($listaJugadores);
+
+            /* Guardar en un Fichero de forma Ordenada*/
+            $cadena2 = ordenarJugadores($Ajugadores);
+            guardarEnArchivo($cadena2);
+
+        }else{
+            echo "cantidad NO valida de Dados";
+        }
+        
     }
 
 ?>
