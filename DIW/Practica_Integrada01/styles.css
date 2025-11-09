@@ -85,20 +85,37 @@ img{ max-width:100%; height:auto; display:block; }
 /* ====== Márgenes ====== */
 .margins-demo{ margin-block: 24px; }
 .m1{ /* TODO: margin usando shorthand 2 valores */ margin: 10px 50px;}
-.m2{ /* TODO: margin usando 4 valores */ margin: 50px 10px 100px 20px;}
+.m2{ /* TODO: margin usando 4 valores */ margin: 50px 10px 0px 200px;  background: rgba(209, 53, 53, 0.451);} 
+/* Coloreo el elemento anterior para demostrar el Margin Collapse */
+
 
 /* Colapso de márgenes */
 .collapse-wrapper{
   /* TODO: evitar colapso de márgenes (pista: overflow:auto; o display:flow-root) */
   background: rgba(255,255,255,.03);
-  padding: 8px 12px;
-  border:1px dashed var(--border);
+  /* El verdadero problema del Margin Collapse, sucede cuando el elemento padre, toma el margen del elemento hijo
+    y se lo pone a si mismo. En este caso, no sucede porque "padding" o "border" anulan este efecto, pero si 
+    quisieramos quitar estos dos elementos, la manera correcta de evitar que el elemento padre coja el margin-top
+    del hijo es usando "overflow". 
+  
+    Prueba a comentar "border", "padding" y "overflow" (este útimo controla como mostrar por pantalla un texto que 
+    se sale de las dimensiones del contenedor que lo contiene) y luego a poner "overflow" para ver como soluciona
+    el Margin Collapse sin usar "border" o "padding" : */
+  
+  padding: 8px 12px; /* Comenta esto */  
+  border:1px dashed var(--border); /* Comenta esto */  
+  overflow: auto; /* Comenta esto */  
+
   border-radius: 8px;
   margin-block: 16px;
+  
 }
-.colapso{ background: rgba(255,255,255,.02); }
-.colapso.top{ margin-bottom: 20px; }
-.colapso.bottom{ margin-top: 20px; }
+.colapso{ background: rgba(255,255,255,.02);}
+/* Estos dos Margenes se colpasaran  siendo solo uno (el mayor de los dos) 
+   pero no tiene sentido quitar el colapso de margenes, simplemente le pones 
+   el tamaño deseado al mayor de ellos y ya está*/
+.colapso.top{ margin-bottom: 20px; margin-top: 100px;} 
+.colapso.bottom{ margin-top: 70px; }
 
 /* Márgenes lógicos */
 .logical{ writing-mode: horizontal-tb; }
@@ -107,6 +124,8 @@ img{ max-width:100%; height:auto; display:block; }
   background: rgba(255,255,255,.03);
   border:1px solid var(--border);
   border-radius: 10px;
+  margin-block:24px;
+  margin-inline:12px;
 }
 
 /* ====== Padding ====== */
@@ -115,9 +134,39 @@ img{ max-width:100%; height:auto; display:block; }
   gap:16px; margin-block:24px;
 }
 .pad{ background: var(--card); border:1px solid var(--border); border-radius:10px; }
-.pad.a{ /* TODO: padding individual top/right/bottom/left */ }
-.pad.b{ /* TODO: shorthand padding 1-2-3 valores */ }
-.pad.c{ /* TODO: demostrar que el fondo se extiende por el padding (incrementa padding) */ }
+.pad.a{ /* TODO: padding individual top/right/bottom/left */ 
+        padding-top: 2px;
+        padding-bottom: 30px;
+        padding-left: 10px;
+        padding-right: 50px; }
+.pad.b{ /* TODO: shorthand padding 1-2-3 valores */ padding: 100px 1px 20px; }
+.pad.c{ /* TODO: demostrar que el fondo se extiende por el padding (incrementa padding) */ 
+        background-image: url(https://images.steamusercontent.com/ugc/2057625729986453843/0154A0A3972A9F6B73405052F4EB7E0CBA4B0537/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false);
+        padding-bottom:  400px;}
+
+@media only screen and (max-width: 600px) { /* Movil */
+    .pad.a{ padding: 6px;}
+    .pad.b{ padding-top: 16px;}
+    .pad.c{ padding-bottom:  60px;
+            background-image: url(https://images.steamusercontent.com/ugc/2057625729986453843/0154A0A3972A9F6B73405052F4EB7E0CBA4B0537/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false);
+          }
+}
+/* USAR HERRAMIENTAS DE DESARROLLADOR PARA VER COMO QUEDA LA PAGINA WEB EN DIFERENTES DISPOSITIVOS MOVILES */
+@media only screen and (min-width: 601px) { /* Tablet */
+    .pad.a{ padding: 20px;}
+    .pad.b{ padding-top: 40px;}
+    .pad.c{ padding-bottom:  200px;
+            background-image: url(https://images.steamusercontent.com/ugc/2057625729986453843/0154A0A3972A9F6B73405052F4EB7E0CBA4B0537/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false);
+          }
+} 
+
+@media only screen and (min-width: 1200px) { /* Ordenador */
+    .pad.a{ padding: 1px;}
+    .pad.b{ padding-top: 300px;}
+    .pad.c{ padding-bottom:  700px;
+            background-image: url(https://images.steamusercontent.com/ugc/2057625729986453843/0154A0A3972A9F6B73405052F4EB7E0CBA4B0537/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false);
+          }
+}
 
 /* ====== Botones estables ====== */
 .btn{
@@ -147,3 +196,5 @@ img{ max-width:100%; height:auto; display:block; }
    - tablet: intermedio
    - escritorio: mayor
 */
+
+
