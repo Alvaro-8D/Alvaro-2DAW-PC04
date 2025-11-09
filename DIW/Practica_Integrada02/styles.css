@@ -1,0 +1,165 @@
+/* ===== Variables, reset y utilidades ===== */
+:root{
+  --bg:#0b1220;
+  --panel:#0f172a;
+  --muted:#94a3b8;
+  --text:#e5e7eb;
+  --brand:#38bdf8;
+  --accent:#22d3ee;
+  --border:#243043;
+  --shadow: rgba(0,0,0,.35);
+}
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; background:var(--bg); color:var(--text); font-family: system-ui, Segoe UI, Roboto, Arial, sans-serif; }
+a{ color:inherit; text-decoration:none; }
+img{ max-width:100%; display:block; }
+.container{ width:min(1100px, 90%); margin-inline:auto; }
+
+/* ===== Header + Navbar ===== */
+.site-header{
+  position: sticky; top:0; z-index:10;
+  background: linear-gradient(0deg, rgba(255,255,255,.02), rgba(255,255,255,.04));
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--border);
+  /* TODO: padding global del header */
+  display:flex; align-items:center; justify-content:space-between;
+}
+.brand{ font-weight:800; letter-spacing:.2px; }
+.brand span{ color: var(--accent); }
+
+.navbar{
+  display:flex; align-items:center; justify-content:space-between;
+  /* TODO: espaciar brand y nav-list */
+}
+.nav-toggle{
+  /* TODO: ocultar en escritorio, mostrar en móvil */
+  background:transparent; border:1px solid var(--border); color:var(--text);
+  padding:.4rem .6rem; border-radius:8px;
+}
+.nav-toggle :focus{
+  /* TODO: ocultar en escritorio, mostrar en móvil */
+  background:rgba(105, 156, 5, 0.696); border:1px solid var(--border); color:var(--text);
+  padding:.5rem .7rem; border-radius:8px;
+}
+.nav-list{
+  list-style:none; margin:0; padding:0;
+  display:flex; gap: 8px;
+}
+.nav-list a{
+  display:block;
+  /* TODO: padding vertical/horizontal adecuado */
+  border-radius:8px;
+  /* TODO: estado :hover/:focus-visible con fondo semitransparente */
+}
+.nav-list a:focus-visible{
+  display:block;
+  /* TODO: padding vertical/horizontal adecuado */
+  border-radius:8px;
+  /* TODO: estado :hover/:focus-visible con fondo semitransparente */
+  background: #0186dfa5;
+}
+.nav-list a:hover{
+  display:block;
+  /* TODO: padding vertical/horizontal adecuado */
+  border-radius:8px;
+  /* TODO: estado :hover/:focus-visible con fondo semitransparente */
+  background: #0186dfa5;
+}
+.nav-list.open{ 
+  /* para móvil */ 
+  padding-block: 30px;
+}
+
+/* ===== Dropdowns ===== */
+.dropdown{ position:relative;}
+.dropdown::after{
+  /* TODO: flecha ▾ con ::after */
+  content:" ▾";
+  margin-left: .25rem;
+}
+.dropdown-right > .dropbtn::after {
+  content: " ▸";    /* Flecha ▸ con ::after para el submenu de Categorias */
+  margin-left: .25rem;
+}
+
+.dropdown-menu{
+  position:absolute; left:0; top:calc(100% + 6px);
+  min-width: 220px;
+  background: var(--panel);
+  border:1px solid var(--border);
+  border-radius:10px;
+  box-shadow: 0 10px 30px var(--shadow);
+  opacity:0; visibility:visible; transform: translateY(-6px);
+  transition: all .18s ease;
+  /* TODO: padding interno de los items */
+}
+.dropdown:hover > .dropdown-menu,
+.dropdown:focus-within > .dropdown-menu{
+  opacity:1; visibility:visible; transform: translateY(0);
+}
+
+.dropdown-right:hover > .dropdown-menu,
+.dropdown-right:focus-within > .dropdown-menu {
+  opacity:1; visibility:visible; transform: translateY(0);
+}
+
+.dropdown-menu li{ list-style:none; }
+.dropdown-menu a{ display:block; /* TODO: padding item */ padding: 10px;}
+.dropdown-right{ position:relative; }
+.dropdown-right > .dropdown-menu{
+  left:100%; top:0; margin-left:8px;
+}
+
+/* ===== Responsive navbar ===== */
+@media (max-width: 768px){
+  .nav-list{ 
+    /* TODO: convertir a columna, ocupar ancho completo y colapsar por defecto */
+    visibility: hidden;
+  }
+  .nav-list.open{ /* TODO: expandir en móvil */ 
+  visibility: visible;}
+  .nav-toggle{ display:inline-flex; }
+}
+@media (min-width: 769px){
+  .nav-toggle{ display:none; }
+}
+
+/* ===== Cards / layout ===== */
+.lead{ color:var(--muted); }
+.cards{ display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:16px; }
+.card{ background: var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px; }
+
+.demo-box{ background: rgba(255,255,255,.03); border:1px dashed var(--border); border-radius:12px; padding:16px; margin-block:16px; }
+.tall{ height: 50vh; }
+
+/* ===== Counters ===== */
+main{ counter-reset: seccion; } /* crear counter 'seccion' */
+h2{
+  /* TODO: incrementar contador y añadir número antes del título */
+}
+h2::before{
+  /* TODO: content: counter(seccion) ". "; estilo destacado */
+  counter-increment: seccion;
+  content: counter(seccion) ".";
+}
+
+/* TOC y Steps con counters anidados */
+.toc{ counter-reset: item; }
+.toc > li::before{
+  /* TODO: numeración 1,2,3... con ::marker o ::before */
+  counter-increment: item;
+  content: counter(item);
+}
+.steps-list{ counter-reset: paso; }
+.steps-list > li{
+  counter-increment: paso;
+  /* TODO: número dentro de un círculo usando ::before */
+}
+.steps-list > li::before{
+  /* TODO: content: counter(paso); */
+  counter-increment: paso;
+  content: counter(paso);
+}
+
+/* ===== Focus & accesibilidad ===== */
+a:focus-visible, button:focus-visible{ outline: 3px solid #60a5fa; outline-offset: 3px; }
