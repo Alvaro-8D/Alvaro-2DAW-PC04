@@ -144,6 +144,7 @@ img{ max-width:100%; height:auto; display:block; }
         background-image: url(https://images.steamusercontent.com/ugc/2057625729986453843/0154A0A3972A9F6B73405052F4EB7E0CBA4B0537/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false);
         padding-bottom:  400px;}
 
+/* ====== Responsivo ====== */
 @media only screen and (max-width: 600px) { /* Movil */
     .pad.a{ padding: 6px;}
     .pad.b{ padding-top: 16px;}
@@ -180,9 +181,9 @@ img{ max-width:100%; height:auto; display:block; }
   cursor:pointer;
 }
 .btn:hover{ border-color: var(--brand); background: transparent; color: var(--text); }
-.btn.sm{ /* TODO: padding reducido */ }
-.btn.md{ /* TODO: padding medio */ }
-.btn.lg{ /* TODO: padding amplio */ }
+.btn.sm{ /* TODO: padding reducido */ padding: 10px; }
+.btn.md{ /* TODO: padding medio */ padding: 20px;}
+.btn.lg{ /* TODO: padding amplio */ padding: 40px;}
 
 /* ====== Accesibilidad foco ====== */
 .btn:focus-visible, a:focus-visible, .card:focus-within{
@@ -190,11 +191,5 @@ img{ max-width:100%; height:auto; display:block; }
   outline-offset: 3px;
 }
 
-/* ====== Responsivo ====== */
-/* TODO: media queries
-   - móvil: padding menor en .pad.*
-   - tablet: intermedio
-   - escritorio: mayor
-*/
 
 
