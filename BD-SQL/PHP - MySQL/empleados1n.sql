@@ -16,3 +16,8 @@ CREATE TABLE empleado
  cod_dpto  VARCHAR(4),
 CONSTRAINT pk_empleado PRIMARY KEY (dni), 
 CONSTRAINT fk_empleado FOREIGN KEY (cod_dpto) REFERENCES departamento(cod_dpto)) ENGINE=InnoDB;
+
+
+
+
+
