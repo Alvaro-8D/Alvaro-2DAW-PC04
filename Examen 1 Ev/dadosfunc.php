@@ -59,13 +59,15 @@
     }
 
     function ordenarJugadores($Ajugadores){
+        $n = 0.1;
         foreach ($Ajugadores as $key => $value) {
             $listaDados = "";
             foreach ($value["dados"] as $key2 => $value2) {
-                $listaDados = $listaDados.$value2."#";
+                $listaDados = $listaDados."#".$value2;
             }
-            $cadena = $key."#".$value["puntos"]."#".$listaDados;
-            $cadena2[substr($cadena,strpos($cadena,"#")+1,strpos($cadena,"#",strpos($cadena,"#")+1)-(strpos($cadena,"#")+1))] = $cadena;
+            $cadena = $key."#".$value["puntos"].$listaDados;
+            $cadena2["".(substr($cadena,strpos($cadena,"#")+1,strpos($cadena,"#",strpos($cadena,"#")+1)-(strpos($cadena,"#")+$n))+$n)] = $cadena;
+            $n += 0.1;
         }
         var_dump($cadena2);
         krsort($cadena2);
