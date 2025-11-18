@@ -13,5 +13,7 @@
         $nombre = limpiar_campos($_POST['nombre']);
         
         nuevaCategoria($nombre);
+
     }
+    
 ?>
