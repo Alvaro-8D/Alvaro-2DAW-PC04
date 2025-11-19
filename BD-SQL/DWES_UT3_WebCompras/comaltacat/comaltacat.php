@@ -11,9 +11,8 @@
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") {    
         $nombre = limpiar_campos($_POST['nombre']);
-        
-        nuevaCategoria($nombre);
 
+        nuevaCategoria($nombre); //realiza todo el programa de Introducir Categorías
     }
     
 ?>
