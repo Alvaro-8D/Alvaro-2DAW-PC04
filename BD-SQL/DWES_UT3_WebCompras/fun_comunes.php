@@ -16,6 +16,7 @@
         $consulta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         return $consulta;
+        $consulta = null;
     }
 
 ?>
