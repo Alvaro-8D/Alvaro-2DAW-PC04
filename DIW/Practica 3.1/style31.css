@@ -72,3 +72,57 @@ main {
   font-size: 0.9rem;
   color: #777;
 }
+
+.p1 table{
+  border: solid 3px black;
+  padding: 5px;
+  background-color: aquamarine;
+}
+
+.p1 button{
+  padding: 10px;
+  font-size: 20px;
+  border: solid 2px black;
+  background-color: #f7f7f7;
+}
+
+.p1 button:hover{
+  padding: 10px;
+  font-size: 20px;
+  border: solid 2px black;
+  background-color: #e3e3e3;
+}
+.parte{
+  margin-top: 10px;
+}
+div.p1 {
+  background-color: rgba(1, 179, 43, 0.397);
+  padding: 10px 10px 15px 15px;
+  border-radius: 10px;
+}
+
+.p2{
+  background-color: rgba(179, 111, 1, 0.397);
+  padding: 10px 10px 15px 15px;
+  border-radius: 10px;
+}
+
+.p3{
+  background-color: rgba(1, 117, 179, 0.397);
+  padding: 10px 10px 15px 15px;
+  border-radius: 10px;
+}
+
+.p4{
+  background-color: rgba(179, 22, 1, 0.397);
+  padding: 10px 10px 15px 15px;
+  border-radius: 10px;
+}
+
+.p5{
+  background-color: rgba(179, 167, 1, 0.397);
+  padding: 10px 10px 15px 15px;
+  border-radius: 10px;
+}
+
+
