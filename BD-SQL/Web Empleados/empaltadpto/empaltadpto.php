@@ -1,26 +1,17 @@
-<h1>Formulario: Alta de Productoss</h1>
+<h1>Formulario: Alta de Departamentos</h1>
 <!-- Importar funciones PHP -->
-<?php require '../fun_comunes.php'; include 'fun_comaltapro.php';?>
+<?php require '../fun_comunes.php'; include 'fun_empaltadpto.php';?>
 
 <form name='mi_formulario' action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post'>
-    <p>Nombre del Producto : <input name="nombre" type="text" required></p>
-    <p>Precio del Producto : <input name="precio" type="text" required></p>
-    <p>Categoría del Producto : 
-        <select name="categoria">
-            <!-- Extrae las categorias de la BD y las mestra en el HTMl -->
-            <?php extraerCategorias(); ?>
-        </select>
-    </p>
+    <p>Nombre del Departamento : <input name="nombre" type="text" required></p>
     <input type="submit" value="Enviar" />
 </form>
 
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {    
         $nombre = limpiar_campos($_POST['nombre']);
-        $precio = limpiar_campos($_POST['precio']);
-        $categoria = limpiar_campos($_POST['categoria']);
 
-        nuevoProducto($nombre,$precio,$categoria); //realiza todo el programa de Introducir Productos
+        nuevoDepartamento($nombre); //realiza todo el programa de Introducir Departamentos
     }
     
 ?>
