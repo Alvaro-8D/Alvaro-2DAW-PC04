@@ -91,28 +91,82 @@
       <div class="gallery-grid p3">
         <!-- TODO: Sustituir por las imágenes optimizadas -->
         <div>
-          <div class="descImagen"> 
-            <p>
-              Imagen .webp de <span class="negrita">2100x1575px</span> y un peso de <span class="negrita">1.08 MB</span>
-            </p>
-          </div>
-         
+          <p class="descImagen">
+            Imagen .webp de <span class="negrita">2100x1575px</span> y un peso de <span class="negrita">1.08 MB</span>
+            Ha sido reducida con CSS al 50% del div, para que se vea a un tamaño correcto.
+            <span class="negrita">Pero sigue manteniendo su peso y píxeles.</span> 
+          </p>
           <figure class="gallery-item">
             <img src="img/img1.webp" alt="Imagen 1 Optimizada" class="tamannoReal"/>
             <figcaption>Imagen 1 (optimizada)</figcaption>
           </figure>
-          
-        </div>
-        <figure class="gallery-item">
-          <img src="img/img2.jpg" alt="Imagen 2 Optimizada" class="tamannoReal"/>
-          <figcaption>Imagen 2 (optimizada)</figcaption>
-        </figure>
+        </div> <!-- Fin Imagen 1 -->
 
-        <figure class="gallery-item">
-          <img src="img/img3.jpg" alt="Imagen 3 Optimizada" class="tamannoReal"/>
-          <figcaption>Imagen 3 (optimizada)</figcaption>
-        </figure>
+        <div>
+          <p class="descImagen">
+            Imagen .jpg de <span class="negrita">2000x2000 px</span> y un peso de <span class="negrita">1.28 MB</span>
+            Ha sido reducida con <a href="https://www.photopea.com/" target="_blank">Photopea</a> para que tenga un tamaño de 
+            <span class="negrita">500x500 px</span> y en <span class="negrita">formato .webp</span> para que pese menos. 
+            Ahora pesa <span class="negrita">109.97kb</span>.
+          </p>
+          <figure class="gallery-item">
+            <img src="img/img2/img2Optimizada.webp" alt="Imagen 2 Optimizada"/>
+            <figcaption>Imagen 2 (optimizada)</figcaption>
+          </figure>
+        </div><!-- Fin Imagen 2 -->
+
+        <div>
+          <p class="descImagen">
+            Imagen .jpg de <span class="negrita">2560x1440 px</span> y un peso de <span class="negrita">4.60 MB</span>
+            Ha sido comprimida con <a href="https://www.iloveimg.com/es/comprimir-imagen" target="_blank">IloveIMG</a> 
+            para su peso baje a <span class="negrita">669.89 kb manteniendo el mismo 
+            tamaño</span> para que no pierda calidad. Una vez comprimida, 
+            <span class="negrita"> he reducido su tamaño con CSS a un 50%</span> para que se vea a un tamaño correcto.
+          </p>
+          <figure class="gallery-item">
+            <img src="img/img3/img3Optimizada.jpg" alt="Imagen 3 Optimizada" class="tamannoReal"/>
+            <figcaption>Imagen 3 (optimizada)</figcaption>
+          </figure>
+        </div> <!-- Fin Imagen 3 -->
+
+        <table class="tablita" border="1" cellpadding="8" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Peso antes</th>
+              <th>Peso después</th>
+              <th>Tamaño antes</th>
+              <th>Tamaño después</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Imagen 1</b></td>
+              <td>1.08 MB</td>
+              <td>1.08 MB</td>
+              <td>2100 x 1575 px</td>
+              <td>2100 x 1575 px (reducida al 50% del DIV solo con CSS)</td>
+            </tr>
+            <tr>
+              <td><b>Imagen 2</b></td>
+              <td>1.28 MB</td>
+              <td>109.97 KB</td>
+              <td>2000 x 2000 px</td>
+              <td>500 x 500 px</td>
+            </tr>
+            <tr>
+              <td><b>Imagen </b>3</td>
+              <td>4.60 MB</td>
+              <td>669.89 KB</td>
+              <td>2560 x 1440 px</td>
+              <td>2560 x 1440 px (reducida al 50% del DIV solo con CSS)</td>
+            </tr>
+          </tbody>
+        </table> <!-- Fin Tabla -->
       </div>
+
+      
+
     </section>
   </main>
 
