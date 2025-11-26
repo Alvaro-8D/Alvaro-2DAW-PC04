@@ -133,6 +133,20 @@ div.p1 {
   border-radius: 10px;
 }
 
+.tamannoReal{
+  width: 500px;
+}
+
+.descImagen{
+  float: right;
+  width: 50%;
+  overflow-wrap: anywhere;
+}
+
+.negrita{
+  font-weight: bold;
+}
+
 /************ Parte 4 **********************/
 .p4{
   background-color: rgba(179, 22, 1, 0.397);
