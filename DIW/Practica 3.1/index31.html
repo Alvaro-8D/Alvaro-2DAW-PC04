@@ -13,6 +13,7 @@
       <!-- <img src="img/logo.svg" alt="Logotipo del sitio" /> -->
       <h1>Galería RA3</h1>
     </div>
+    <img class="logo" src="img/LogoCSS.svg" alt="Aquí debería ir el LOGO">
     <p class="subtitle">Práctica 1: Imágenes optimizadas para la web</p>
   </header>
 
@@ -90,7 +91,7 @@
       <h2>Galería de imágenes</h2>
       <div class="gallery-grid p3">
         <!-- TODO: Sustituir por las imágenes optimizadas -->
-        <div>
+        <div class="img-desc">
           <p class="descImagen">
             Imagen .webp de <span class="negrita">2100x1575px</span> y un peso de <span class="negrita">1.08 MB</span>
             Ha sido reducida con CSS al 50% del div, para que se vea a un tamaño correcto.
@@ -102,7 +103,7 @@
           </figure>
         </div> <!-- Fin Imagen 1 -->
 
-        <div>
+        <div class="img-desc">
           <p class="descImagen">
             Imagen .jpg de <span class="negrita">2000x2000 px</span> y un peso de <span class="negrita">1.28 MB</span>
             Ha sido reducida con <a href="https://www.photopea.com/" target="_blank">Photopea</a> para que tenga un tamaño de 
@@ -110,12 +111,12 @@
             Ahora pesa <span class="negrita">109.97kb</span>.
           </p>
           <figure class="gallery-item">
-            <img src="img/img2/img2Optimizada.webp" alt="Imagen 2 Optimizada"/>
+            <img src="img/img2/img2Optimizada.webp" alt="Imagen 2 Optimizada" class="tamannoReal"/>
             <figcaption>Imagen 2 (optimizada)</figcaption>
           </figure>
         </div><!-- Fin Imagen 2 -->
 
-        <div>
+        <div class="img-desc">
           <p class="descImagen">
             Imagen .jpg de <span class="negrita">2560x1440 px</span> y un peso de <span class="negrita">4.60 MB</span>
             Ha sido comprimida con <a href="https://www.iloveimg.com/es/comprimir-imagen" target="_blank">IloveIMG</a> 
@@ -129,7 +130,7 @@
           </figure>
         </div> <!-- Fin Imagen 3 -->
 
-        <table class="tablita" border="1" cellpadding="8" cellspacing="0">
+        <table class="tablita">
           <thead>
             <tr>
               <th>Nombre</th>
