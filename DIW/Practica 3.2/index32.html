@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Práctica 2 - Audio y Vídeo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style32.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Práctica 2 · Audio y Vídeo HTML5</h1>
+  </header>
+
+  <main class="layout">
+    <section class="media-card">
+      <h2>Audio de muestra</h2>
+      <!-- TODO: enlazar a vuestros archivos de audio 
+       
+      Audio Recortado con: https://mp3cut.net/es/
+      -->
+      <audio controls>
+        <source src="media/audio-demo.mp3" type="audio/mpeg" />
+        <source src="media/audio-demo.ogg" type="audio/ogg" />
+        Tu navegador no soporta audio HTML5.
+      </audio>
+      <p class="note">
+        Explica aquí cómo has editado y exportado el audio (formatos, bitrate,...).
+      </p>
+    </section>
+
+    <section class="media-card">
+      <h2>Vídeo de muestra</h2>
+      <!-- TODO: enlazar a vuestros archivos de vídeo -->
+      <video controls poster="img/poster-video.jpg">
+        <source src="media/video-demo.mp4" type="video/mp4" />
+        <source src="media/video-demo.webm" type="video/webm" />
+        Tu navegador no soporta vídeo HTML5.
+      </video>
+      <p class="note">
+        Describe los cambios realizados en el vídeo y la diferencia de peso entre formatos.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
