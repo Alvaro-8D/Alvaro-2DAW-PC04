@@ -1,4 +1,4 @@
-<h1>Formulario: Alta de Almacenes</h1>
+<h1>Formulario: Aprovisionar Productos</h1>
 <!-- Importar funciones PHP -->
 <?php require '../fun_comunes.php'; include 'fun_comaprpro.php';?>
 
