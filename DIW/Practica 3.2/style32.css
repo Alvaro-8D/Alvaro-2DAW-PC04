@@ -18,12 +18,17 @@ body {
 
 .media-card {
   margin-bottom: 1.5rem;
+  width: 99%;
 }
 
 audio,
 video {
-  width: 100%;
-  max-width: 100%;
+  width: 90%;
+  max-width: 90%;
+}
+
+.negrita{
+  font-weight: bold;
 }
 
 /* TODO: añadir estilos con flex o grid, efecto hover, dark/light mode, etc. */
