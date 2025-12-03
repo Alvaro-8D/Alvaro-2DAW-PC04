@@ -38,15 +38,13 @@
         $sentencia->execute();// ejecuta la sentencia
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
-        var_dump($resultado);
 
-        // hacer un FOR para recorrer todos los porductos del almacen
         if($resultado===array()){
-            echo "<h2>No hay STOCK en el almacén ".recuperar_almacen($consulta,$almacen)."</h2>";
+            echo "<h2>No hay STOCK en el almacén >>".recuperar_almacen($consulta,$almacen)."<<</h2>";
         }else{
-            echo "<h2>Stock:</h2>";
+            echo "<h2>Stock del Almacen >>".$resultado[0]["LOCALIDAD"]."<<</h2>";
             foreach ($resultado as $key => $value) {
-                echo "<h3>silla: 8</h3>";
+                echo "<h3>".$value["NOMBRE"]." ===> ".$value["CANTIDAD"]."</h3>";
             }  
         }
         
