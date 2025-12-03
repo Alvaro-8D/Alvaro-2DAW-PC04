@@ -1,26 +1,29 @@
-<h1>Formulario: Alta de Productoss</h1>
+<h1>Formulario: Consulta de Stock</h1>
 <!-- Importar funciones PHP -->
 <?php require '../fun_comunes.php'; include 'fun_comconstock.php';?>
 
 <form name='mi_formulario' action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post'>
-    <p>Nombre del Producto : <input name="nombre" type="text" required></p>
-    <p>Precio del Producto : <input name="precio" type="text" required></p>
-    <p>Categoría del Producto : 
-        <select name="categoria">
-            <!-- Extrae las categorias de la BD y las mestra en el HTMl -->
-            <?php extraerCategorias(); ?>
+    <p>Producto:  
+        <select name="producto">
+            <!-- Extrae los productos de la BD y las mestra en el HTMl -->
+            <?php extraerProductos(); ?>
         </select>
     </p>
-    <input type="submit" value="Enviar" />
+    <p>Almacen : 
+        <select name="almacen">
+            <!-- Extrae los almacenes de la BD y las mestra en el HTMl -->
+            <?php extraerAlmacenes(); ?>
+        </select>
+    </p>
+    <input type="submit" value="Mostrar STOCK" />
 </form>
 
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {    
-        $nombre = limpiar_campos($_POST['nombre']);
-        $precio = limpiar_campos($_POST['precio']);
-        $categoria = limpiar_campos($_POST['categoria']);
+        $producto = limpiar_campos($_POST['producto']);
+        $almacen = limpiar_campos($_POST['almacen']);
 
-        //nuevoProducto($nombre,$precio,$categoria); //realiza todo el programa de Introducir Productos
+        consultar_stock($producto,$almacen); //realiza todo el programa de Introducir Productos
     }
     
 ?>
