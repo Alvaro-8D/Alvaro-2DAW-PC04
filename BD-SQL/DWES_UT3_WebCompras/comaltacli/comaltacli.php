@@ -13,28 +13,26 @@
 </form>
 
 <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {    
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {  
         $dni = limpiar_campos($_POST['dni']);
-        $nombre = limpiar_campos($_POST['nombre']);
-        $apellido = limpiar_campos($_POST['apellido']);
-        $cp = limpiar_campos($_POST['cp']);
-        $direc = limpiar_campos($_POST['direc']);
-        $ciudad = limpiar_campos($_POST['ciudad']);
+        if(dni_correcto($dni)) {
+            $nombre = limpiar_campos($_POST['nombre']);
+            $apellido = limpiar_campos($_POST['apellido']);
+            $cp = limpiar_campos($_POST['cp']);
+            $direc = limpiar_campos($_POST['direc']);
+            $ciudad = limpiar_campos($_POST['ciudad']);
 
-        if (!$nombre) $nombre = null;
-        if (!$apellido) $apellido = null;
-        if (!$cp) $cp = null;
-        if (!$direc) $direc = null;
-        if (!$ciudad) $ciudad = null;
+            if (!$nombre) $nombre = null;
+            if (!$apellido) $apellido = null;
+            if (!$cp) $cp = null;
+            if (!$direc) $direc = null;
+            if (!$ciudad) $ciudad = null;
 
-        //var_dump($dni);
-        //var_dump($nombre);
-        //var_dump($apellido);
-        //var_dump($cp);
-        //var_dump($direc);
-        //var_dump($ciudad);
+            registrarCliente($dni,$nombre,$apellido,$cp,$direc,$ciudad); //realiza todo el programa de Introducir Almacenes
+        }else{
 
-        //registrarCliente($dni,$nombre,$apellido,$cp,$direc,$ciudad); //realiza todo el programa de Introducir Almacenes
+        }
+      
     }
     
 ?>

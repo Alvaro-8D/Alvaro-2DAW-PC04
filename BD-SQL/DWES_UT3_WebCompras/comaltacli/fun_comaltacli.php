@@ -3,14 +3,28 @@
         // Funcion principal del programa, da de alta clientes
         $consulta = conexionBD();
         try {
-            $nuevoID = ultimo_id($consulta); // Genera un Nuevo ID (NO repetido)            
-            insertar_almacen($consulta,$localidad,$nuevoID); // Inserta el Nuevo Almacen 
-            mostrar_almacen($consulta); // Mostrar las Categorias de las BD
+            var_dump(dni_correcto($dni));
         }
         catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
         $consulta = null;
+    }
+
+    function dni_correcto($dni){
+        if(strlen($dni)!=9){
+            return false;
+        }else{
+            $letra = substr($dni,-1);
+            $num = str_replace("e","kk:D",(substr($dni,0, strlen($dni)-1))); // evita que detecte "e" como número
+            if (is_numeric($num)){$final=true;}else{$final=false;} 
+            return $final;
+        }
+    }
+
+    function dni_repetido($dni){
+
+        echo "hola";
     }
 
     function insertar_almacen($consulta,$localidad,$nuevoID){ 
