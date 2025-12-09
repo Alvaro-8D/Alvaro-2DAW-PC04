@@ -24,9 +24,9 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cliente = limpiar_campos($_POST['cliente']);
         $producto = limpiar_campos($_POST['producto']);
-        $cantidad = limpiar_campos($_POST['cantidad']);
+        $cantidad = intval(limpiar_campos($_POST['cantidad']));
         $fechaCom = limpiar_campos($_POST['fecha']);
-        if ($cantidad > 1){
+        if ($cantidad >= 1){
             comprarProducto($cliente,$producto,$cantidad,$fechaCom);
         }else{
             echo "<h3 style=\"color:red\">Debes comprar AL MENOS 1 Producto *</h3>";
