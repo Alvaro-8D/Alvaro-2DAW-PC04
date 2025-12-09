@@ -52,14 +52,15 @@
 
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
-
-        if ($resultado[0]["total"] < $cantidad){
-            echo "<h3 style=\"color:red\">No hay STOCK <br>):</h3>";
-            $cantidad = false;
-        }else{
-            echo ">>>>>>>>>> Si hay Stock <br>";
-            $cantidad = true;
-        }
+        if($resultado !== array()){
+            if ($resultado[0]["total"] < $cantidad){
+                echo "<h3 style=\"color:red\">No hay STOCK <br> :(</h3>";
+                $cantidad = false;
+            }else{
+                echo ">>>>>>>>>> Si hay Stock <br>";
+                $cantidad = true;
+            }
+        }else{$cantidad = false; echo "<h3 style=\"color:red\">No hay STOCK <br> :(</h3>";}
 
         $consulta = null;
         return $cantidad;
@@ -98,13 +99,7 @@
             $stock_alm= array_column($sentencia->fetchAll(),"CANTIDAD");
             if($stock_alm !==array()){
                 $stock_alm= intval($stock_alm[0]);
-                echo "-------stock almacen2-----------";
-                var_dump($stock_alm);
-                var_dump($almacenes[$alma_actual]);
-        echo "........principio..................";
-        var_dump($productos_restantes);
-                
-                echo "------------------";
+
                 if($stock_alm <= $productos_restantes){
                     /*
                     delete from almacena
@@ -136,8 +131,6 @@
             }
             // pasar al siguiente almacen
             $alma_actual ++;
-            echo "........final..................";
-            var_dump($productos_restantes);
             
         }while ($productos_restantes > 0 &&  $alma_actual < count($almacenes));
         // 3. Si (productos_restantes > 0) paso al siguiente almacen (vuelveo al paso 1.)
@@ -148,7 +141,7 @@
 
     function mostrar_compras($consulta){ 
         // Extrae todas los almacenes de la BD y las muestra por pantalla
-        $sentencia = $consulta->prepare("select NIF,ID_PRODUCTO,FECHA_COMPRA,UNIDADES from compra order by NIF;");
+        $sentencia = $consulta->prepare("select NIF,ID_PRODUCTO,FECHA_COMPRA,UNIDADES from compra order by FECHA_COMPRA;");
         $sentencia->execute();// ejecuta la sentencia
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
