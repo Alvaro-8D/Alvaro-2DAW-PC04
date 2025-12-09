@@ -13,9 +13,9 @@
 </form>
 
 <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {  
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $dni = limpiar_campos($_POST['dni']);
-        if(dni_correcto($dni)) {
+        if(dni_correcto($dni,conexionBD())) {
             $nombre = limpiar_campos($_POST['nombre']);
             $apellido = limpiar_campos($_POST['apellido']);
             $cp = limpiar_campos($_POST['cp']);
@@ -30,9 +30,10 @@
 
             registrarCliente($dni,$nombre,$apellido,$cp,$direc,$ciudad); //realiza todo el programa de Introducir Almacenes
         }else{
-
+            echo "<h3 style=\"color:red\">Formato de DNI Incorrecto o DNI Repetido *</h3>";
+            mostrar_cliente(conexionBD());
         }
-      
     }
     
 ?>
+
