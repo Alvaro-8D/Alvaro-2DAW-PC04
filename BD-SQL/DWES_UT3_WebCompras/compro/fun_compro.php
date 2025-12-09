@@ -77,15 +77,14 @@
         $consulta = null;
     }
 
-    function guardar_compra($consulta,$dni,$id_producto,$unidades,$fechaCom){ 
-        // Pide el ID y la localidad, e inserta el nuevo almacen en la BD 
-        $sentencia = $consulta->prepare("INSERT into compra (NIF,ID_PRODUCTO,FECHA_COMPRA,UNIDADES) 
-                                        values (:dni,:id_producto,:fechaCom,:unidades)");
-        $sentencia->bindParam(':dni',$dni);
-        $sentencia->bindParam(':id_producto',$id_producto);
-        $sentencia->bindParam(':fechaCom',$fechaCom);
-        $sentencia->bindParam(':unidades',$unidades);
-        $sentencia->execute();// ejecuta la sentencia
+    function restar_productos($consulta,$dni,$id_producto,$unidades,$fechaCom){ 
+        // 0. Saca los IDs de todos los almacenes
+        // 1. Selecciona un primer almacen 
+        // 2. quita los productos del almacen: 
+        //      a) NO HAY SUFICIENTE: quita todo
+        //      b) SI HAY SUFICIANTE: quita lo justo y necesario
+        // 3. Si (productos_restantes > 0) paso al siguiente almacen (vuelveo al paso 1.)
+        
         $consulta = null;
     }
 
