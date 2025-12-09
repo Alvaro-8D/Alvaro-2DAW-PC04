@@ -101,6 +101,9 @@
                 echo "-------stock almacen2-----------";
                 var_dump($stock_alm);
                 var_dump($almacenes[$alma_actual]);
+        echo "........principio..................";
+        var_dump($productos_restantes);
+                
                 echo "------------------";
                 if($stock_alm <= $productos_restantes){
                     /*
@@ -121,17 +124,20 @@
                     where num_almacen = 1 && id_producto = 1;
                     */
                     $sentencia = $consulta->prepare("UPDATE almacena
-                                                    SET cantidad = :productos_restantes
+                                                    SET cantidad = :stock_restante
                                                     WHERE num_almacen = :alma_actual && id_producto = :producto;");
                     $sentencia->bindParam(':alma_actual',$almacenes[$alma_actual]);
                     $sentencia->bindParam(':producto',$producto);
-                    $productos_restantes = $stock_alm - $productos_restantes;
-                    $sentencia->bindParam(':productos_restantes',$productos_restantes);
+                    $stock_restante = $stock_alm - $productos_restantes;
+                    $productos_restantes = 0;
+                    $sentencia->bindParam(':stock_restante',$stock_restante);
                     $sentencia->execute();
                 }
             }
             // pasar al siguiente almacen
             $alma_actual ++;
+            echo "........final..................";
+            var_dump($productos_restantes);
             
         }while ($productos_restantes > 0 &&  $alma_actual < count($almacenes));
         // 3. Si (productos_restantes > 0) paso al siguiente almacen (vuelveo al paso 1.)
