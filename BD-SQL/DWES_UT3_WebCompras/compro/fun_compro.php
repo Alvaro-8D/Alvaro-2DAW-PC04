@@ -88,49 +88,52 @@
         //      a) NO HAY SUFICIENTE: quita todo
         //      b) SI HAY SUFICIANTE: quita lo justo y necesario
         $alma_actual = 0; // almacen actual
-        $productos_restantes = $cantidad; //porductos que hay sacar sacando de uno o varios almacenes
+        $productos_restantes = intval($cantidad); //porductos que hay sacar sacando de uno o varios almacenes
         do {
             $sentencia = $consulta->prepare("select CANTIDAD from almacena where NUM_ALMACEN = :alma_actual && id_producto = :producto;");
             $sentencia->bindParam(':alma_actual',$almacenes[$alma_actual]);
             $sentencia->bindParam(':producto',$producto);
             $sentencia->execute();
             $sentencia->setFetchMode(PDO::FETCH_ASSOC); 
-            $stock_alm= (array_column($sentencia->fetchAll(),"CANTIDAD")[0]);
-            echo "-------stock almacen-----------";
-            var_dump($stock_alm);
-            echo "------------------";
-            if(($stock_alm <= $cantidad )&&($stock_alm !==array())){
-                /*
-                delete from almacena
-                where num_almacen = 1 && id_producto = 3;
-                */
-                $sentencia = $consulta->prepare("DELETE from almacena
-                                                WHERE num_almacen = :alma_actual && id_producto = :producto;");
-                $sentencia->bindParam(':alma_actual',$almacenes[$alma_actual]);
-                $sentencia->bindParam(':producto',$producto);
-                $sentencia->execute();
-                $productos_restantes = $productos_restantes - $stock_alm;
-
-            }else if(($stock_alm > $cantidad )&&($stock_alm !==array())){
-                /*
-                update almacena
-                set cantidad = 7
-                where num_almacen = 1 && id_producto = 1;
-                */
-                $sentencia = $consulta->prepare("UPDATE almacena
-                                                SET cantidad = :productos_restantes
-                                                WHERE num_almacen = :alma_actual && id_producto = :producto;");
-                $sentencia->bindParam(':alma_actual',$almacenes[$alma_actual]);
-                $sentencia->bindParam(':producto',$producto);
-                $productos_restantes = $stock_alm - $productos_restantes;
-                $sentencia->bindParam(':productos_restantes',$productos_restantes);
-                $sentencia->execute();
-            }else{
-                // pasar al siguiente almacen
-                $alma_actual ++;
+            $stock_alm= array_column($sentencia->fetchAll(),"CANTIDAD");
+            if($stock_alm !==array()){
+                $stock_alm= intval($stock_alm[0]);
+                echo "-------stock almacen2-----------";
+                var_dump($stock_alm);
+                var_dump($almacenes[$alma_actual]);
+                echo "------------------";
+                if($stock_alm <= $productos_restantes){
+                    /*
+                    delete from almacena
+                    where num_almacen = 1 && id_producto = 3;
+                    */
+                    $sentencia = $consulta->prepare("DELETE from almacena
+                                                    WHERE num_almacen = :alma_actual && id_producto = :producto;");
+                    $sentencia->bindParam(':alma_actual',$almacenes[$alma_actual]);
+                    $sentencia->bindParam(':producto',$producto);
+                    $sentencia->execute();
+                    $productos_restantes = $productos_restantes - $stock_alm;
+    
+                }else if($stock_alm > $productos_restantes){
+                    /*
+                    update almacena
+                    set cantidad = 7
+                    where num_almacen = 1 && id_producto = 1;
+                    */
+                    $sentencia = $consulta->prepare("UPDATE almacena
+                                                    SET cantidad = :productos_restantes
+                                                    WHERE num_almacen = :alma_actual && id_producto = :producto;");
+                    $sentencia->bindParam(':alma_actual',$almacenes[$alma_actual]);
+                    $sentencia->bindParam(':producto',$producto);
+                    $productos_restantes = $stock_alm - $productos_restantes;
+                    $sentencia->bindParam(':productos_restantes',$productos_restantes);
+                    $sentencia->execute();
+                }
             }
+            // pasar al siguiente almacen
+            $alma_actual ++;
             
-        }while ($productos_restantes > 0);
+        }while ($productos_restantes > 0 &&  $alma_actual < count($almacenes));
         // 3. Si (productos_restantes > 0) paso al siguiente almacen (vuelveo al paso 1.)
 
         
