@@ -25,11 +25,15 @@
         $consulta = null;
     }
 
-    function comprarProducto($dni,$nombre,$apellido,$cp,$direc,$ciudad){
+    function comprarProducto($cliente,$producto,$cantidad,$fechaCom){
         // Funcion principal del programa, da de alta clientes
         $consulta = conexionBD();
         try {
-            //guardar_compra($consulta,$dni,$nombre,$apellido,$cp,$direc,$ciudad);
+            $stock = comprobar_stock($consulta,$producto,$cantidad); // true = SI hay stock
+            if ($stock){
+                guardar_compra($consulta,$cliente,$producto,$cantidad,$fechaCom); // registra la compra en la BD
+                //restar_productos($consulta); //restar productos comprados del almacen
+            }
             mostrar_compras($consulta);
         }
         catch(PDOException $e) {
@@ -38,11 +42,49 @@
         $consulta = null;
     }
 
-    function guardar_compra($consulta,$dni){ 
+    function comprobar_stock($consulta,$producto,$cantidad){ 
+        // Devuelve  true = SI hay stock
+        $sentencia = $consulta->prepare("SELECT sum(CANTIDAD) total from almacena 
+                                        WHERE ID_PRODUCTO = :producto
+                                        group by ID_PRODUCTO;");
+        $sentencia->bindParam(':producto',$producto);
+        $sentencia->execute();
+
+        $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
+        $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
+
+        if ($resultado[0]["total"] < $cantidad){
+            echo "<h3 style=\"color:red\">No hay STOCK <br>):</h3>";
+            $cantidad = false;
+        }else{
+            echo ">>>>>>>>>> Si hay Stock <br>";
+            $cantidad = true;
+        }
+
+        $consulta = null;
+        return $cantidad;
+    }
+
+    function guardar_compra($consulta,$dni,$id_producto,$unidades,$fechaCom){ 
         // Pide el ID y la localidad, e inserta el nuevo almacen en la BD 
-        $sentencia = $consulta->prepare("INSERT into cliente (NIF,NOMBRE,APELLIDO,CP,DIRECCION,CIUDAD) 
-                                        values (:dni,:nombre,:apellido,:cp,:direc,:ciudad)");
+        $sentencia = $consulta->prepare("INSERT into compra (NIF,ID_PRODUCTO,FECHA_COMPRA,UNIDADES) 
+                                        values (:dni,:id_producto,:fechaCom,:unidades)");
         $sentencia->bindParam(':dni',$dni);
+        $sentencia->bindParam(':id_producto',$id_producto);
+        $sentencia->bindParam(':fechaCom',$fechaCom);
+        $sentencia->bindParam(':unidades',$unidades);
+        $sentencia->execute();// ejecuta la sentencia
+        $consulta = null;
+    }
+
+    function guardar_compra($consulta,$dni,$id_producto,$unidades,$fechaCom){ 
+        // Pide el ID y la localidad, e inserta el nuevo almacen en la BD 
+        $sentencia = $consulta->prepare("INSERT into compra (NIF,ID_PRODUCTO,FECHA_COMPRA,UNIDADES) 
+                                        values (:dni,:id_producto,:fechaCom,:unidades)");
+        $sentencia->bindParam(':dni',$dni);
+        $sentencia->bindParam(':id_producto',$id_producto);
+        $sentencia->bindParam(':fechaCom',$fechaCom);
+        $sentencia->bindParam(':unidades',$unidades);
         $sentencia->execute();// ejecuta la sentencia
         $consulta = null;
     }

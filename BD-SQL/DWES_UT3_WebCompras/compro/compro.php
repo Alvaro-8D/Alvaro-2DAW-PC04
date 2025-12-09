@@ -15,12 +15,22 @@
             <?php extraerProductos(); ?>
         </select>
     </p>
+    <p>Fecha de la Compra:  <input name="fecha" type="date" required></p>
+    <p>Cantidad:  <input name="cantidad" type="number" required></p>
     <input type="submit" value="Comprar" />
 </form>
 
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        echo "hola";
+        $cliente = limpiar_campos($_POST['cliente']);
+        $producto = limpiar_campos($_POST['producto']);
+        $cantidad = limpiar_campos($_POST['cantidad']);
+        $fechaCom = limpiar_campos($_POST['fecha']);
+        if ($cantidad > 1){
+            comprarProducto($cliente,$producto,$cantidad,$fechaCom);
+        }else{
+            echo "<h3 style=\"color:red\">Debes comprar AL MENOS 1 Producto *</h3>";
+        }
     }
     
 ?>
