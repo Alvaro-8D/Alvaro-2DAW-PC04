@@ -1,4 +1,4 @@
-<h1>Formulario: Cambio de Departamento</h1>
+<h1>Formulario: Listado Empleados Actualmente en el Departamento</h1>
 <!-- Importar funciones PHP -->
 <?php require '../fun_comunes.php'; include 'fun_empcambiodpto.php';?>
 
