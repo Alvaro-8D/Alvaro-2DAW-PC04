@@ -8,6 +8,12 @@
     <p>DNI : <input name="dni" type="text" required></p>
     <p>Fecha de Nacimiento : <input name="fecna" type="date" required></p>
     <p>Salario : <input name="salario" type="number" required></p>
+    <p>Departamento : 
+        <select name="departamento">
+            <!-- Extrae los departamentos de la BD y las mestra en el HTMl -->
+            <?php extraerDepartamentos(); ?>
+        </select>
+    </p>
     <input type="submit" value="Enviar" />
 </form>
 
@@ -18,14 +24,9 @@
         $dni = limpiar_campos($_POST['dni']);
         $fecna = limpiar_campos($_POST['fecna']);
         $salario = (int) limpiar_campos($_POST['salario']);
+        $depart = limpiar_campos($_POST['departamento']);
 
-        var_dump($nombre);
-        var_dump($apellidos);
-        var_dump($dni);
-        var_dump($fecna);
-        var_dump($salario);
-
-        //nuevoDepartamento($nombre); //realiza todo el programa de Introducir Empleados
+        nuevoEmpleado($nombre,$apellidos,$dni,$fecna,$salario,$depart); //realiza todo el programa de Introducir Empleados
     }
     
 ?>

@@ -1,65 +1,61 @@
 <?php
-    function  nuevoDepartamento($nombre){
-        // Funcion principal del programa, da de alta departamentos
+    function extraerDepartamentos(){
+        $consulta = conexionBD();
+        // Extrae las categorias de la BD y las muestra en el HTMl
+        $sentencia = $consulta->prepare("select cod_dpto,nombre_dpto from departamento order by cod_dpto;");
+        $sentencia->execute();// ejecuta la sentencia
+        $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
+        $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo    
+        foreach ($resultado as $key => $value) {
+            echo "<option value=\"",$value["cod_dpto"],"\">",$value["nombre_dpto"],"</option>";
+        }
+        $consulta = null;
+    }
+    
+    function  nuevoEmpleado($nombre,$apellidos,$dni,$fecna,$salario,$depart){
+        // Funcion principal del programa, da de alta empleados y les asigna un departamento
         $consulta = conexionBD();
         try {
-            $nuevoID = ultimo_id($consulta); // Genera un Nuevo ID (NO repetido)          
-            insertar_dpto($consulta,$nombre,$nuevoID); // Inserta el Nuevo Producto 
-            mostrar_dpto($consulta); // Mostrar las Categorias de las BD
+            insertar_emp($consulta,$nombre,$apellidos,$dni,$fecna,$salario); // Inserta el Nuevo Empleado 
+            asignar_dpto($consulta,$dni,$depart); // Asigna un Departamento al nuevo empleado
         }
         catch(PDOException $e) {
             if($e->getCode() == "23000"){
-                echo "NO puede haber dos Departamentos con el MISMO CÓDIGO";
+                echo "NO puede haber dos Empleados con el MISMO DNI";
             }else{
                echo "Error: " . $e->getMessage(); 
             }
             $consulta->rollBack();
-            
         }
         $consulta = null;
     }
 
-    function ultimo_id($consulta){
-        // Extrae el último ID y devuelve un nuevo ID no repetido a partir del último ID
-        $sentencia = $consulta->prepare("select max(cod_dpto) ultimo_id from departamento;");
-        $sentencia->execute();// ejecuta la sentencia
-        $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
-        $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
-        if($resultado[0]["ultimo_id"] == null){
-            $nuevoID = "D001";
-        }else{
-            // saca el útimo id y le suma +1 para generar el siguiente ID
-            $nuevoID = "D".str_pad(intval(substr($resultado[0]["ultimo_id"],1))+1,3,0,STR_PAD_LEFT); 
-        }
-        $consulta = null;
-        return $nuevoID;
-    }
-
-    function insertar_dpto($consulta,$nombre,$nuevoID){ 
-        // Pide el nombre y el ID, e inserta el nuevo producto en la BD 
+    function insertar_emp($consulta,$nombre,$apellidos,$dni,$fecna,$salario){ 
+        // Añade el nuevo empleado a la BD
         $consulta->beginTransaction();
-        $sentencia = $consulta->prepare("INSERT INTO departamento (cod_dpto, nombre_dpto) 
-                                            VALUES (:codigo,:nombre)");
-
-        // $nuevoID='D011';// PRUEBA PARA METER UNA CLAVE DUCPLICADA
-
-        $sentencia->bindParam(':codigo',$nuevoID);// variar parte de la consulta SQL
-        $sentencia->bindParam(':nombre',$nombre);// variar parte de la consulta SQL
-        $sentencia->execute();// ejecuta la sentencia
+        $sentencia = $consulta->prepare("INSERT INTO empleado (dni, nombre, apellidos, fecha_nac, salario) 
+                                            VALUES (:dni, :nombre, :apellidos, :fecha_nac, :salario)");
+        $sentencia->bindParam(':dni',$dni);
+        $sentencia->bindParam(':nombre',$nombre);
+        $sentencia->bindParam(':apellidos',$apellidos);
+        $sentencia->bindParam(':fecha_nac',$fecna);
+        $sentencia->bindParam(':salario',$salario);
+        $sentencia->execute();
         $consulta->commit();
         $consulta = null;
     }
 
-    function mostrar_dpto($consulta){ 
-        // Extrae todas los Productos de la BD y las muestra por pantalla
-        $sentencia = $consulta->prepare("select cod_dpto,nombre_dpto from departamento order by cod_dpto;");
-        $sentencia->execute();// ejecuta la sentencia
-        $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
-        $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
-        echo "<h2>Productos</h2>";
-        foreach($resultado as $row) {
-            echo "Codigo Departamento: ".$row["cod_dpto"]."<br>-> Nombre: ".$row["nombre_dpto"]."<br>>>>---------------------------------><br>";
-        }
+    function asignar_dpto($consulta,$dni,$cod_dpto){ 
+        // Asigna un empleado a un departamento
+        $consulta->beginTransaction();
+        $sentencia = $consulta->prepare("INSERT INTO emple_depart (dni, cod_dpto, fecha_ini, fecha_fin) 
+                                            VALUES (:dni, :cod_dpto, :fecha_ini, NULL)");
+        $sentencia->bindParam(':dni',$dni);
+        $sentencia->bindParam(':cod_dpto',$cod_dpto);
+        $fecha_ini = date('Y-m-d'); // fecha actual
+        $sentencia->bindParam(':fecha_ini',$fecha_ini);
+        $sentencia->execute();
+        $consulta->commit();
         $consulta = null;
     }
     
