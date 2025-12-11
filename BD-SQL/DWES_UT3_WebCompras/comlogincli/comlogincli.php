@@ -14,8 +14,6 @@
         $nombre = limpiar_campos($_POST['usuario']);
         $password = limpiar_campos($_POST['password']);
 
-        var_dump($nombre,$password);
-
         iniciar_sesion($nombre,$password); //realiza todo el programa de Introducir Categorías
     }
     
