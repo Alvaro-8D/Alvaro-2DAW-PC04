@@ -11,7 +11,7 @@
     </p>
     <p>Fecha DESDE:  <input name="fecha_inicio" type="date" required></p>
     <p>Fecha HASTA:  <input name="fecha_fin" type="date" required></p>
-    <input type="submit" value="Mostrar STOCK del Almacén" />
+    <input type="submit" value="Mostrar Compras" />
 </form>
 
 <?php

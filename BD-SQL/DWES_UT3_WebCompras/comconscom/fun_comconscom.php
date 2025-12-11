@@ -26,7 +26,8 @@
 
     function ver_compras($consulta,$cliente,$fecha_inicio,$fecha_fin){ 
         // Extrae el STOCK de la BD y las muestra por pantalla
-        $sentencia = $consulta->prepare("SELECT CONCAT(' + ',NOMBRE,' (',c.ID_PRODUCTO,') >> ',UNIDADES,' x ',PRECIO,' Euros/unidad = ',PRECIO*UNIDADES)
+        $sentencia = $consulta->prepare("SELECT CONCAT(' + ',NOMBRE,' (ID: ',c.ID_PRODUCTO,') >> ',UNIDADES,' x ',PRECIO,' Euros/unidad = ',PRECIO*UNIDADES) 
+                                        AS frase
                                         FROM producto p, compra c
                                         WHERE p.ID_PRODUCTO = c.ID_PRODUCTO AND c.NIF = :cliente 
                                         AND FECHA_COMPRA BETWEEN :fecha_inicio AND :fecha_fin ;");
@@ -38,13 +39,13 @@
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
 
         if($resultado===array()){
-            echo "<h2>No hay compras de >>".recuperar_cliente($consulta,$cliente)."<< 
-            ente ("") y ()</h2>";
+            echo "<h2>No hay compras de >>".recuperar_cliente($consulta,$cliente)."<< ente (".$fecha_inicio.") y (".$fecha_fin.")</h2>";
         }else{
-            echo "<h2>Stock del Almacen >>".recuperar_cliente($consulta,$cliente)."<<</h2>";
+            echo "<h2>Compras de >>".recuperar_cliente($consulta,$cliente)."<< ente (".$fecha_inicio.") y (".$fecha_fin.") :</h2>";
             foreach ($resultado as $key => $value) {
-                echo "<h3>".$value["NOMBRE"]." ===> ".$value["CANTIDAD"]."</h3>";
-            }  
+                echo "<h3>".$value["frase"]."</h3>";
+            }
+            suma_de_compras($consulta,$cliente,$fecha_inicio,$fecha_fin);
         }
         
         $consulta = null;
@@ -64,7 +65,13 @@
 
     function suma_de_compras($consulta,$cliente,$fecha_inicio,$fecha_fin){ 
         // Extrae el STOCK de la BD y las muestra por pantalla
-        $sentencia = $consulta->prepare("SELECT CONCAT(' + ',NOMBRE,' (',c.ID_PRODUCTO,') >> ',UNIDADES,' x ',PRECIO,' Euros/unidad = ',PRECIO*UNIDADES)
+        /*
+        SELECT SUM(PRECIO*UNIDADES) AS suma
+        FROM producto p, compra c
+        WHERE p.ID_PRODUCTO = c.ID_PRODUCTO AND c.NIF = '12345678A' 
+        AND FECHA_COMPRA BETWEEN '2025-12-12' AND '2025-12-17' ; 
+        */
+        $sentencia = $consulta->prepare("SELECT SUM(PRECIO*UNIDADES) AS suma
                                         FROM producto p, compra c
                                         WHERE p.ID_PRODUCTO = c.ID_PRODUCTO AND c.NIF = :cliente 
                                         AND FECHA_COMPRA BETWEEN :fecha_inicio AND :fecha_fin ;");
@@ -75,16 +82,7 @@
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
 
-        if($resultado===array()){
-            echo "<h2>No hay compras de >>".recuperar_cliente($consulta,$cliente)."<< 
-            ente ("") y ()</h2>";
-        }else{
-            echo "<h2>Stock del Almacen >>".recuperar_cliente($consulta,$cliente)."<<</h2>";
-            foreach ($resultado as $key => $value) {
-                echo "<h3>".$value["NOMBRE"]." ===> ".$value["CANTIDAD"]."</h3>";
-            }  
-        }
-        
+        if($resultado!==array()){echo "<br><h2>Total de las compras: ".$resultado[0]["suma"]." Euros</h2>";}
         $consulta = null;
     }
 
