@@ -11,13 +11,7 @@
     <p>Ciudad: <input name="ciudad" type="text" required></p>
     <input type="submit" value="Registrarse" />
 </form>
-<!-- 
-SQL:
-    use comprasweb;
 
-    ALTER TABLE cliente
-    ADD (CLAVE VARCHAR(40));
--->
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $dni = limpiar_campos($_POST['dni']);
