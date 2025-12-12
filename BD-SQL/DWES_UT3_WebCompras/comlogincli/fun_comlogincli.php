@@ -39,7 +39,7 @@
     }
 
     function generar_cookies($consulta,$nombre,$password){
-        $sentencia = $consulta->prepare("SELECT NIF
+        $sentencia = $consulta->prepare("SELECT NIF,APELLIDO
                                         FROM cliente
                                         WHERE NOMBRE = :usuario
                                         AND CLAVE = :clave;");
@@ -50,10 +50,13 @@
         $resultado=$sentencia->fetchAll();
         // Extrae el NIF del cliente para usar en proximas aplicaciones
         setcookie("id_cliente", $resultado[0]["NIF"], time() + (86400 * 30), "/");
+        setcookie("nombre", $nombre, time() + (86400 * 30), "/");
+        setcookie("apellido", $resultado[0]["APELLIDO"], time() + (86400 * 30), "/");
     }
     
     function entrar(){
-        echo "<a href=\"../comprocli/comprocli.php\" target=\"_blank\"><button>Compra de Productos</button></a><br><br>";
-        echo "<a href=\"../comconscli/comconscli.php\" target=\"_blank\"><button>Consulta de Compras</button></a>";
+        //   target=\"_blank\" (para que se abra en una nueva pestaña)
+        echo "<a href=\"../comprocli/comprocli.php\" ><button>Compra de Productos</button></a><br><br>";
+        echo "<a href=\"../comconscli/comconscli.php\" ><button>Consulta de Compras</button></a>";
     }
 ?>

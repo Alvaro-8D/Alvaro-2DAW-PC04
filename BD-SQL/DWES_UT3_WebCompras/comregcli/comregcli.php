@@ -22,12 +22,11 @@
             $direc = limpiar_campos($_POST['direc']);
             $ciudad = limpiar_campos($_POST['ciudad']);
 
-            $clave = strtolower(strrev($apellido));
+            $clave = str_replace(" ","",strtolower(strrev($apellido)));
 
             registrarCliente($dni,$nombre,$apellido,$cp,$direc,$ciudad,$clave); //realiza todo el programa de Introducir Almacenes
         }else{
             echo "<h3 style=\"color:red\">Formato de DNI Incorrecto o DNI Repetido *</h3>";
-            mostrar_cliente(conexionBD());
         }
     }
     
