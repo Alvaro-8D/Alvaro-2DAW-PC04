@@ -1,15 +1,7 @@
 <?php
-    function extraerClientes(){
-        $consulta = conexionBD();
-        // Extrae las categorias de la BD y las muestra en el HTMl
-        $sentencia = $consulta->prepare("select NIF,NOMBRE from cliente order by NIF;");
-        $sentencia->execute();// ejecuta la sentencia
-        $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
-        $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo   
-        foreach ($resultado as $key => $value) {
-            echo "<option value=\"",$value["NIF"],"\">",$value["NOMBRE"],"(",$value["NIF"],")","</option>";
-        }
-        $consulta = null;
+    function extraerClienteActual($dni){ 
+        // Muestra Mensaje de Bienvenida con el nombre y apellido del cliente
+        echo "<h2>Hola ",$_COOKIE["nombre"]," ",$_COOKIE["apellido"],"!!! </h2>";
     }
 
     function extraerProductos(){
@@ -148,6 +140,12 @@
         echo "<h2>Compras</h2>";
         var_dump($resultado);
         $consulta = null;
+    }
+
+    function verCarrito(){
+        // Muestra por pantalla el Carrito de la Compra
+        echo "<h2>Carrito de la Compra: </h2>";
+        var_dump($_SESSION["carrito"]); 
     }
     
 ?>
