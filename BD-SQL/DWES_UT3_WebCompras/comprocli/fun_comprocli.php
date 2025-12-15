@@ -17,16 +17,17 @@
         $consulta = null;
     }
 
-    function comprarProducto($cliente,$producto,$cantidad,$fechaCom){
-        // Funcion principal del programa, dá de alta clientes
+    function comprarProducto($cliente,$fechaCom,$array_carrito){
+        // Funcion principal del programa, compra productos
         $consulta = conexionBD();
         try {
-            $stock = comprobar_stock($consulta,$producto,$cantidad); // true = SI hay stock
-            if ($stock){
-                guardar_compra($consulta,$cliente,$producto,$cantidad,$fechaCom); // registra la compra en la BD
-                restar_productos($consulta,$cantidad,$producto); //restar productos comprados del almacen
+            foreach ($array_carrito as $producto => $cantidad) {
+                $stock = comprobar_stock($consulta,$producto,$cantidad); // true = SI hay stock
+                if ($stock){
+                    guardar_compra($consulta,$cliente,$producto,$cantidad,$fechaCom); // registra la compra en la BD
+                    restar_productos($consulta,$cantidad,$producto); //restar productos comprados del almacen
+                }
             }
-            mostrar_compras($consulta);
         }
         catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -36,8 +37,9 @@
 
     function comprobar_stock($consulta,$producto,$cantidad){ 
         // Devuelve  true = SI hay stock
-        $sentencia = $consulta->prepare("SELECT sum(CANTIDAD) total from almacena 
-                                        WHERE ID_PRODUCTO = :producto
+        // ESTABA TRATANDO DE QUE DIGA QUÉ PRODUCTO HAY O NO HAY STOCK
+        $sentencia = $consulta->prepare("SELECT sum(CANTIDAD) total, NOMBRE from almacena a, producto p
+                                        WHERE ID_PRODUCTO = :producto AND p.ID_PRODUCTO = a.ID_PRODUCTO
                                         group by ID_PRODUCTO;");
         $sentencia->bindParam(':producto',$producto);
         $sentencia->execute();
@@ -46,10 +48,10 @@
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
         if($resultado !== array()){
             if ($resultado[0]["total"] < $cantidad){
-                echo "<h3 style=\"color:red\">No hay STOCK <br> :(</h3>";
+                echo "<h3 style=\"color:red\">No hay STOCK de ",$resultado[0]["NOMBRE"],"<br> :(</h3>";
                 $cantidad = false;
             }else{
-                echo ">>>>>>>>>> Si hay Stock <br>";
+                echo ">>>>>>>>>> Si hay Stock de ",$resultado[0]["NOMBRE"],"<br>";
                 $cantidad = true;
             }
         }else{$cantidad = false; echo "<h3 style=\"color:red\">No hay STOCK <br> :(</h3>";}
@@ -131,17 +133,6 @@
         $consulta = null;
     }
 
-    function mostrar_compras($consulta){ 
-        // Extrae todas los almacenes de la BD y las muestra por pantalla
-        $sentencia = $consulta->prepare("select NIF,ID_PRODUCTO,FECHA_COMPRA,UNIDADES from compra order by FECHA_COMPRA;");
-        $sentencia->execute();// ejecuta la sentencia
-        $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
-        $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
-        echo "<h2>Compras</h2>";
-        var_dump($resultado);
-        $consulta = null;
-    }
-
     function boton_carrito($boton_carrito,$carrito){
         // modifica la variable se sesion con nuevos productos del carrito
         if ($boton_carrito) {
@@ -169,8 +160,8 @@
             $fechaCom = limpiar_campos($_POST['fecha']);
     
             if($carrito !== array() && $fechaCom !== ''){
-                var_dump($cliente,$fechaCom,$_SESSION["carrito"]);
-                //comprarProducto($cliente,$producto,$cantidad,$fechaCom);
+                //var_dump($cliente,$fechaCom,$_SESSION["carrito"]);
+                comprarProducto($cliente,$fechaCom,$_SESSION["carrito"]);
             }else{
                 echo "<h3 style=\"color:red\">Debes añadir AL MENOS 1 Producto AL CARRITO para Comprar*</h3>";
                 echo "<h3 style=\"color:red\">Y tambien DEBES PONER UNA FECHA *</h3>";
