@@ -142,6 +142,42 @@
         $consulta = null;
     }
 
+    function boton_carrito($boton_carrito,$carrito){
+        // modifica la variable se sesion con nuevos productos del carrito
+        if ($boton_carrito) {
+            $producto = limpiar_campos($_POST['producto']);
+            $cantidad = intval(limpiar_campos($_POST['cantidad']));
+    
+            if ($cantidad >= 1){
+                if(array_key_exists($producto,$carrito)){
+                    $carrito[$producto] = $carrito[$producto] + $cantidad;
+                }else{
+                    $carrito[$producto] = $cantidad;
+                }
+                $_SESSION["carrito"] = $carrito;
+    
+                //$_SESSION["carrito"] = array();
+            }else{
+                echo "<h3 style=\"color:red\">Debes añadir AL MENOS 1 Producto *</h3>";
+            }
+        }
+    }
+
+    function boton_comprar($boton_comprar,$carrito){
+        if ($boton_comprar) {
+            $cliente = $_COOKIE["id_cliente"]; // recupera la Cookie del NIF del Cliente
+            $fechaCom = limpiar_campos($_POST['fecha']);
+    
+            if($carrito !== array() && $fechaCom !== ''){
+                var_dump($cliente,$fechaCom,$_SESSION["carrito"]);
+                //comprarProducto($cliente,$producto,$cantidad,$fechaCom);
+            }else{
+                echo "<h3 style=\"color:red\">Debes añadir AL MENOS 1 Producto AL CARRITO para Comprar*</h3>";
+                echo "<h3 style=\"color:red\">Y tambien DEBES PONER UNA FECHA *</h3>";
+            }
+        }
+    }
+
     function verCarrito(){
         // Muestra por pantalla el Carrito de la Compra
         echo "<h2>Carrito de la Compra: </h2>";

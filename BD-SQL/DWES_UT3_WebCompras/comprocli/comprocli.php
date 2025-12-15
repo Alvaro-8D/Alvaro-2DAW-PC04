@@ -11,32 +11,25 @@
             <?php extraerProductos(); ?>
         </select>
     </p>
-    <p>Fecha de la Compra:  <input name="fecha" type="date" required></p>
-    <p>Cantidad:  <input name="cantidad" type="number" required></p>
-    <input type="submit" value="Añadir al Carrito" />
+    <p>Cantidad:  <input name="cantidad" type="number" ></p>
+    <input type="submit" name="carrito" value="Añadir al Carrito" />
+    <h4>..............................................................</h4>
+    <p>Fecha de la Compra:  <input name="fecha" type="date"></p>
+    <input type="submit" name="comprar" value="Comprar" />
 </form>
 
 <?php
+    if(!$_SESSION["carrito"]){$_SESSION["carrito"] = array();} //si no existe la variable de sesión, la crea como un array vacio
     $carrito = $_SESSION["carrito"]; //carga el carrito en una variable
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $cliente = $_COOKIE["id_cliente"];
-        $producto = limpiar_campos($_POST['producto']);
-        $cantidad = intval(limpiar_campos($_POST['cantidad']));
-        $fechaCom = limpiar_campos($_POST['fecha']);
-
-        if ($cantidad >= 1){
-            
-            $mete_al_carrito = array("cliente"=>$cliente,"producto"=>$producto,"cantidad"=>$cantidad,"fecha"=>$fechaCom);
-            array_push($carrito,$mete_al_carrito);
-            $_SESSION["carrito"] = $carrito;
-            //$_SESSION["carrito"] = array();
-            //comprarProducto($cliente,$producto,$cantidad,$fechaCom);
-        }else{
-            echo "<h3 style=\"color:red\">Debes comprar AL MENOS 1 Producto *</h3>";
-        }
-    }
     
-    verCarrito()
+    //comprueba que hayas pulsado el boton "Añadir al Carrito"
+    if(array_key_exists("carrito",$_POST)){$boton_carrito = $_POST["carrito"];}else{$boton_carrito = null;}
+    //comprueba que hayas pulsado el boton "Comprar"
+    if(array_key_exists("comprar",$_POST)){$boton_comprar = $_POST["comprar"];}else{$boton_comprar = null;}
+    
+    boton_carrito($boton_carrito,$carrito); // añade productos al carrito
+    boton_comprar($boton_comprar,$carrito); // compra los productos del carrito (solo si hay stock)
+
+    verCarrito(); // Muestra por pantalla el carrito
 ?>
 
