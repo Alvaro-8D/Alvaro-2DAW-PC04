@@ -37,10 +37,9 @@
 
     function comprobar_stock($consulta,$producto,$cantidad){ 
         // Devuelve  true = SI hay stock
-        // ESTABA TRATANDO DE QUE DIGA QUÉ PRODUCTO HAY O NO HAY STOCK
         $sentencia = $consulta->prepare("SELECT sum(CANTIDAD) total, NOMBRE from almacena a, producto p
-                                        WHERE ID_PRODUCTO = :producto AND p.ID_PRODUCTO = a.ID_PRODUCTO
-                                        group by ID_PRODUCTO;");
+                                        WHERE a.ID_PRODUCTO = :producto AND p.ID_PRODUCTO = a.ID_PRODUCTO
+                                        group by a.ID_PRODUCTO;");
         $sentencia->bindParam(':producto',$producto);
         $sentencia->execute();
 
@@ -48,7 +47,7 @@
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
         if($resultado !== array()){
             if ($resultado[0]["total"] < $cantidad){
-                echo "<h3 style=\"color:red\">No hay STOCK de ",$resultado[0]["NOMBRE"],"<br> :(</h3>";
+                echo "<h3 style=\"color:red\">No hay STOCK de [",$resultado[0]["NOMBRE"],"]<br> :(</h3>";
                 $cantidad = false;
             }else{
                 echo ">>>>>>>>>> Si hay Stock de ",$resultado[0]["NOMBRE"],"<br>";
