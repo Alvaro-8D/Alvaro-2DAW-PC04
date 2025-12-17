@@ -27,7 +27,7 @@
 
         //comprueba que hayas pulsado el boton "Cerrar Sesión"
         if(array_key_exists("cerrar_sesion",$_POST)){
-            if($_POST["cerrar_sesion"] == "Cerrar Sesión"){
+            if($_POST["cerrar_sesion"] !== null){
                 $boton_cerrar_sesion = $_POST["cerrar_sesion"];
             }else{$boton_cerrar_sesion = null;}}else{$boton_cerrar_sesion = null;}
 
@@ -43,6 +43,7 @@
             setcookie("id_cliente", "", time() - 3600,"/");
             setcookie("nombre", "", time() - 3600,"/");
             // Evita que el programa vuelva a iniciar sesion y lo DETIENE
+            header('../comlogincli/comlogincli.php');
             exit("<h3 style=\"color:Blue\">Has CERRADO Sesion CORRECTAMENTE</h3>");
         }
     }
@@ -50,8 +51,8 @@
     function detecta_sesion_iniciada(){ // Poner al final del >> if ($_SERVER["REQUEST_METHOD"] == "POST")
         // Cierra la Sesión (elimina cookies y variables de sesión)
         if(isset($_COOKIE) && $_COOKIE !== array()){
-            echo "<br><br><h2> [Sesion Iniciada con: ",$_COOKIE["nombre"]," ",$_COOKIE["apellido"],"] ";
-            echo "<input type=\"submit\" name=\"cerrar_sesion\" value=\"Cerrar Sesión\" /> </h2>";
+            echo "<h2> [Sesion Iniciada con: ",$_COOKIE["nombre"]," ",$_COOKIE["apellido"],"] </h2>";
+            echo "<input type=\"submit\" name=\"cerrar_sesion\" value=\"Cerrar Sesion\"/> ";
         }
 
         // Boton para cerrar sesion:

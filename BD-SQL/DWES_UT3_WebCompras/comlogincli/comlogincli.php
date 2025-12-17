@@ -3,11 +3,10 @@
 <form name='mi_formulario' action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post'>
     <p>Usuario : <input name="usuario" type="text" required></p>
     <p>Contraseña : <input name="password" type="password" required></p>
-    <input type="submit" value="Log In" /> 
+    <input type="submit" value="Log In" /> <?php require '../fun_comunes.php'; detecta_sesion_iniciada(); ?>
 </form>
 
 <?php
-    require '../fun_comunes.php';
     include 'fun_comlogincli.php';
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") {  
@@ -17,6 +16,6 @@
 
         iniciar_sesion($nombre,$password); //realiza todo el programa de Introducir Categorías
     }
-    detecta_sesion_iniciada();
+    //detecta_sesion_iniciada();
     
 ?>
