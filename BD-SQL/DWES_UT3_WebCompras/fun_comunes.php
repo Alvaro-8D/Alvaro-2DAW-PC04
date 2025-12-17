@@ -43,7 +43,7 @@
             setcookie("id_cliente", "", time() - 3600,"/");
             setcookie("nombre", "", time() - 3600,"/");
             // Evita que el programa vuelva a iniciar sesion y lo DETIENE
-            header('../comlogincli/comlogincli.php');
+            header("Location: ../comlogincli/comlogincli.php");
             exit("<h3 style=\"color:Blue\">Has CERRADO Sesion CORRECTAMENTE</h3>");
         }
     }
