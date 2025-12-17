@@ -16,6 +16,7 @@
     <h4>..............................................................</h4>
     <p>Fecha de la Compra:  <input name="fecha" type="date"></p>
     <input type="submit" name="comprar" value="Comprar" />
+    
 </form>
 
 <?php
