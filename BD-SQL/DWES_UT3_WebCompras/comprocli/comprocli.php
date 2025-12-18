@@ -1,5 +1,6 @@
 <?php session_start(); require '../fun_comunes.php'; include 'fun_comprocli.php';?>
-<h1>Formulario: Compra de Productos</h1>
+<h1>Formulario: Compra de Productos</h1> 
+<h2>Consultar Compras >>>>>> <a href="../comconscli/comconscli.php" ><button>Consultar de Compras</button></a></h2>
 <!-- Importar funciones PHP -->
 
 <form name='mi_formulario' action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post'>
@@ -17,11 +18,10 @@
     <h4>..............................................................</h4>
     <p>Fecha de la Compra:  <input name="fecha" type="date"></p>
     <input type="submit" name="comprar" value="Comprar" />
-    
 </form>
 
 <?php
-    if(!$_SESSION["carrito"]){$_SESSION["carrito"] = array();} //si no existe la variable de sesión, la crea como un array vacio
+    if(!isset($_SESSION["carrito"])){$_SESSION["carrito"] = array();} //si no existe la variable de sesión, la crea como un array vacio
     $carrito = $_SESSION["carrito"]; //carga el carrito en una variable
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") { 

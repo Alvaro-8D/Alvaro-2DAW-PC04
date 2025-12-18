@@ -28,6 +28,7 @@
                     restar_productos($consulta,$cantidad,$producto); //restar productos comprados del almacen
                 }
             }
+            $_SESSION["carrito"] = array();
         }
         catch(PDOException $e) {
             echo "Error: " . $e->getMessage();

@@ -6,7 +6,7 @@
         try {
             if(comprobar_crecenciales($consulta,$nombre,$password)){ //comprueba que usuario y contraseña son correctos
                 generar_cookies($consulta,$nombre,$password); // genera las cookies
-                entrar(); // entra al portal del cliente donde puede elegir si ver cesta o comprar producto
+                header("Location: ../comprocli/comprocli.php"); // Redirije a la la pagina de "Comprar Producto"
             }
         }
         catch(PDOException $e) {
@@ -54,9 +54,4 @@
         setcookie("apellido", $resultado[0]["APELLIDO"], time() + (86400 * 30), "/");
     }
     
-    function entrar(){
-        //   target=\"_blank\" (para que se abra en una nueva pestaña)
-        echo "<a href=\"../comprocli/comprocli.php\" ><button>Compra de Productos</button></a><br><br>";
-        echo "<a href=\"../comconscli/comconscli.php\" ><button>Consulta de Compras</button></a>";
-    }
 ?>
