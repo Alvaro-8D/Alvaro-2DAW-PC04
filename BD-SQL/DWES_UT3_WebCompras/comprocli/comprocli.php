@@ -1,4 +1,4 @@
-<?php session_start(); require '../fun_comunes.php'; include 'fun_comprocli.php';?>
+<?php require '../fun_comunes.php'; if(impide_acceso_sesion_cerrada()){session_start();}   include 'fun_comprocli.php';?>
 <h1>Formulario: Compra de Productos</h1> 
 <h2>Consultar Compras >>>>>> <a href="../comconscli/comconscli.php" ><button>Consultar de Compras</button></a></h2>
 <!-- Importar funciones PHP -->
@@ -21,10 +21,10 @@
 </form>
 
 <?php
-    if(!isset($_SESSION["carrito"])){$_SESSION["carrito"] = array();} //si no existe la variable de sesión, la crea como un array vacio
-    $carrito = $_SESSION["carrito"]; //carga el carrito en una variable
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+        $carrito = $_SESSION["carrito"]; //carga el carrito en una variable
+
         cerrar_sesion();
         //comprueba que hayas pulsado el boton "Añadir al Carrito"
         if(array_key_exists("carrito",$_POST)){$boton_carrito = $_POST["carrito"];}else{$boton_carrito = null;}

@@ -1,7 +1,8 @@
+<?php require '../fun_comunes.php'; impide_acceso_sesion_cerrada(); ?>
 <h1>Formulario: Consulta de Compras</h1>
 <h2>Comprar Productos >>>>>> <a href="../comprocli/comprocli.php" ><button>Compra de Productos</button></a></h2>
 <!-- Importar funciones PHP -->
-<?php require '../fun_comunes.php'; include 'fun_comconscli.php';?>
+<?php include 'fun_comconscli.php';?>
 
 <form name='mi_formulario' action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post'>
     <!-- MOSTRAR DEL LA COOKIE GUARDADA EL NOMBRE DEL CLIENTE -->

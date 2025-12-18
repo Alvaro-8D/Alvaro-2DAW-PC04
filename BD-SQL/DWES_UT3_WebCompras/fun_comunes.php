@@ -49,7 +49,7 @@
     }
 
     function detecta_sesion_iniciada(){ // Poner al final del >> if ($_SERVER["REQUEST_METHOD"] == "POST")
-        // Cierra la Sesión (elimina cookies y variables de sesión)
+        
         if(isset($_COOKIE) && $_COOKIE !== array()){
             echo "<h2> [Sesion Iniciada con: ",$_COOKIE["nombre"]," ",$_COOKIE["apellido"],"] </h2>";
             echo "<input type=\"submit\" name=\"cerrar_sesion\" value=\"Cerrar Sesion\"/> ";
@@ -58,6 +58,16 @@
         // Boton para cerrar sesion:
         //  HTML >    <input type="submit" name="cerrar_sesion" value="Cerrar Sesión"/>
         //  PHP >    echo "<input type=\"submit\" name=\"cerrar_sesion\" value=\"Cerrar Sesión\" /> </h2>";
+    }
+
+    function impide_acceso_sesion_cerrada(){ // al inicio del PHP ==> PRIMERA LINEA
+        // Reenvia a la página de Log In si no hay sesión iniciada
+        var_dump($_COOKIE);
+        if(!isset($_COOKIE)|| $_COOKIE == array()){header("Location: ../comlogincli/comlogincli.php"); return false;}else{return true;}
+
+        /* Copiar y pegar esto al inicio: 
+                    <?php impide_acceso_sesion_cerrada(); ?>
+        */
     }
 
 ?>

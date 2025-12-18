@@ -158,6 +158,8 @@
         if ($boton_comprar) {
             $cliente = $_COOKIE["id_cliente"]; // recupera la Cookie del NIF del Cliente
             $fechaCom = limpiar_campos($_POST['fecha']);
+
+            if(!$fechaCom){$fechaCom = date("Y-m-d"); echo "<h3 style=\"color:BLUE\">Fecha por defecto => HOY *</h3>";}
     
             if($carrito !== array() && $fechaCom !== ''){
                 //var_dump($cliente,$fechaCom,$_SESSION["carrito"]);
@@ -172,7 +174,7 @@
     function verCarrito(){
         // Muestra por pantalla el Carrito de la Compra
         echo "<h2>Carrito de la Compra: </h2>";
-        var_dump($_SESSION["carrito"]); 
+        if(isset($_SESSION["carrito"])){var_dump($_SESSION["carrito"]);}
     }
     
 ?>
