@@ -96,10 +96,12 @@
 
                 if($stock_alm <= $productos_restantes){
                     /*
-                    delete from almacena
+                    UPDATE almacena
+                    SET cantidad = 0
                     where num_almacen = 1 && id_producto = 3;
                     */
-                    $sentencia = $consulta->prepare("DELETE from almacena
+                    $sentencia = $consulta->prepare("UPDATE almacena
+                                                    SET cantidad = 0
                                                     WHERE num_almacen = :alma_actual && id_producto = :producto;");
                     $sentencia->bindParam(':alma_actual',$almacenes[$alma_actual]);
                     $sentencia->bindParam(':producto',$producto);
@@ -166,7 +168,6 @@
                 comprarProducto($cliente,$fechaCom,$_SESSION["carrito"]);
             }else{
                 echo "<h3 style=\"color:red\">Debes añadir AL MENOS 1 Producto AL CARRITO para Comprar*</h3>";
-                echo "<h3 style=\"color:red\">Y tambien DEBES PONER UNA FECHA *</h3>";
             }
         }
     }

@@ -62,7 +62,6 @@
 
     function impide_acceso_sesion_cerrada(){ // al inicio del PHP ==> PRIMERA LINEA
         // Reenvia a la página de Log In si no hay sesión iniciada
-        var_dump($_COOKIE);
         if(!isset($_COOKIE)|| $_COOKIE == array()){header("Location: ../comlogincli/comlogincli.php"); return false;}else{return true;}
 
         /* Copiar y pegar esto al inicio: 

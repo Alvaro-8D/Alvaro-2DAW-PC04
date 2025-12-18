@@ -23,7 +23,8 @@
 <?php
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") { 
-        $carrito = $_SESSION["carrito"]; //carga el carrito en una variable
+        //carga el carrito en una variable
+        if(isset($_SESSION["carrito"])){$carrito = $_SESSION["carrito"];}else{$carrito = array();}
 
         cerrar_sesion();
         //comprueba que hayas pulsado el boton "Añadir al Carrito"
