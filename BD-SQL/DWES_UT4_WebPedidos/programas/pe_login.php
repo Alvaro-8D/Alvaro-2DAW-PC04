@@ -7,14 +7,14 @@
 </form>
 
 <?php
-    include '..\funciones\fun_comlogincli.php';
+    include '..\funciones\fun_pe_login.php';
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") {  
         cerrar_sesion();
-        $nombre = limpiar_campos($_POST['usuario']);
+        $usuario = limpiar_campos($_POST['usuario']);
         $password = limpiar_campos($_POST['password']);
 
-        iniciar_sesion($nombre,$password); //realiza todo el programa de Introducir Categorías
+        iniciar_sesion($usuario,$password); //realiza todo el programa de Introducir Categorías
     }
     //detecta_sesion_iniciada();
     

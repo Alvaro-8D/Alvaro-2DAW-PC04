@@ -43,7 +43,7 @@
             setcookie("id_cliente", "", time() - 3600,"/");
             setcookie("nombre", "", time() - 3600,"/");
             // Evita que el programa vuelva a iniciar sesion y lo DETIENE
-            header("Location: ../comlogincli/comlogincli.php");
+            header("Location: pe_login.php");
             exit("<h3 style=\"color:Blue\">Has CERRADO Sesion CORRECTAMENTE</h3>");
         }
     }
@@ -51,7 +51,7 @@
     function detecta_sesion_iniciada(){ // Poner al final del >> if ($_SERVER["REQUEST_METHOD"] == "POST")
         
         if(isset($_COOKIE) && $_COOKIE !== array()){
-            echo "<h2> [Sesion Iniciada con: ",$_COOKIE["nombre"]," ",$_COOKIE["apellido"],"] </h2>";
+            echo "<h2> [Sesion Iniciada con: ",$_COOKIE["nombre"],"] </h2>";
             echo "<input type=\"submit\" name=\"cerrar_sesion\" value=\"Cerrar Sesion\"/> ";
         }
 
@@ -62,7 +62,7 @@
 
     function impide_acceso_sesion_cerrada(){ // al inicio del PHP ==> PRIMERA LINEA
         // Reenvia a la página de Log In si no hay sesión iniciada
-        if(!isset($_COOKIE)|| $_COOKIE == array()){header("Location: ../comlogincli/comlogincli.php"); return false;}else{return true;}
+        if(!isset($_COOKIE)|| $_COOKIE == array()){header("Location: pe_login.php"); return false;}else{return true;}
 
         /* Copiar y pegar esto al inicio: 
                     <?php impide_acceso_sesion_cerrada(); ?>
