@@ -16,6 +16,6 @@
 
         iniciar_sesion($usuario,$password); //realiza todo el programa de Introducir Categorías
     }
-    //detecta_sesion_iniciada();
+    
     
 ?>
