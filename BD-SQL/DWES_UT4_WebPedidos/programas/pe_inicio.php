@@ -3,14 +3,13 @@
 
 <form name='mi_formulario' action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post'>
     <?php detecta_sesion_iniciada(); ?>
-
-    
 </form>
-
-<a href="pe_altaped.php"><button>Alta Pedidos</button></a>
 
 <?php
     cerrar_sesion();
     //detecta_sesion_iniciada();
     
 ?>
+
+<br><br>***********************************************
+<br><a href="pe_altaped.php"><button>Alta Pedidos</button></a>
