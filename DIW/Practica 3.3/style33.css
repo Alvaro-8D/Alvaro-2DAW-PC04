@@ -98,6 +98,18 @@ span.negrita{
   cursor: pointer;
   background: #1d4ed8;
   color: #e5e7eb;
+  transition: transform 1s, background 0.5s;
+}
+.btn-animado:hover {
+  margin-top: 0.75rem;
+  padding: 0.8rem 1.4rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: #00227f;
+  color: #e5e7eb;
+  transform: scaleX(1.1) scaleY(1.2);
 }
 
 /* Demo de animación continua (TODO: animar .burbujita) */
@@ -107,12 +119,28 @@ span.negrita{
   align-items: center;
   gap: 1rem;
 }
-
+@keyframes bajo-el-agua {
+  0%{
+    width: 43px;
+    height: 38px;
+    margin: -35px 0px 0px -10px;
+  }
+  100%{
+    width: 38px;
+    height: 43px;
+    margin: 35px 0px 0px 20px;
+  }
+}
 .burbujita {
   width: 40px;
   height: 40px;
   border-radius: 999px;
   background: var(--accent);
+  /* Animación */
+  animation-duration: 2s;
+  animation-name: bajo-el-agua;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 /* Responsive básico */
