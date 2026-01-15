@@ -17,9 +17,9 @@ ob_start();?>
         &nbsp;&nbsp;&nbsp;&nbsp; <!-- Espacios HTML "&nbsp;" = " " -->
         Cantidad:  <input name="cantidad" type="number" >
     </p>
-    <p>Número de Pago: <input name="num_pago" type="text" ></p>
     <input type="submit" name="carrito" value="Añadir al Carrito" />
     <h4>..............................................................</h4>
+    <p>Número de Pago: <input name="num_pago" type="text" ></p>
     <input type="submit" name="comprar" value="Comprar" />
 </form>
 
