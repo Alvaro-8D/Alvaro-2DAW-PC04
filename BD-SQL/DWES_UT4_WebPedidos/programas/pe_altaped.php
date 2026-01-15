@@ -1,4 +1,7 @@
-<?php require '../funciones/fun_comunes.php'; if(impide_acceso_sesion_cerrada()){session_start();}   include '../funciones/fun_pe_altaped.php';?>
+<?php require '../funciones/fun_comunes.php'; if(impide_acceso_sesion_cerrada()){session_start();}   
+include '../funciones/fun_pe_altaped.php'; 
+// Evita problemas con los Headers
+ob_start();?>
 <h1>Formulario: Alta Pedidos</h1>
 <a href="pe_inicio.php"><button>Pagina de Inicio</button></a>
 

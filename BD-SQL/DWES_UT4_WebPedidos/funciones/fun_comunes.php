@@ -33,6 +33,7 @@
 
         // Cuando BOTON ha sido PULSADO, elimina los datos (cookies y sesiones)
         if($boton_cerrar_sesion){
+            var_dump($boton_cerrar_sesion);
             if(array_key_exists("PHPSESSID",$_COOKIE)){
                 session_unset();// elimina variables de sesión
                 session_destroy();// elimina la sesión
@@ -42,7 +43,6 @@
             setcookie("id_cliente", "", time() - 3600,"/");
             setcookie("nombre", "", time() - 3600,"/");
             // Evita que el programa vuelva a iniciar sesion y lo DETIENE
-            var_dump("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             header("Location: pe_login.php");
             exit("<h3 style=\"color:Blue\">Has CERRADO Sesion CORRECTAMENTE</h3>");
         }
