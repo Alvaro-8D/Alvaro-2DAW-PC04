@@ -42,6 +42,7 @@
             }
             setcookie("id_cliente", "", time() - 3600,"/");
             setcookie("nombre", "", time() - 3600,"/");
+            setcookie("nico_array", time() - 36000, "/"); // array creado para probar serialize() y unserialize()
             // Evita que el programa vuelva a iniciar sesion y lo DETIENE
             header("Location: pe_login.php");
             exit("<h3 style=\"color:Blue\">Has CERRADO Sesion CORRECTAMENTE</h3>");
