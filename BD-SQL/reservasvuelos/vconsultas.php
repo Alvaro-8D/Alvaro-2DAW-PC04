@@ -1,4 +1,5 @@
-<?php include 'funci\fun_comunes.php'; impide_acceso_sesion_cerrada();?><html>
+	
+<?php include 'funci\fun_comunes.php'; impide_acceso_sesion_cerrada(); include 'funci\fun_vconsultas.php'; ?><html>
    
  <head>
     <meta charset="UTF-8">
@@ -26,7 +27,7 @@
 		<B>Fecha:</B>  <?php extraerFecha();?>  <BR><BR>
 		
 		<B>Numero Reserva</B><select name="reserva" class="form-control">
-				
+				<?php extraerReservas();?>
 			</select>	
 		<BR><BR><BR><BR><BR><BR><BR>
 		<div>
@@ -37,7 +38,6 @@
 	</form>
 	
 <?php
-
 	if ($_SERVER["REQUEST_METHOD"] == "POST") { 
         
 		if(isset($_POST['volver'])){
@@ -45,7 +45,7 @@
 		}else{
 			cerrar_sesion();
 		
-		
+			resultado();
 		
 		
 		}
