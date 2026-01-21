@@ -106,14 +106,16 @@
         return $cantidad;
     }
 
-    function guardar_compra($consulta,$dni,$id_producto,$unidades,$fechaCom){ 
+    function guardar_compra($consulta){ 
         // Pide el ID y la localidad, e inserta el nuevo almacen en la BD 
-        $sentencia = $consulta->prepare("INSERT into reserva (id_reserva,id_vuelo,dni_cliente,fecha_reserva,num_asientos,preciototal) 
-                                        values (:id_reserva,:id_producto,:fechaCom,:unidades)");
+        $sentencia = $consulta->prepare("INSERT into reserva 
+                                        values (:id_reserva,:id_vuelo,:dni_cliente,:fecha_reserva,:num_asientos,:preciototal)");
         $sentencia->bindParam(':id_reserva',$dni);
-        $sentencia->bindParam(':id_producto',$id_producto);
-        $sentencia->bindParam(':fechaCom',$fechaCom);
-        $sentencia->bindParam(':unidades',$unidades);
+        $sentencia->bindParam(':id_vuelo',$id_producto);
+        $sentencia->bindParam(':dni_cliente',$fechaCom);
+        $sentencia->bindParam(':fecha_reserva',$fechaCom);
+        $sentencia->bindParam(':num_asientos',$fechaCom);
+        $sentencia->bindParam(':preciototal',$fechaCom);
         $sentencia->execute();// ejecuta la sentencia
         $consulta = null;
     }

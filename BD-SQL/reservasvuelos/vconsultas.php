@@ -42,14 +42,12 @@
         
 		if(isset($_POST['volver'])){
 			header("Location: vinicio.php");
-		}else{
-			cerrar_sesion();
-		
-			resultado();
-		
-		
 		}
 
+		cerrar_sesion();
+		
+		$id_reserva = limpiar_campos($_POST["reserva"]);
+		resultado($id_reserva);
     }  
 ?>
   </body>
