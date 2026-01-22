@@ -20,21 +20,17 @@
         if ($boton_carrito) {
             $producto = limpiar_campos($_POST['vuelos']);
             $cantidad = intval(limpiar_campos($_POST['cantidad']));
-            //var_dump(1111111,$carrito);
-    
             if ($cantidad >= 1){
                 if(array_key_exists($producto,$carrito)){
                     $carrito[$producto] = $carrito[$producto] + $cantidad;
                 }else{
                     $carrito[$producto] = $cantidad;
                 }
-               // var_dump(1111111,$carrito);
-                $_COOKIE["carrito"] = serialize($carrito);
-                //var_dump(1111111,unserialize($_COOKIE["carrito"]));
+                setcookie("carrito", serialize($carrito), time() + (86400 * 30), "/");
+                header("Location: vreservas.php");
             }else{
                 echo "<h3 style=\"color:red\">Debes añadir AL MENOS 1 Producto *</h3>";
             }
-                
         }
     }
 

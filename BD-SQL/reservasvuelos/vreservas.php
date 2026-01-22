@@ -1,5 +1,4 @@
 <?php include 'funci\fun_comunes.php'; if(impide_acceso_sesion_cerrada()){session_start();ob_start();} include 'funci\fun_vreservas.php';
-var_dump(00000000000,unserialize($_COOKIE["carrito"]));
 if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() + (86400 * 30), "/");}?><html>
    
  <head>
@@ -54,7 +53,7 @@ if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() +
 			header("Location: vinicio.php");
 		}
 		if(isset($_POST['vaciar'])){
-			$_COOKIE["carrito"]= serialize(null);
+			setcookie("carrito",serialize(array()), time() + (86400 * 30), "/");
 		}
 		//carga el carrito en una variable
 		if(isset($_COOKIE["carrito"])){$carrito = unserialize($_COOKIE["carrito"]);}
