@@ -69,6 +69,7 @@
 		
 
     }  
+	var_dump(date("y-m-d H:i:s"));
 	verCarrito(); // Muestra por pantalla el carrito
 ?>
   </body>

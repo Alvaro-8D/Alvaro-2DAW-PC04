@@ -29,7 +29,7 @@
                     $carrito[$producto] = $cantidad;
                 }
                 $_SESSION["carrito"] = $carrito;
-    
+                nuevo_id(conexionBD()); // genera una cookie con el nuevo ID
                 //$_SESSION["carrito"] = array();
             }else{
                 echo "<h3 style=\"color:red\">Debes añadir AL MENOS 1 Producto *</h3>";
@@ -106,16 +106,16 @@
         return $cantidad;
     }
 
-    function guardar_compra($consulta){ 
+    function guardar_compra($consulta,$id_vuelo,$num_asientos,$preciototal){ 
         // Pide el ID y la localidad, e inserta el nuevo almacen en la BD 
         $sentencia = $consulta->prepare("INSERT into reserva 
                                         values (:id_reserva,:id_vuelo,:dni_cliente,:fecha_reserva,:num_asientos,:preciototal)");
-        $sentencia->bindParam(':id_reserva',$dni);
-        $sentencia->bindParam(':id_vuelo',$id_producto);
-        $sentencia->bindParam(':dni_cliente',$fechaCom);
-        $sentencia->bindParam(':fecha_reserva',$fechaCom);
-        $sentencia->bindParam(':num_asientos',$fechaCom);
-        $sentencia->bindParam(':preciototal',$fechaCom);
+        $sentencia->bindParam(':id_reserva',$_COOKIE['id_reserva']);
+        $sentencia->bindParam(':id_vuelo',$id_vuelo);
+        $sentencia->bindParam(':dni_cliente',$_COOKIE['id_cliente']);
+        $sentencia->bindParam(':fecha_reserva',date("y-m-d H:i:s"));
+        $sentencia->bindParam(':num_asientos',$num_asientos);
+        $sentencia->bindParam(':preciototal',$preciototal);
         $sentencia->execute();// ejecuta la sentencia
         $consulta = null;
     }
@@ -128,6 +128,17 @@
         $sentencia->bindParam(':cantidad',$cantidad);
         $sentencia->bindParam(':producto',$producto);
         $sentencia->execute();
+        $consulta = null;
+    }
+
+    function nuevo_id($consulta){ 
+        // Genera un nuevo ID para la nueva reserva que guardar
+        $sentencia = $consulta->prepare("SELECT max(id_reserva) ultimo from reservas order by id_reserva;");
+        $sentencia->execute();// ejecuta la sentencia
+        $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
+        $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
+        $nuevoID = 'R'.str_pad(intval(substr($resultado[0]['ultimo'],1))+1,4,'0',STR_PAD_LEFT);
+        setcookie("id_reserva", $nuevoID, time() + (86400 * 30), "/");
         $consulta = null;
     }
 

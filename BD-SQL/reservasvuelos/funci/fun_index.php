@@ -49,6 +49,8 @@
         $resultado=$sentencia->fetchAll();
         // Extrae el DNI del cliente para usar en proximas aplicaciones
         setcookie("id_cliente", $resultado[0]["dni"], time() + (86400 * 30), "/");
+        setcookie("id_cliente", $resultado[0]["dni"], time() + (86400 * 30), "/");
+        setcookie("id_cliente", $resultado[0]["dni"], time() + (86400 * 30), "/");
     }
     
 ?>
