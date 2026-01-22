@@ -29,7 +29,7 @@
                     $carrito[$producto] = $cantidad;
                 }
                 $_SESSION["carrito"] = $carrito;
-                nuevo_id(conexionBD()); // genera una cookie con el nuevo ID
+                nuevo_id(); // genera una cookie con el nuevo ID
                 //$_SESSION["carrito"] = array();
             }else{
                 echo "<h3 style=\"color:red\">Debes añadir AL MENOS 1 Producto *</h3>";
@@ -131,8 +131,9 @@
         $consulta = null;
     }
 
-    function nuevo_id($consulta){ 
+    function nuevo_id(){ 
         // Genera un nuevo ID para la nueva reserva que guardar
+        $consulta = conexionBD();
         $sentencia = $consulta->prepare("SELECT max(id_reserva) ultimo from reservas order by id_reserva;");
         $sentencia->execute();// ejecuta la sentencia
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select

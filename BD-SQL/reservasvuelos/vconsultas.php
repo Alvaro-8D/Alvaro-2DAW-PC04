@@ -1,5 +1,4 @@
-	
-<?php include 'funci\fun_comunes.php'; impide_acceso_sesion_cerrada(); include 'funci\fun_vconsultas.php'; ?><html>
+<?php include 'funci\fun_comunes.php'; if(impide_acceso_sesion_cerrada()){session_start();} include 'funci\fun_vconsultas.php'; ?><html>
    
  <head>
     <meta charset="UTF-8">
@@ -22,8 +21,8 @@
 	<!-- INICIO DEL FORMULARIO -->
 	<form action="" method="post">
 	
-		<B>Email Cliente:</B> <?php extraerEmail();?> <BR>
-		<B>Nombre Cliente:</B>  <?php extraerNombre();?>  <BR>
+		<B>Email Cliente:</B> <?php echo $_SESSION["email"];?> <BR>
+		<B>Nombre Cliente:</B>  <?php echo $_SESSION["nombre"];?>  <BR>
 		<B>Fecha:</B>  <?php extraerFecha();?>  <BR><BR>
 		
 		<B>Numero Reserva</B><select name="reserva" class="form-control">

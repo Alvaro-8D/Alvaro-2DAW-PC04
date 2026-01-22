@@ -21,8 +21,8 @@
 	<!-- INICIO DEL FORMULARIO -->
 	<form action="" method="post">
 	
-		<B>Email Cliente:</B> <?php extraerEmail();?> <BR>
-		<B>Nombre Cliente:</B>  <?php extraerNombre();?>  <BR>
+		<B>Email Cliente:</B> <?php echo $_SESSION["email"];?> <BR>
+		<B>Nombre Cliente:</B>  <?php echo $_SESSION["nombre"];?>  <BR>
 		<B>Fecha:</B>  <?php extraerFecha();?>  <BR><BR>
 		
 		<B>Vuelos</B><select name="vuelos" class="form-control">

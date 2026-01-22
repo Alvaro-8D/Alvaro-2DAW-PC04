@@ -77,7 +77,7 @@
         $sentencia->execute();// ejecuta la sentencia
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo    
-        echo $resultado[0]["email"];
+        $_SESSION['email'] = $resultado[0]["email"];
         $consulta = null;
     }
     function extraerNombre(){
@@ -90,17 +90,11 @@
         $sentencia->execute();// ejecuta la sentencia
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo    
-        echo $resultado[0]["nombre"];
+        $_SESSION['nombre'] = $resultado[0]["nombre"];
         $consulta = null;
     }
-    function extraerFecha(){
-        $consulta = conexionBD();
-        // Extrae las categorias de la BD y las muestra en el HTMl
-        $sentencia = $consulta->prepare("SELECT SYSDATE();");
-        $sentencia->execute();// ejecuta la sentencia
-        $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
-        $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo    
-        echo $resultado[0]["SYSDATE()"];
+    function extraerFecha(){  
+        echo date("y-m-d H:i:s");
         $consulta = null;
     }
 ?>

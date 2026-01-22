@@ -1,4 +1,8 @@
-﻿<?php include 'funci\fun_comunes.php'; impide_acceso_sesion_cerrada();?><html>
+﻿<?php include 'funci\fun_comunes.php'; impide_acceso_sesion_cerrada();
+		session_start();
+		extraerNombre(); // genera Sesión para el Nombre
+        extraerEmail(); // genera Sesión para el Email?>
+<html>
    
  <head>
     <meta charset="UTF-8">
@@ -16,8 +20,8 @@
 		<div class="card-header">Menú Usuario </div>
 		<div class="card-body">
 
-		<B>Email Cliente:</B> <?php extraerEmail();?> <BR>
-		<B>Nombre Cliente:</B>  <?php extraerNombre();?>  <BR>
+		<B>Email Cliente:</B> <?php echo $_SESSION["email"];?> <BR>
+		<B>Nombre Cliente:</B>  <?php echo $_SESSION["nombre"];?>  <BR>
 		<B>Fecha:</B>  <?php extraerFecha();?>  <BR><BR>
 	  
 		<!--Formulario con enlaces -->
