@@ -20,7 +20,7 @@
         if ($boton_carrito) {
             $producto = limpiar_campos($_POST['vuelos']);
             $cantidad = intval(limpiar_campos($_POST['cantidad']));
-            
+            //var_dump(1111111,$carrito);
     
             if ($cantidad >= 1){
                 if(array_key_exists($producto,$carrito)){
@@ -28,9 +28,9 @@
                 }else{
                     $carrito[$producto] = $cantidad;
                 }
-                $_SESSION["carrito"] = $carrito;
-                nuevo_id(); // genera una cookie con el nuevo ID
-                //$_SESSION["carrito"] = array();
+               // var_dump(1111111,$carrito);
+                $_COOKIE["carrito"] = serialize($carrito);
+                //var_dump(1111111,unserialize($_COOKIE["carrito"]));
             }else{
                 echo "<h3 style=\"color:red\">Debes añadir AL MENOS 1 Producto *</h3>";
             }
@@ -41,7 +41,7 @@
     function verCarrito(){
         // Muestra por pantalla el Carrito de la Compra
         echo "<h2>Carrito de la Compra: </h2>";
-        if(isset($_SESSION["carrito"])){var_dump($_SESSION["carrito"]);}
+        if(isset($_COOKIE["carrito"])){var_dump(unserialize($_COOKIE["carrito"]));}
     }
 
     function boton_comprar($boton_comprar,$carrito){
@@ -108,9 +108,10 @@
 
     function guardar_compra($consulta,$id_vuelo,$num_asientos,$preciototal){ 
         // Pide el ID y la localidad, e inserta el nuevo almacen en la BD 
+        $nuevoID = nuevo_id();
         $sentencia = $consulta->prepare("INSERT into reserva 
                                         values (:id_reserva,:id_vuelo,:dni_cliente,:fecha_reserva,:num_asientos,:preciototal)");
-        $sentencia->bindParam(':id_reserva',$_COOKIE['id_reserva']);
+        $sentencia->bindParam(':id_reserva',$nuevoID);
         $sentencia->bindParam(':id_vuelo',$id_vuelo);
         $sentencia->bindParam(':dni_cliente',$_COOKIE['id_cliente']);
         $sentencia->bindParam(':fecha_reserva',date("y-m-d H:i:s"));
@@ -139,8 +140,8 @@
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
         $nuevoID = 'R'.str_pad(intval(substr($resultado[0]['ultimo'],1))+1,4,'0',STR_PAD_LEFT);
-        setcookie("id_reserva", $nuevoID, time() + (86400 * 30), "/");
         $consulta = null;
+        return $nuevoID;
     }
 
 

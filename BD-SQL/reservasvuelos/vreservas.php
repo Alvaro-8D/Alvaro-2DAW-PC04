@@ -1,4 +1,6 @@
-<?php include 'funci\fun_comunes.php'; if(impide_acceso_sesion_cerrada()){session_start();} include 'funci\fun_vreservas.php';?><html>
+<?php include 'funci\fun_comunes.php'; if(impide_acceso_sesion_cerrada()){session_start();ob_start();} include 'funci\fun_vreservas.php';
+var_dump(00000000000,unserialize($_COOKIE["carrito"]));
+if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() + (86400 * 30), "/");}?><html>
    
  <head>
     <meta charset="UTF-8">
@@ -52,25 +54,24 @@
 			header("Location: vinicio.php");
 		}
 		if(isset($_POST['vaciar'])){
-			$_SESSION["carrito"] = null;
+			$_COOKIE["carrito"]= serialize(null);
 		}
 		//carga el carrito en una variable
-		if(isset($_SESSION["carrito"])){$carrito = $_SESSION["carrito"];}else{$carrito = array();}
-
+		if(isset($_COOKIE["carrito"])){$carrito = unserialize($_COOKIE["carrito"]);}
+		
 		cerrar_sesion();
 
-	
 		if(array_key_exists("carrito",$_POST)){$boton_carrito = $_POST["carrito"];}else{$boton_carrito = null;}
 		//comprueba que hayas pulsado el boton "Comprar"
 		if(array_key_exists("comprar",$_POST)){$boton_comprar = $_POST["comprar"];}else{$boton_comprar = null;}
 	
 		boton_carrito($boton_carrito,$carrito); // añade productos al carrito
 		boton_comprar($boton_comprar,$carrito); // compra los productos del carrito (solo si hay stock)
-		
 
     }  
-	var_dump(date("y-m-d H:i:s"));
+	//var_dump(date("y-m-d H:i:s"));
 	verCarrito(); // Muestra por pantalla el carrito
+	
 ?>
   </body>
    
