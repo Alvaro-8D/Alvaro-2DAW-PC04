@@ -39,6 +39,7 @@
                 setcookie("PHPSESSID", "", time() - 3600,"/");
             }
             setcookie("id_cliente", "", time() - 36000,"/");
+            setcookie("carrito", "", time() - 36000,"/");
             // Evita que el programa vuelva a iniciar sesion y lo DETIENE
             header("Location: index.php");
             exit("<h3 style=\"color:Blue\">Has CERRADO Sesion CORRECTAMENTE</h3>");

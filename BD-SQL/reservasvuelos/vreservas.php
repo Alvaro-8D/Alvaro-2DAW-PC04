@@ -54,6 +54,7 @@ if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() +
 		}
 		if(isset($_POST['vaciar'])){
 			setcookie("carrito",serialize(array()), time() + (86400 * 30), "/");
+			header("Location: vreservas.php");
 		}
 		//carga el carrito en una variable
 		if(isset($_COOKIE["carrito"])){$carrito = unserialize($_COOKIE["carrito"]);}
