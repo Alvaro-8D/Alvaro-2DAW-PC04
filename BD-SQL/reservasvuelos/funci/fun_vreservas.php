@@ -67,19 +67,23 @@
             }
             if ($stock2){
                 $nuevoID = nuevo_id();
+                $consulta->beginTransaction(); // comienza a modificar tablas
                 foreach ($array_carrito as $id_vuelo => $cantidad) {
-                    echo '<h1>SIIIIIIIIIIIIi</h1>';
                     guardar_compra($consulta,$id_vuelo,$cantidad,$nuevoID); // registra la compra en la BD
                     restar_productos($consulta,$cantidad,$id_vuelo); //restar productos comprados del almacen
                 }
+                $consulta->commit();//guarda los cambios si todo sale bien
             }
             setcookie("carrito", serialize(array()), time() + (86400 * 30), "/");
             header("Location: vreservas.php");
         }
         catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
+            $consulta->rollBack();
         }
-        $consulta = null;
+        finally{
+            $consulta = null;
+        }
     }
     
 

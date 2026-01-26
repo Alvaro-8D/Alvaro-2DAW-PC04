@@ -1,0 +1,11 @@
+{
+    "DS_MERCHANT_ORDER": "00014338z744",
+    "DS_MERCHANT_MERCHANTCODE": "999008881",
+    "DS_MERCHANT_TERMINAL": "001",
+    "DS_MERCHANT_CURRENCY": "978",
+    "DS_MERCHANT_TRANSACTIONTYPE": "0",
+    "DS_MERCHANT_AMOUNT": "249", 
+    "DS_MERCHANT_MERCHANTURL": "http:\\localhost\\alvaro\\BD-SQL\\reservasvuelos\\pagos\\urlNotificacion.php",
+    "DS_MERCHANT_URLOK": "http:\\localhost\\alvaro\\BD-SQL\\reservasvuelos\\pagos\\pagoCorrecto.php",
+    "DS_MERCHANT_URLKO": "http:\\localhost\\alvaro\\BD-SQL\\reservasvuelos\\pagos\\pagoFallidoDenegado.php"
+}

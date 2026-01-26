@@ -1,5 +1,6 @@
 <?php include 'funci\fun_comunes.php'; if(impide_acceso_sesion_cerrada()){session_start();ob_start();} include 'funci\fun_vreservas.php';
-if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() + (86400 * 30), "/");}?><html>
+if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() + (86400 * 30), "/");}?>
+<html>
    
  <head>
     <meta charset="UTF-8">
