@@ -111,7 +111,7 @@
     function guardar_compra($consulta,$id_vuelo,$num_asientos,$nuevoID){ 
         // Pide el ID y la localidad, e inserta el nuevo almacen en la BD 
         $preciototal = extraerPrecioTotal($id_vuelo,$num_asientos);
-        header("Location: .\\pagos\\ejemploGeneraPet.php");
+        //header("Location: .\\pagos\\ejemploGeneraPet.php");
         /*
         $sentencia = $consulta->prepare("INSERT into reservas 
                                         values (:id_reserva,:id_vuelo,:dni_cliente,:fecha_reserva,:num_asientos,:preciototal)");
@@ -161,21 +161,20 @@
         return $nuevoID;
     }
 
-    function elegir_action(){
+    function elegir_action($boton){
         // devuelve el "PHP_SELF" si solo se usa el CARRITO
         // devuelve el la direccion de RedSys(PAGOS) si se pulsa el boton COMPRAR
-        if(true){
-            echo htmlspecialchars($_SERVER["PHP_SELF"]);
-        }else{
-            echo "https://sis-t.redsys.es:25443/sis/realizarPago";
-        }
+
+       
+            // detecta si se pulsa Boton Comprar
+
+            if(!$boton){ 
+                echo htmlspecialchars($_SERVER["PHP_SELF"]);
+            }else{ 
+                echo "https://sis-t.redsys.es:25443/sis/realizarPago";
+            }
+        
     }
-
-    
-
-
-
-
 
 
 

@@ -1,5 +1,6 @@
 <?php include 'funci\fun_comunes.php'; if(impide_acceso_sesion_cerrada()){session_start();ob_start();} include 'funci\fun_vreservas.php';
-if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() + (86400 * 30), "/");}?>
+if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() + (86400 * 30), "/");}
+$boton = false; ?>
 <html>
    
  <head>
@@ -21,7 +22,7 @@ if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() +
 	  	  
 
 	<!-- INICIO DEL FORMULARIO -->
-	<form name="frm" action='<?php elegir_action(); // elige donde enviar datos del formulario?>' method="POST">
+	<form name="frm" action='<?php elegir_action($boton); // elige donde enviar datos del formulario?>' method="POST">
 	
 		<B>Email Cliente:</B> <?php echo $_SESSION["email"];?> <BR>
 		<B>Nombre Cliente:</B>  <?php echo $_SESSION["nombre"];?>  <BR>
@@ -45,7 +46,7 @@ if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() +
 			
 			<br><br><input type="submit" value="Cerrar Sesión" name="cerrar_sesion" class="btn btn-warning disabled">
 
-			<?php include 'pagos/ejemploGeneraPet.php'; generar_peticion_pago();?>
+			<?php include 'pagos/ejemploGeneraPet.php'; generar_peticion_pago(); //incluye campos para enviar a la prataforma de Pago ?> 
 		</div>		
 	</form>
 <?php

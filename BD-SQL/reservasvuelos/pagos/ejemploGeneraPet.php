@@ -51,15 +51,4 @@
 		";
 	}
 ?>
-<!--
-<html lang="es">
-	<body>
-		<form name="frm" action="https://sis-t.redsys.es:25443/sis/realizarPago" method="POST" target="_blank">
-			Ds_Merchant_SignatureVersion <input type="text" name="Ds_SignatureVersion" value="<?php //echo $version; ?>"/></br>
-			Ds_Merchant_MerchantParameters <input type="text" name="Ds_MerchantParameters" value="<?php //echo $params; ?>"/></br>
-			Ds_Merchant_Signature <input type="text" name="Ds_Signature" value="<?php //echo $signature; ?>"/></br>
-			<input type="submit" value="Enviar" >
-		</form>
-	</body>
-</html>
--->
+
