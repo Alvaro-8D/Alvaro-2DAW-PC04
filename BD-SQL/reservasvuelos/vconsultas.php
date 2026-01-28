@@ -19,7 +19,7 @@
 	  	  
 
 	<!-- INICIO DEL FORMULARIO -->
-	<form action="" method="post">
+	<form action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' method="post">
 	
 		<B>Email Cliente:</B> <?php echo $_SESSION["email"];?> <BR>
 		<B>Nombre Cliente:</B>  <?php echo $_SESSION["nombre"];?>  <BR>

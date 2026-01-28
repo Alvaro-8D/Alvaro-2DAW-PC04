@@ -161,6 +161,16 @@
         return $nuevoID;
     }
 
+    function elegir_action(){
+        // devuelve el "PHP_SELF" si solo se usa el CARRITO
+        // devuelve el la direccion de RedSys(PAGOS) si se pulsa el boton COMPRAR
+        if(true){
+            echo htmlspecialchars($_SERVER["PHP_SELF"]);
+        }else{
+            echo "https://sis-t.redsys.es:25443/sis/realizarPago";
+        }
+    }
+
     
 
 

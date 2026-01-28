@@ -17,7 +17,7 @@
 		<div class="card-header">Acceso Reserva Vuelos</div>
 		<div class="card-body">
 		
-		<form id="" name="" action="" method="post" class="card-body">
+		<form action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post' method="post" class="card-body">
 		
 		<div class="form-group">
 			Usuario <input type="text" name="usuario" placeholder="usuario" class="form-control">

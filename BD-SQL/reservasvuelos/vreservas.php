@@ -21,7 +21,7 @@ if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() +
 	  	  
 
 	<!-- INICIO DEL FORMULARIO -->
-	<form action="" method="post">
+	<form name="frm" action='<?php elegir_action(); // elige donde enviar datos del formulario?>' method="POST">
 	
 		<B>Email Cliente:</B> <?php echo $_SESSION["email"];?> <BR>
 		<B>Nombre Cliente:</B>  <?php echo $_SESSION["nombre"];?>  <BR>
@@ -33,7 +33,7 @@ if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() +
 			
 		<BR> 
 		<B>Número Asientos</B><input type="number" name="cantidad" size="3" min="1" max="100" value="1" class="form-control">
-		<BR><BR><BR><BR><BR>
+		<BR><BR>
 		<div>
 			<input type="submit" value="Agregar a Cesta" name="carrito" class="btn btn-warning disabled">
 
@@ -44,6 +44,8 @@ if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() +
 			<input type="submit" value="Volver" name="volver" class="btn btn-warning disabled">
 			
 			<br><br><input type="submit" value="Cerrar Sesión" name="cerrar_sesion" class="btn btn-warning disabled">
+
+			<?php include 'pagos/ejemploGeneraPet.php'; generar_peticion_pago();?>
 		</div>		
 	</form>
 <?php
