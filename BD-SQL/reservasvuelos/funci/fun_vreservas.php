@@ -45,7 +45,6 @@
             $cliente = $_COOKIE["id_cliente"]; // recupera la Cookie del NIF del Cliente
 
             if($carrito !== array()){
-                //var_dump($cliente,$_SESSION["carrito"]);
                 comprarProducto($cliente,unserialize($_COOKIE["carrito"]));
             }else{
                 echo "<h3 style=\"color:red\">Debes añadir AL MENOS 1 Producto AL CARRITO para Comprar*</h3>";
@@ -68,14 +67,41 @@
             if ($stock2){
                 $nuevoID = nuevo_id();
                 $consulta->beginTransaction(); // comienza a modificar tablas
+                $preciototal = 0;
+                $desc = "(Id_Vuelo,cantidad): ";
                 foreach ($array_carrito as $id_vuelo => $cantidad) {
                     guardar_compra($consulta,$id_vuelo,$cantidad,$nuevoID); // registra la compra en la BD
-                    restar_productos($consulta,$cantidad,$id_vuelo); //restar productos comprados del almacen
+                    $preciototal += extraerPrecioTotal($id_vuelo,$cantidad);
+                    $desc = $desc."(".$id_vuelo.",".$cantidad.")-";
+                    //restar_productos($consulta,$cantidad,$id_vuelo); //restar productos comprados del almacen
                 }
+
+                echo "
+                <!-- INICIO DEL FORMULARIO -->
+                <form action='https://sis-t.redsys.es:25443/sis/realizarPago' method=\"post=\" target==\"_blank=\" >
+
+                    <!-- ************** Campos para realizar el PAGO ***************** -->
+                    <!-- Ds_Merchant_SignatureVersion -->
+                    <input type==\"hidden=\" name==\"Ds_SignatureVersion=\" value==\"<?php echo $version; ?>=\"/></br>
+                    <!-- Ds_Merchant_MerchantParameters -->
+                    <input type==\"hidden=\" name==\"Ds_MerchantParameters=\" value==\"<?php echo $params; ?>=\"/></br>
+                    <!-- Ds_Merchant_Signature -->
+                    <input type==\"hidden=\" name="Ds_Signature" value="<?php echo $signature; ?>"/></br>
+                    
+                    <input type==\"submit=\" name="enviar" value="enviar"/></br>
+
+                </form>";
+
+
+
+
+
+
+
                 $consulta->commit();//guarda los cambios si todo sale bien
+                //setcookie("carrito", serialize(array()), time() + (86400 * 30), "/");
             }
-            setcookie("carrito", serialize(array()), time() + (86400 * 30), "/");
-            header("Location: vreservas.php");
+            //header("Location: vreservas.php");
         }
         catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -111,7 +137,7 @@
     function guardar_compra($consulta,$id_vuelo,$num_asientos,$nuevoID){ 
         // Pide el ID y la localidad, e inserta el nuevo almacen en la BD 
         $preciototal = extraerPrecioTotal($id_vuelo,$num_asientos);
-
+        /*
         $sentencia = $consulta->prepare("INSERT into reservas 
                                         values (:id_reserva,:id_vuelo,:dni_cliente,:fecha_reserva,:num_asientos,:preciototal)");
         $sentencia->bindParam(':id_reserva',$nuevoID);
@@ -121,6 +147,7 @@
         $sentencia->bindParam(':num_asientos',$num_asientos);
         $sentencia->bindParam(':preciototal',$preciototal);
         $sentencia->execute();// ejecuta la sentencia
+        */
         $consulta = null;
     }
 
