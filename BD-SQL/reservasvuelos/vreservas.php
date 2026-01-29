@@ -1,6 +1,5 @@
 <?php include 'funci\fun_comunes.php'; if(impide_acceso_sesion_cerrada()){session_start();ob_start();} include 'funci\fun_vreservas.php';
-if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() + (86400 * 30), "/");}
-$boton = false; ?>
+if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() + (86400 * 30), "/");}?>
 <html>
    
  <head>
@@ -22,7 +21,7 @@ $boton = false; ?>
 	  	  
 
 	<!-- INICIO DEL FORMULARIO -->
-	<form name="frm" action='<?php elegir_action($boton); // elige donde enviar datos del formulario?>' method="POST">
+	<form action="" method="post">
 	
 		<B>Email Cliente:</B> <?php echo $_SESSION["email"];?> <BR>
 		<B>Nombre Cliente:</B>  <?php echo $_SESSION["nombre"];?>  <BR>
@@ -34,7 +33,7 @@ $boton = false; ?>
 			
 		<BR> 
 		<B>Número Asientos</B><input type="number" name="cantidad" size="3" min="1" max="100" value="1" class="form-control">
-		<BR><BR>
+		<BR><BR><BR><BR><BR>
 		<div>
 			<input type="submit" value="Agregar a Cesta" name="carrito" class="btn btn-warning disabled">
 
@@ -45,8 +44,6 @@ $boton = false; ?>
 			<input type="submit" value="Volver" name="volver" class="btn btn-warning disabled">
 			
 			<br><br><input type="submit" value="Cerrar Sesión" name="cerrar_sesion" class="btn btn-warning disabled">
-
-			<?php include 'pagos/ejemploGeneraPet.php'; generar_peticion_pago(); //incluye campos para enviar a la prataforma de Pago ?> 
 		</div>		
 	</form>
 <?php

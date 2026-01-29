@@ -70,12 +70,12 @@
                 $consulta->beginTransaction(); // comienza a modificar tablas
                 foreach ($array_carrito as $id_vuelo => $cantidad) {
                     guardar_compra($consulta,$id_vuelo,$cantidad,$nuevoID); // registra la compra en la BD
-                    //restar_productos($consulta,$cantidad,$id_vuelo); //restar productos comprados del almacen
+                    restar_productos($consulta,$cantidad,$id_vuelo); //restar productos comprados del almacen
                 }
                 $consulta->commit();//guarda los cambios si todo sale bien
             }
             setcookie("carrito", serialize(array()), time() + (86400 * 30), "/");
-            //header("Location: vreservas.php");
+            header("Location: vreservas.php");
         }
         catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -111,8 +111,7 @@
     function guardar_compra($consulta,$id_vuelo,$num_asientos,$nuevoID){ 
         // Pide el ID y la localidad, e inserta el nuevo almacen en la BD 
         $preciototal = extraerPrecioTotal($id_vuelo,$num_asientos);
-        //header("Location: .\\pagos\\ejemploGeneraPet.php");
-        /*
+
         $sentencia = $consulta->prepare("INSERT into reservas 
                                         values (:id_reserva,:id_vuelo,:dni_cliente,:fecha_reserva,:num_asientos,:preciototal)");
         $sentencia->bindParam(':id_reserva',$nuevoID);
@@ -123,7 +122,6 @@
         $sentencia->bindParam(':preciototal',$preciototal);
         $sentencia->execute();// ejecuta la sentencia
         $consulta = null;
-        */
     }
 
     function extraerPrecioTotal($id_vuelo,$num_asientos){ //suma todas los asientos de un vuelo y devuelve el precio total
@@ -161,20 +159,11 @@
         return $nuevoID;
     }
 
-    function elegir_action($boton){
-        // devuelve el "PHP_SELF" si solo se usa el CARRITO
-        // devuelve el la direccion de RedSys(PAGOS) si se pulsa el boton COMPRAR
+    
 
-       
-            // detecta si se pulsa Boton Comprar
 
-            if(!$boton){ 
-                echo htmlspecialchars($_SERVER["PHP_SELF"]);
-            }else{ 
-                echo "https://sis-t.redsys.es:25443/sis/realizarPago";
-            }
-        
-    }
+
+
 
 
 
