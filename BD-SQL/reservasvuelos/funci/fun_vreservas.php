@@ -37,14 +37,14 @@
     function verCarrito(){
         // Muestra por pantalla el Carrito de la Compra
         echo "<h2>Carrito de la Compra: </h2>";
-        if(isset($_COOKIE["carrito"])&&unserialize($_COOKIE["carrito"])!==array()){var_dump(unserialize($_COOKIE["carrito"]));}
+        if(isset($_COOKIE["carrito"])&&unserialize($_COOKIE["carrito"])!=array()){var_dump(unserialize($_COOKIE["carrito"]));}
     }
 
     function boton_comprar($boton_comprar,$carrito){
         if ($boton_comprar) {
             $cliente = $_COOKIE["id_cliente"]; // recupera la Cookie del NIF del Cliente
 
-            if($carrito !== array()){
+            if($carrito != array()){
                 comprarProducto($cliente,unserialize($_COOKIE["carrito"]));
             }else{
                 echo "<h3 style=\"color:red\">Debes añadir AL MENOS 1 Producto AL CARRITO para Comprar*</h3>";
@@ -75,26 +75,8 @@
                     $desc = $desc."(".$id_vuelo.",".$cantidad.")-";
                     //restar_productos($consulta,$cantidad,$id_vuelo); //restar productos comprados del almacen
                 }
-
-                echo "
-                <!-- INICIO DEL FORMULARIO -->
-                <form action='https://sis-t.redsys.es:25443/sis/realizarPago' method=\"post=\" target==\"_blank=\" >
-
-                    <!-- ************** Campos para realizar el PAGO ***************** -->
-                    <!-- Ds_Merchant_SignatureVersion -->
-                    <input type==\"hidden=\" name==\"Ds_SignatureVersion=\" value==\"<?php echo $version; ?>=\"/></br>
-                    <!-- Ds_Merchant_MerchantParameters -->
-                    <input type==\"hidden=\" name==\"Ds_MerchantParameters=\" value==\"<?php echo $params; ?>=\"/></br>
-                    <!-- Ds_Merchant_Signature -->
-                    <input type==\"hidden=\" name="Ds_Signature" value="<?php echo $signature; ?>"/></br>
-                    
-                    <input type==\"submit=\" name="enviar" value="enviar"/></br>
-
-                </form>";
-
-
-
-
+                peticion_pago($preciototal,$desc);
+                
 
 
 
@@ -122,7 +104,7 @@
 
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
-        if($resultado !== array()){
+        if($resultado != array()){
             if ($resultado[0]["total"] < $cantidad){
                 $cantidad = false;
             }else{
@@ -187,7 +169,62 @@
     }
 
     
+    function peticion_pago($preciototal,$desc){
+		// Se incluye la librería
+		include 'pagos/signatureUtils/signature.php';
 
+		//Datos de configuración
+		$version = "HMAC_SHA512_V2";
+		$kc = 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'; //Clave de firma de tu TPV Virtual
+
+		// Valores de entrada 
+		$fuc = "263100000"; // Numero de Comercio (FUC)
+		$terminal = "12"; // Número Terminal de tu TPV
+		$moneda = "978"; // euro
+		$transactionType = "0"; // tipo redirección
+		$url = "http://localhost/alvaro/BD-SQL/reservasvuelos/pagos/urlNotificacion.php"; // URL para recibir notificaciones del pago
+		$order = time();
+		$amount = "".(100*$preciototal); // *100 precio a pagar (se pone en * céntimos *)
+        //$amount = "1074"; // probar "Pago Denegado"
+		$descripcion = $desc; // descripción de la compra (125 caracteres / A-N)
+
+		$currentUrl = Utils::getCurrentUrl();
+		$urlOK = "http://localhost/alvaro/BD-SQL/reservasvuelos/pagos/pagoCorrecto.php"; // preguntar a Añfono como poner una ruta relativa aqui
+		$urlKO = "http://localhost/alvaro/BD-SQL/reservasvuelos/pagos/pagoFallidoDenegado.php";
+
+		// Se Rellenan los campos
+		$data = array(
+			"DS_MERCHANT_PRODUCTDESCRIPTION" => $descripcion,
+			"DS_MERCHANT_AMOUNT" => $amount,
+			"DS_MERCHANT_ORDER" => $order,
+			"DS_MERCHANT_MERCHANTCODE" => $fuc,
+			"DS_MERCHANT_CURRENCY" => $moneda,
+			"DS_MERCHANT_TRANSACTIONTYPE" => $transactionType,
+			"DS_MERCHANT_TERMINAL" => $terminal,
+			"DS_MERCHANT_MERCHANTURL" => $url,
+			"DS_MERCHANT_URLOK" => $urlOK,
+			"DS_MERCHANT_URLKO" => $urlKO
+		);
+
+		// Se generan los parámetros de la petición
+		$params = Utils::base64_url_encode_safe(json_encode($data));
+		$signature = Signature::createMerchantSignature($kc, $params, $order);
+        
+        // Envia los datos de la compra directamente al formulario para que RedSys los analice y haga la operacion bancaria
+        echo "<!-- INICIO DEL FORMULARIO -->
+            <form action='https://sis-t.redsys.es:25443/sis/realizarPago' method=\"post\" target=\"_blank\" >
+
+                <!-- ************** Campos para realizar el PAGO ***************** -->
+                <!-- Ds_Merchant_SignatureVersion -->
+                <input type=\"hidden\" name=\"Ds_SignatureVersion\" value=\"".$version."\"/></br>
+                <!-- Ds_Merchant_MerchantParameters -->
+                <input type=\"hidden\" name=\"Ds_MerchantParameters\" value=\"".$params."\"/></br>
+                <!-- Ds_Merchant_Signature -->
+                <input type=\"hidden\" name=\"Ds_Signature\" value=\"".$signature."\"/></br> 
+                <input type=\"submit\" value=\"Confirmar Compra\"/></br>
+
+            </form>";
+	}
 
 
 
