@@ -70,7 +70,6 @@ if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() +
 		boton_comprar($boton_comprar,$carrito); // compra los productos del carrito (solo si hay stock)
 
     }  
-	//var_dump(date("y-m-d H:i:s"));
 	verCarrito(); // Muestra por pantalla el carrito
 	
 ?>
