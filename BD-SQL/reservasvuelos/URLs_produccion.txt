@@ -1,0 +1,1 @@
+$urlOK="http://localhost/ftp/ftp-alvaro/reservasvuelos/pagos/pagoCorrecto.php";

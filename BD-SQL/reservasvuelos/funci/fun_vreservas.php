@@ -189,6 +189,26 @@
 		$descripcion = $desc; // descripción de la compra (125 caracteres / A-N)
 
 		$currentUrl = Utils::getCurrentUrl();
+
+        /************************************************************************* */
+        /*********************CARLOS**************************************************** */
+        /************************************************************************* 
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+		$domain = $_SERVER['HTTP_HOST'];
+
+		// Si tu proyecto está en una subcarpeta, esto la incluirá
+		$currentDir = dirname($_SERVER['PHP_SELF']); 
+
+		// Limpiamos la ruta para asegurar que termine en la carpeta raíz del proyecto
+		// y añadimos la ruta relativa al archivo de éxito
+		$urlOK = $protocol . $domain . $currentDir . "/pagos/pagoCorrecto.php";
+		$urlKO = $protocol . $domain . $currentDir . "/pagos/pagoCancelado.php";
+        /************************************************************************* */
+        /*********************CARLOS**************************************************** */
+        /************************************************************************* */
+        /************************************************************************* */
+
+        var_dump($currentUrl);
 		$urlOK = "http://localhost/alvaro/BD-SQL/reservasvuelos/pagos/pagoCorrecto.php"; // preguntar a Añfono como poner una ruta relativa aqui
 		$urlKO = "http://localhost/alvaro/BD-SQL/reservasvuelos/pagos/pagoFallidoDenegado.php";
 
