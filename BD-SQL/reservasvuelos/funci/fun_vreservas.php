@@ -40,7 +40,7 @@
         if(isset($_COOKIE["carrito"])&&unserialize($_COOKIE["carrito"])!=array()){var_dump(unserialize($_COOKIE["carrito"]));}
     }
 
-    function boton_comprar($boton_comprar,$carrito,$resultadoOperacion=false){
+    function boton_comprar($boton_comprar,$carrito,$resultadoOperacion){
         if ($boton_comprar) {
             $cliente = $_COOKIE["id_cliente"]; // recupera la Cookie del NIF del Cliente
 
@@ -73,28 +73,15 @@
                     guardar_compra($consulta,$id_vuelo,$cantidad,$nuevoID); // registra la compra en la BD
                     $preciototal += extraerPrecioTotal($id_vuelo,$cantidad);
                     $desc = $desc."(".$id_vuelo.",".$cantidad.")-";
-                    //restar_productos($consulta,$cantidad,$id_vuelo); //restar productos comprados del almacen
+                    restar_productos($consulta,$cantidad,$id_vuelo); //restar productos comprados del almacen
                 }
                 peticion_pago($preciototal,$desc);
-                var_dump($resultadoOperacion);
-                if(!$resultadoOperacion){throw new Exception("<h1>FALLOOOOOOOOO</h1>");}
-                else{var_dump("<h1>YES SIIIIR </h1>",$resultadoOperacion);}
-                
 
-
-
-                $consulta->commit();//guarda los cambios si todo sale bien
-                //setcookie("carrito", serialize(array()), time() + (86400 * 30), "/");
             }
-            //header("Location: vreservas.php");
         }
         catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
             $consulta->rollBack();
-        }
-        catch(Exception $e2) {
-            $consulta->rollBack();
-            $e2->getMessage();
         }
         finally{
             $consulta = null;
@@ -126,13 +113,14 @@
     function guardar_compra($consulta,$id_vuelo,$num_asientos,$nuevoID){ 
         // Pide el ID y la localidad, e inserta el nuevo almacen en la BD 
         $preciototal = extraerPrecioTotal($id_vuelo,$num_asientos);
+        $fecha = date("y-m-d H:i:s"); // fecha actual
         
         $sentencia = $consulta->prepare("INSERT into reservas 
                                         values (:id_reserva,:id_vuelo,:dni_cliente,:fecha_reserva,:num_asientos,:preciototal)");
         $sentencia->bindParam(':id_reserva',$nuevoID);
         $sentencia->bindParam(':id_vuelo',$id_vuelo);
         $sentencia->bindParam(':dni_cliente',$_COOKIE['id_cliente']);
-        $sentencia->bindParam(':fecha_reserva',date("y-m-d H:i:s"));
+        $sentencia->bindParam(':fecha_reserva',$fecha);
         $sentencia->bindParam(':num_asientos',$num_asientos);
         $sentencia->bindParam(':preciototal',$preciototal);
         $sentencia->execute();// ejecuta la sentencia

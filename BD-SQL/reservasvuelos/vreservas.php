@@ -67,11 +67,10 @@ if(!isset($_COOKIE["carrito"])){setcookie("carrito",serialize(array()), time() +
 		if(array_key_exists("comprar",$_POST)){$boton_comprar = $_POST["comprar"];}else{$boton_comprar = null;}
 
 		if(isset($_POST['resultado_operacion'])&&boolval($_POST['resultado_operacion'])){
-			$resultadoOperacion = boolval($_POST['resultado_operacion']);
-			var_dump($resultadoOperacion,($_POST['resultado_operacion']));
-		}else{ $resultadoOperacion = false;var_dump($resultadoOperacion);}
-
-			
+			$resultadoOperacion = true;
+		}else{
+			$resultadoOperacion = false;
+		}
 		
 		boton_carrito($boton_carrito,$carrito); // añade productos al carrito
 		boton_comprar($boton_comprar,$carrito,$resultadoOperacion); // compra los productos del carrito (solo si hay stock)
