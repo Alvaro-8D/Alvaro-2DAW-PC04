@@ -40,19 +40,19 @@
         if(isset($_COOKIE["carrito"])&&unserialize($_COOKIE["carrito"])!=array()){var_dump(unserialize($_COOKIE["carrito"]));}
     }
 
-    function boton_comprar($boton_comprar,$carrito){
+    function boton_comprar($boton_comprar,$carrito,$resultadoOperacion=false){
         if ($boton_comprar) {
             $cliente = $_COOKIE["id_cliente"]; // recupera la Cookie del NIF del Cliente
 
             if($carrito != array()){
-                comprarProducto($cliente,unserialize($_COOKIE["carrito"]));
+                comprarProducto($cliente,unserialize($_COOKIE["carrito"]),$resultadoOperacion);
             }else{
                 echo "<h3 style=\"color:red\">Debes añadir AL MENOS 1 Producto AL CARRITO para Comprar*</h3>";
             }
         }
     }
 
-    function comprarProducto($cliente,$array_carrito){
+    function comprarProducto($cliente,$array_carrito,$resultadoOperacion){
         // Funcion principal del programa, compra productos
         $consulta = conexionBD();
         try {
@@ -76,6 +76,9 @@
                     //restar_productos($consulta,$cantidad,$id_vuelo); //restar productos comprados del almacen
                 }
                 peticion_pago($preciototal,$desc);
+                var_dump($resultadoOperacion);
+                if(!$resultadoOperacion){throw new Exception("<h1>FALLOOOOOOOOO</h1>");}
+                else{var_dump("<h1>YES SIIIIR </h1>",$resultadoOperacion);}
                 
 
 
@@ -88,6 +91,10 @@
         catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
             $consulta->rollBack();
+        }
+        catch(Exception $e2) {
+            $consulta->rollBack();
+            $e2->getMessage();
         }
         finally{
             $consulta = null;
@@ -119,7 +126,7 @@
     function guardar_compra($consulta,$id_vuelo,$num_asientos,$nuevoID){ 
         // Pide el ID y la localidad, e inserta el nuevo almacen en la BD 
         $preciototal = extraerPrecioTotal($id_vuelo,$num_asientos);
-        /*
+        
         $sentencia = $consulta->prepare("INSERT into reservas 
                                         values (:id_reserva,:id_vuelo,:dni_cliente,:fecha_reserva,:num_asientos,:preciototal)");
         $sentencia->bindParam(':id_reserva',$nuevoID);
@@ -129,7 +136,7 @@
         $sentencia->bindParam(':num_asientos',$num_asientos);
         $sentencia->bindParam(':preciototal',$preciototal);
         $sentencia->execute();// ejecuta la sentencia
-        */
+        
         $consulta = null;
     }
 
@@ -182,36 +189,17 @@
 		$terminal = "12"; // Número Terminal de tu TPV
 		$moneda = "978"; // euro
 		$transactionType = "0"; // tipo redirección
-		$url = "http://localhost/alvaro/BD-SQL/reservasvuelos/pagos/urlNotificacion.php"; // URL para recibir notificaciones del pago
 		$order = time();
 		$amount = "".(100*$preciototal); // *100 precio a pagar (se pone en * céntimos *)
         //$amount = "1074"; // probar "Pago Denegado"
+
 		$descripcion = $desc; // descripción de la compra (125 caracteres / A-N)
 
-		$currentUrl = Utils::getCurrentUrl();
-
-        /************************************************************************* */
-        /*********************CARLOS**************************************************** */
-        /************************************************************************* 
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
-		$domain = $_SERVER['HTTP_HOST'];
-
-		// Si tu proyecto está en una subcarpeta, esto la incluirá
-		$currentDir = dirname($_SERVER['PHP_SELF']); 
-
-		// Limpiamos la ruta para asegurar que termine en la carpeta raíz del proyecto
-		// y añadimos la ruta relativa al archivo de éxito
-		$urlOK = $protocol . $domain . $currentDir . "/pagos/pagoCorrecto.php";
-		$urlKO = $protocol . $domain . $currentDir . "/pagos/pagoCancelado.php";
-        /************************************************************************* */
-        /*********************CARLOS**************************************************** */
-        /************************************************************************* */
-        /************************************************************************* */
-
-        var_dump($currentUrl);
-		$urlOK = "http://localhost/alvaro/BD-SQL/reservasvuelos/pagos/pagoCorrecto.php"; // preguntar a Añfono como poner una ruta relativa aqui
-		$urlKO = "http://localhost/alvaro/BD-SQL/reservasvuelos/pagos/pagoFallidoDenegado.php";
-
+        // URLs
+        $currentDir = $_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
+        $urlOK = "http://". $currentDir."/pagos/pagoCorrecto.php";
+		$urlKO = "http://". $currentDir."/pagos/pagoFallidoDenegado.php";
+        
 		// Se Rellenan los campos
 		$data = array(
 			"DS_MERCHANT_PRODUCTDESCRIPTION" => $descripcion,
@@ -221,7 +209,6 @@
 			"DS_MERCHANT_CURRENCY" => $moneda,
 			"DS_MERCHANT_TRANSACTIONTYPE" => $transactionType,
 			"DS_MERCHANT_TERMINAL" => $terminal,
-			"DS_MERCHANT_MERCHANTURL" => $url,
 			"DS_MERCHANT_URLOK" => $urlOK,
 			"DS_MERCHANT_URLKO" => $urlKO
 		);
