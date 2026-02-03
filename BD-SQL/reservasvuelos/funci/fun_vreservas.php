@@ -71,20 +71,17 @@
                 $desc = "(Id_Vuelo,cantidad): ";
                 foreach ($array_carrito as $id_vuelo => $cantidad) {
                     guardar_compra($consulta,$id_vuelo,$cantidad,$nuevoID); // registra la compra en la BD
-                    $preciototal += extraerPrecioTotal($id_vuelo,$cantidad);
+                    $preciototal += extraerPrecioTotal($consulta,$id_vuelo,$cantidad);
                     $desc = $desc."(".$id_vuelo.",".$cantidad.")-";
                     restar_productos($consulta,$cantidad,$id_vuelo); //restar productos comprados del almacen
                 }
+                $consulta->commit(); //guarda los cambios si todo sale bien
                 peticion_pago($preciototal,$desc);
-
             }
         }
         catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
             $consulta->rollBack();
-        }
-        finally{
-            $consulta = null;
         }
     }
     
@@ -106,13 +103,13 @@
             }
         }else{$cantidad = false; echo "<h3 style=\"color:red\">No hay STOCK <br> :(</h3>";}
 
-        $consulta = null;
+        //$consulta = null;
         return $cantidad;
     }
 
     function guardar_compra($consulta,$id_vuelo,$num_asientos,$nuevoID){ 
         // Pide el ID y la localidad, e inserta el nuevo almacen en la BD 
-        $preciototal = extraerPrecioTotal($id_vuelo,$num_asientos);
+        $preciototal = extraerPrecioTotal($consulta,$id_vuelo,$num_asientos);
         $fecha = date("y-m-d H:i:s"); // fecha actual
         
         $sentencia = $consulta->prepare("INSERT into reservas 
@@ -125,17 +122,17 @@
         $sentencia->bindParam(':preciototal',$preciototal);
         $sentencia->execute();// ejecuta la sentencia
         
-        $consulta = null;
+        //$consulta = null;
     }
 
-    function extraerPrecioTotal($id_vuelo,$num_asientos){ //suma todas los asientos de un vuelo y devuelve el precio total
-        $consulta = conexionBD();
+    function extraerPrecioTotal($consulta,$id_vuelo,$num_asientos){ //suma todas los asientos de un vuelo y devuelve el precio total
+        //$consulta = conexionBD();
         $sentencia = $consulta->prepare("SELECT precio_asiento from vuelos WHERE id_vuelo = :id_vuelo order by id_vuelo;");
         $sentencia->bindParam(':id_vuelo',$id_vuelo);
         $sentencia->execute();// ejecuta la sentencia
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo   
-        $consulta = null;
+        //$consulta = null;
         $suma_precio = $resultado[0]['precio_asiento'] * $num_asientos;
         return $suma_precio;
     }
@@ -148,7 +145,7 @@
         $sentencia->bindParam(':cantidad',$cantidad);
         $sentencia->bindParam(':id_vuelo',$id_vuelo);
         $sentencia->execute();
-        $consulta = null;
+        //$consulta = null;
     }
 
     function nuevo_id(){ 
@@ -159,7 +156,7 @@
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo
         $nuevoID = 'R'.str_pad(intval(substr($resultado[0]['ultimo'],1))+1,4,'0',STR_PAD_LEFT);
-        $consulta = null;
+        //$consulta = null;
         return $nuevoID;
     }
 
