@@ -66,22 +66,25 @@
             }
             if ($stock2){
                 $nuevoID = nuevo_id();
-                $consulta->beginTransaction(); // comienza a modificar tablas
                 $preciototal = 0;
                 $desc = "(Id_Vuelo,cantidad): ";
+                $consulta->beginTransaction(); // comienza a modificar tablas
                 foreach ($array_carrito as $id_vuelo => $cantidad) {
                     guardar_compra($consulta,$id_vuelo,$cantidad,$nuevoID); // registra la compra en la BD
                     $preciototal += extraerPrecioTotal($consulta,$id_vuelo,$cantidad);
                     $desc = $desc."(".$id_vuelo.",".$cantidad.")-";
-                    restar_productos($consulta,$cantidad,$id_vuelo); //restar productos comprados del almacen
+                    //restar_productos($consulta,$cantidad,$id_vuelo); //restar productos comprados del almacen
                 }
                 $consulta->commit(); //guarda los cambios si todo sale bien
-                peticion_pago($preciototal,$desc);
+                peticion_pago($preciototal,$desc,$nuevoID);
             }
-        }
-        catch(PDOException $e) {
+
+        }catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
             $consulta->rollBack();
+
+        }finally{ 
+            $consulta = null;
         }
     }
     
@@ -111,8 +114,8 @@
         // Pide el ID y la localidad, e inserta el nuevo almacen en la BD 
         $preciototal = extraerPrecioTotal($consulta,$id_vuelo,$num_asientos);
         $fecha = date("y-m-d H:i:s"); // fecha actual
-        
         $sentencia = $consulta->prepare("INSERT into reservas 
+                                        (id_reserva,id_vuelo,dni_cliente,fecha_reserva,num_asientos,preciototal)
                                         values (:id_reserva,:id_vuelo,:dni_cliente,:fecha_reserva,:num_asientos,:preciototal)");
         $sentencia->bindParam(':id_reserva',$nuevoID);
         $sentencia->bindParam(':id_vuelo',$id_vuelo);
@@ -121,7 +124,6 @@
         $sentencia->bindParam(':num_asientos',$num_asientos);
         $sentencia->bindParam(':preciototal',$preciototal);
         $sentencia->execute();// ejecuta la sentencia
-        
         //$consulta = null;
     }
 
@@ -137,17 +139,6 @@
         return $suma_precio;
     }
 
-    function restar_productos($consulta,$cantidad,$id_vuelo){ 
-        
-        $sentencia = $consulta->prepare("UPDATE VUELOS
-                                        SET asientos_disponibles = asientos_disponibles	- :cantidad
-                                        WHERE id_vuelo = :id_vuelo;");
-        $sentencia->bindParam(':cantidad',$cantidad);
-        $sentencia->bindParam(':id_vuelo',$id_vuelo);
-        $sentencia->execute();
-        //$consulta = null;
-    }
-
     function nuevo_id(){ 
         // Genera un nuevo ID para la nueva reserva que guardar
         $consulta = conexionBD();
@@ -161,7 +152,10 @@
     }
 
     
-    function peticion_pago($preciototal,$desc){
+    function peticion_pago($preciototal,$desc,$id_reserva){
+        // guarda id de la reserva en una cookie para luego actualizar el campo "estado_pago"
+        setcookie("id_reserva_actual", $id_reserva, time() + (86400 * 30), "/");
+        // -----------------------------------------------------------------------------
 		// Se incluye la librería
 		include 'pagos/signatureUtils/signature.php';
 
@@ -217,11 +211,6 @@
 
             </form>";
 	}
-
-
-
-
-
 
 
 ?>

@@ -1,3 +1,4 @@
+<?php include 'funci\fun_index.php'; include 'funci\fun_comunes.php'; redirigir_sesion_abierta(); ?>
 <html>
    
  <head>
@@ -35,7 +36,6 @@
     </div>
 
 <?php
-    include 'funci\fun_index.php'; include 'funci\fun_comunes.php';
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") {  
         $nombre = limpiar_campos($_POST['usuario']);

@@ -50,5 +50,14 @@
         // Extrae el DNI del cliente para usar en proximas aplicaciones
         setcookie("id_cliente", $resultado[0]["dni"], time() + (86400 * 30), "/");
     }
+
+    function redirigir_sesion_abierta(){ // al inicio del PHP ==> PRIMERA LINEA
+        // Reenvia a la página de Log In si no hay sesión iniciada
+        if(isset($_COOKIE)&&$_COOKIE !== array()){ob_start(); header("Location: vinicio.php");}
+
+        /* Copiar y pegar esto al inicio: 
+                    <?php redirigir_sesion_abierta(); ?>
+        */
+    }
     
 ?>
