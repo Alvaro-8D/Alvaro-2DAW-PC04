@@ -165,7 +165,7 @@
 
 		// Valores de entrada 
 		$fuc = "263100000"; // Numero de Comercio (FUC)
-		$terminal = "12"; // Número Terminal de tu TPV
+		$terminal = "9"; // Número Terminal de tu TPV
 		$moneda = "978"; // euro
 		$transactionType = "0"; // tipo redirección
 		$order = time();
