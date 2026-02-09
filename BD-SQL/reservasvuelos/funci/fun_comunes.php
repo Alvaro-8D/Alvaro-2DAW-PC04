@@ -60,7 +60,20 @@
 
     function impide_acceso_sesion_cerrada(){ // al inicio del PHP ==> PRIMERA LINEA
         // Reenvia a la página de Log In si no hay sesión iniciada
-        if(!isset($_COOKIE)|| $_COOKIE == array()){header("Location: index.php"); return false;}else{return true;}
+
+        // (de momento, solo necesito 'id_cliente', 'PHPSESSID' es más dificil de controlar)
+        $mis_cookies = array('id_cliente'); // mis cookies
+
+        $existen_mis_cookies = false; // Se usa para solo dejar pasar si tiene MIS cookies
+        
+        foreach ($mis_cookies as $key => $value) {
+            if (array_key_exists($value,$_COOKIE)) {
+                $existen_mis_cookies = true;
+            }
+        }
+
+        // si NO existen MIS cookies, entonces te bloquea el paso a esta página y te reenvia a la paginad de login
+        if(!isset($_COOKIE)||!$existen_mis_cookies){header("Location: index.php"); return false;}else{return true;}
 
         /* Copiar y pegar esto al inicio: 
                     <?php impide_acceso_sesion_cerrada(); ?>
