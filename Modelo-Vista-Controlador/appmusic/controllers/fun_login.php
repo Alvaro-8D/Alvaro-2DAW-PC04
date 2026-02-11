@@ -1,4 +1,5 @@
 <?php
+    impide_acceso_sesion_abierta();
     require_once 'views\login.php';
     require_once 'controllers\fun_comunes.php';
     require_once 'models\bd_login.php';
@@ -28,9 +29,9 @@
         //$GLOBALS['conexion'] = null;
     }
 
-    function impide_acceso_sesion_cerrada(){ // al inicio del PHP ==> PRIMERA LINEA
+    function impide_acceso_sesion_abierta(){ // al inicio del PHP ==> PRIMERA LINEA
         // Reenvia a la página de Log In si no hay sesión iniciada
-        if(!isset($_COOKIE)|| $_COOKIE == array()){header("Location: pe_login.php"); return false;}else{return true;}
+        if(isset($_COOKIE['email'])&&isset($_COOKIE['id_cliente'])){header("Location: controllers/fun_inicio.php"); return false;}else{return true;}
 
         /* Copiar y pegar esto al inicio: 
                     <?php impide_acceso_sesion_cerrada(); ?>
