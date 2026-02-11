@@ -31,8 +31,8 @@
         $sentencia->execute();
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
         $resultado=$sentencia->fetchAll();
-        //setcookie("id_cliente", $resultado[0]["CustomerId"], time() + (86400 * 30), "/");
-        //setcookie("email", $resultado[0]["Email"], time() + (86400 * 30), "/");
+
+        // Devuelve ID del Cliente y su Email para meterlo en cookies
         return [$resultado[0]["CustomerId"],$resultado[0]["Email"]];
     }
 
