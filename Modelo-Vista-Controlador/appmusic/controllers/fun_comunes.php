@@ -11,7 +11,6 @@
         
         //Crea una entrada en _POST para saber si se pulsa el boton "Cerrar Sesión"
         if(!array_key_exists("cerrar_sesion",$_POST)){$_POST["cerrar_sesion"] = null;}
-        
 
         //comprueba que hayas pulsado el boton "Cerrar Sesión"
         if(array_key_exists("cerrar_sesion",$_POST)){
@@ -21,18 +20,18 @@
 
         // Cuando BOTON ha sido PULSADO, elimina los datos (cookies y sesiones)
         if($boton_cerrar_sesion){
-            var_dump($boton_cerrar_sesion);
+            //var_dump($boton_cerrar_sesion);
             if(array_key_exists("PHPSESSID",$_COOKIE)){
                 session_unset();// elimina variables de sesión
                 session_destroy();// elimina la sesión
             //Elimina la Cookie local que contiene el id de la sesión (si existe)
                 setcookie("PHPSESSID", "", time() - 3600,"/");
             }
+            setcookie("email", "", time() - 3600,"/");
             setcookie("id_cliente", "", time() - 3600,"/");
-            setcookie("nombre", "", time() - 3600,"/");
-            setcookie("nico_array", time() - 36000, "/"); // array creado para probar serialize() y unserialize()
+
+            header("Location: ../index.php");
             // Evita que el programa vuelva a iniciar sesion y lo DETIENE
-            header("Location: pe_login.php");
             exit("<h3 style=\"color:Blue\">Has CERRADO Sesion CORRECTAMENTE</h3>");
         }
     }
@@ -40,7 +39,7 @@
     function detecta_sesion_iniciada(){ // Poner al final del >> if ($_SERVER["REQUEST_METHOD"] == "POST")
         
         if(isset($_COOKIE) && $_COOKIE !== array()){
-            echo "<h2> [Sesion Iniciada con: ",$_COOKIE["nombre"],"] </h2>";
+            echo "<h2> [Sesion Iniciada con: ",$_COOKIE["email"],"] </h2>";
             echo "<input type=\"submit\" name=\"cerrar_sesion\" value=\"Cerrar Sesion\"/> ";
         }
 
