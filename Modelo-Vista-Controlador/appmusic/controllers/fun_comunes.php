@@ -50,7 +50,7 @@
 
     function impide_acceso_sesion_cerrada(){ // al inicio del PHP ==> PRIMERA LINEA
         // Reenvia a la página de Log In si no hay sesión iniciada
-        if(!isset($_COOKIE)|| $_COOKIE == array()){header("Location: pe_login.php"); return false;}else{return true;}
+        if(!isset($_COOKIE)|| $_COOKIE == array()){header("Location: ../index.php"); return false;}else{return true;}
 
         /* Copiar y pegar esto al inicio: 
                     <?php impide_acceso_sesion_cerrada(); ?>

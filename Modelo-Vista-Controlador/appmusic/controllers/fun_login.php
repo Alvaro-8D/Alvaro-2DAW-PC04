@@ -32,10 +32,6 @@
     function impide_acceso_sesion_abierta(){ // al inicio del PHP ==> PRIMERA LINEA
         // Reenvia a la página de Log In si no hay sesión iniciada
         if(isset($_COOKIE['email'])&&isset($_COOKIE['id_cliente'])){header("Location: controllers/fun_inicio.php"); return false;}else{return true;}
-
-        /* Copiar y pegar esto al inicio: 
-                    <?php impide_acceso_sesion_cerrada(); ?>
-        */
     }
     
 ?>

@@ -5,4 +5,5 @@
     <?php require_once 'fun_comunes.php'; detecta_sesion_iniciada(); ?> 
     <br><br> **************** Funcionalidades ******************<br><br>
     <input name="historial_pagos" type="submit" value="Historial de Facturas">
+    <input name="hola" type="submit" value="Hola">
 </form>
