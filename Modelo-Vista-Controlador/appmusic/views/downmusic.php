@@ -2,11 +2,11 @@
 
 <form name="descargarMusica" action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post'>
 	
-		<B>Vuelos</B><select name="vuelos" class="form-control">
+		<B>Canciones: </B><select name="track" class="form-control">
 			<?php extraerMusica(); ?>	
 			</select>	
 		<BR> <br>
-		<B>Unidades que quieres Comprar/Descargar: </B><input type="number" name="cantidad" size="3" min="1" value="1">
+		<B>Unidades: </B><input type="number" name="cantidad" size="3" min="1" value="1">
 		<BR><BR>
 		<div>
 			<input type="submit" value="Agregar a Cesta" name="carrito" class="btn btn-warning disabled">
@@ -14,4 +14,5 @@
 			<!-- PONER BOTOTN "Comprar" en Formulario de RedSys -->
 			<!-- <input type="submit" value="Comprar" name="comprar" class="btn btn-warning disabled"> -->
 		</div>		
+        
 	</form>

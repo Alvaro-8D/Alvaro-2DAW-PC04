@@ -19,7 +19,7 @@
             require_once '..\views\histfacturas.php';
         }
         if(isset($_POST['downmusic'])){
-            require_once 'fun_downmusic.php';
+            header("Location: fun_downmusic.php");;
         }
         if(isset($_POST['facturas'])){
             require_once '..\views\facturas.php';
