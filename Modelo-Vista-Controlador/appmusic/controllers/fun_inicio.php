@@ -19,7 +19,6 @@
             require_once '..\views\histfacturas.php';
         }
         if(isset($_POST['downmusic'])){
-            require_once '..\views\downmusic.php';
             require_once 'fun_downmusic.php';
         }
         if(isset($_POST['facturas'])){

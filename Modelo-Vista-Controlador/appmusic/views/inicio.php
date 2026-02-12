@@ -1,7 +1,7 @@
 <h1>Página de Inicio</h1>
 
 <!-- Menu de Inicio -->
-<form name='mi_formulario' action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post'>
+<form name='mi_formulario_pricipal' action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post'>
     <?php require_once 'fun_comunes.php'; detecta_sesion_iniciada(); ?> 
     <br><br> **************** Funcionalidades ******************<br>
     <input name="historial_pagos" type="submit" value="Historial de Facturas" style="background-color: #007bff; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
