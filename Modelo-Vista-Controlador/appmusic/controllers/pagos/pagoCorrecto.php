@@ -10,7 +10,7 @@
 
 <h1>Pago CORRECTO ✅</h1>
 
-<?php restar_productos(); ?>
+<?php actualizar_bd(); ?>
 
 <br>
 <a href="../fun_downmusic.php"><button>Volver</button></a>

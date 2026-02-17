@@ -5,6 +5,13 @@
         include_once '..\db\conexion_bd.php'; 
     }
 
+    if(file_exists('..\fun_comunes.php')){ 
+        // Uso un IF por si el fichero desde el que se incluye se encuentra en otra ubicación
+        include_once '..\fun_comunes.php'; 
+        // Extrae el nombre de la cookie carrito del cliente que ha iniciado sesion ahora mismo
+        $GLOBALS['nombreCarrito'] = nombre_carrito();
+    }
+
     function extraerMusica(){
         // Extrae las Musica de la BD y las muestra en el HTMl
         $sentencia = $GLOBALS['conexion']->prepare("SELECT TrackId, Name, UnitPrice from track;");
@@ -33,25 +40,26 @@
         return $suma;
     }
 
-    function restar_productos(){ 
-
+    function actualizar_bd(){ 
         try {
-            echo "hola";
-            $GLOBALS['conexion']->beginTransaction();/*
-            // ********************* Actualizar el campo "estado_pago" **************************
-            $sentencia = $GLOBALS['conexion']->prepare(" UPDATE reservas set estado_pago = 'pagado' where id_reserva = :id_reserva_actual;");
-            $sentencia->bindParam(':id_reserva_actual',$_COOKIE["id_reserva_actual"]);
-            $sentencia->execute();
-            $array_carrito = unserialize($_COOKIE['carrito']);
-            // ********************* Restar asientos disponibles de los vuelos **************************
+            //$GLOBALS['conexion']->beginTransaction();
+            // ********************* Insertar Factura "INVOICE" en la BD **************************
+            var_dump(nuevo_id());
+            // ********************* Insertar Factura "INVOICE_LINE" en la BD **************************
+            //$sentencia = $GLOBALS['conexion']->prepare(" UPDATE reservas set estado_pago = 'pagado' where id_reserva = :id_reserva_actual;");
+            //$sentencia->bindParam(':id_reserva_actual',$_COOKIE["id_reserva_actual"]);
+            //$sentencia->execute();
+            $array_carrito = unserialize($_COOKIE[$GLOBALS['nombreCarrito']]);
+            var_dump($array_carrito);
             foreach ($array_carrito as $id_vuelo => $cantidad) {
-                restar_productos($GLOBALS['conexion'],$cantidad,$id_vuelo); // restar vuelos pagados
+                //restar_productos($cantidad,$id_vuelo); // restar vuelos pagados
+                echo "<h3>hola</h3>";
             }
-            $GLOBALS['conexion']->commit();
+            //$GLOBALS['conexion']->commit();
             // Una vez cambiado el campo "estado_pago" correctamente, eliminamos la cookie
-            setcookie("id_reserva_actual", "", time() - 36000,"/");
+            //setcookie("id_reserva_actual", "", time() - 36000,"/");
             // Borra el carrito en caso de que la operación salga correcta
-            setcookie("carrito", serialize(array()), time() + (86400 * 30), "/");*/
+            setcookie($GLOBALS['nombreCarrito'], serialize(array()), time() + (86400 * 30), "/");
             
         }catch(PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -60,16 +68,18 @@
         }finally{ 
             $GLOBALS['conexion'] = null;
         }
-/*
-        //resta los vuelos pagados correctamente de la base de datos
-        $sentencia = $GLOBALS['conexion']->prepare("UPDATE VUELOS
-                                        SET asientos_disponibles = asientos_disponibles	- :cantidad
-                                        WHERE id_vuelo = :id_vuelo;");
-        $sentencia->bindParam(':cantidad',$cantidad);
-        $sentencia->bindParam(':id_vuelo',$id_vuelo);
-        $sentencia->execute();
-        */
+
     }
 
+    function nuevo_id(){ 
+        // Devuelve un nuevo ID para la transacción
+        $sentencia = $GLOBALS['conexion']->prepare("SELECT max(InvoiceId) maximo from invoice order by InvoiceId;");
+        $sentencia->bindParam(':trackId',$id);// ejecuta la sentencia
+        $sentencia->execute();// ejecuta la sentencia
+        $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
+        $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo   
+        $nuevo_id = intval($resultado[0]['maximo'])+1;
+        return $nuevo_id;
+    }
     
 ?>
