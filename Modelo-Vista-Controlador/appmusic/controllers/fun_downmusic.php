@@ -5,13 +5,15 @@
     // Funciones Comunes
     require_once 'fun_comunes.php';
     impide_acceso_sesion_cerrada();
+    // Extrae el nombre de la cookie carrito del cliente que ha iniciado sesion ahora mismo
+    $GLOBALS['nombreCarrito'] = nombre_carrito();
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
     // Funciones Especicas del Fichero
     require_once '..\models\bd_downmusic.php';
     require_once '..\views\downmusic.php';
     // Añade Boton Comprar (solo si hay productos en el carrito)
-    if (isset($_COOKIE['carrito'])&&unserialize($_COOKIE['carrito'])!== array()) {
+    if (isset($_COOKIE[$GLOBALS['nombreCarrito']])&&unserialize($_COOKIE[$GLOBALS['nombreCarrito']])!== array()) {
         peticion_pago(precio_total_compra(),desc_compra());
     }
 
@@ -20,7 +22,7 @@
             boton_carrito();
         }
         if(isset($_POST['vaciar'])){
-            setcookie("carrito", serialize(array()), time() + (86400 * 30), "/");
+            setcookie($GLOBALS['nombreCarrito'], serialize(array()), time() + (86400 * 30), "/");
             header("Location: fun_downmusic.php");
         }
             
@@ -32,8 +34,8 @@
 
     function boton_carrito(){
         // modifica la variable se sesion con nuevos productos del carrito
-        if (isset($_COOKIE['carrito'])) {
-            $carrito = unserialize($_COOKIE['carrito']);
+        if (isset($_COOKIE[$GLOBALS['nombreCarrito']])) {
+            $carrito = unserialize($_COOKIE[$GLOBALS['nombreCarrito']]);
         }else{
             $carrito = array();
         }
@@ -46,7 +48,7 @@
             }else{
                 $carrito[$id_cancion] = $cantidad;
             }
-            setcookie("carrito", serialize($carrito), time() + (86400 * 30), "/");
+            setcookie($GLOBALS['nombreCarrito'], serialize($carrito), time() + (86400 * 30), "/");
             header("Location: fun_downmusic.php");
         }else{
             echo "<h3 style=\"color:red\">Debes añadir AL MENOS 1 Producto *</h3>";
@@ -55,9 +57,9 @@
 
     function verCarrito(){
         // Muestra por pantalla el Carrito de la Compra
-        if(isset($_COOKIE["carrito"])&&unserialize($_COOKIE["carrito"])!=array()){
+        if(isset($_COOKIE[$GLOBALS['nombreCarrito']])&&unserialize($_COOKIE[$GLOBALS['nombreCarrito']])!=array()){
             echo "<h2>Carrito de la Compra: </h2>";
-            var_dump(unserialize($_COOKIE["carrito"]));
+            var_dump(unserialize($_COOKIE[$GLOBALS['nombreCarrito']]));
         }
     }
 
@@ -122,7 +124,7 @@
 
     function desc_compra(){
         // Devuelve descripcionde los productos comprados
-        $carrito = unserialize($_COOKIE["carrito"]);
+        $carrito = unserialize($_COOKIE[$GLOBALS['nombreCarrito']]);
         $descripcion = "Musica: \n";
         foreach ($carrito as $id => $cantidad) {
             $descripcion = $descripcion."[".$id."]=>".$cantidad.",,,";

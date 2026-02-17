@@ -1,9 +1,10 @@
 <?php
     // Conexión base de datos
-    if(){
+    if(file_exists('..\db\conexion_bd.php')){ 
+        // Uso un IF por si el fichero desde el que se incluye se encuentra en otra ubicación
         include_once '..\db\conexion_bd.php'; 
     }
-    
+
     function extraerMusica(){
         // Extrae las Musica de la BD y las muestra en el HTMl
         $sentencia = $GLOBALS['conexion']->prepare("SELECT TrackId, Name, UnitPrice from track;");
@@ -17,7 +18,7 @@
 
     function precio_total_compra(){
         // Extrae las Musica de la BD y las muestra en el HTMl
-        $carrito = unserialize($_COOKIE["carrito"]);
+        $carrito = unserialize($_COOKIE[$GLOBALS['nombreCarrito']]);
         $suma = 0;
         foreach ($carrito as $id => $cantidad) {
             $sentencia = $GLOBALS['conexion']->prepare("SELECT UnitPrice from track where TrackId = :trackId;");

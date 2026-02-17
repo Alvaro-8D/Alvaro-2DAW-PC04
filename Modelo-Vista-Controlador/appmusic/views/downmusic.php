@@ -6,8 +6,8 @@
 	<title>DownMusic</title>
 </head>
 <body>
-	<h1>Comprar y Descargar Música</h1>
-	
+	<h1>Comprar y Descargar Música <a href="fun_inicio.php"><button>Volver</button></a></h1>
+
 	<form name="descargarMusica" action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' method='post'>
 		
 		<B>Canciones: </B><select name="track" class="form-control">

@@ -6,6 +6,10 @@
         return $data;
     }
 
+    function nombre_carrito() { //Evita la Injección de Código
+        return "carrito_".$_COOKIE['id_cliente'];
+    }
+
     function cerrar_sesion(){ // DENTRO de >> if ($_SERVER["REQUEST_METHOD"] == "POST") >> AL INICIO
         // Cierra la Sesión (elimina cookies y variables de sesión)
         
