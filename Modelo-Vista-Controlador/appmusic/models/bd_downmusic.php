@@ -1,7 +1,9 @@
 <?php
     // Conexión base de datos
-    require_once '..\db\conexion_bd.php'; 
-
+    if(){
+        include_once '..\db\conexion_bd.php'; 
+    }
+    
     function extraerMusica(){
         // Extrae las Musica de la BD y las muestra en el HTMl
         $sentencia = $GLOBALS['conexion']->prepare("SELECT TrackId, Name, UnitPrice from track;");
@@ -30,12 +32,10 @@
         return $suma;
     }
 
-
-    
-
-    function restar_productos($cantidad,$id_vuelo){ 
+    function restar_productos(){ 
 
         try {
+            echo "hola";
             $GLOBALS['conexion']->beginTransaction();/*
             // ********************* Actualizar el campo "estado_pago" **************************
             $sentencia = $GLOBALS['conexion']->prepare(" UPDATE reservas set estado_pago = 'pagado' where id_reserva = :id_reserva_actual;");
@@ -59,7 +59,7 @@
         }finally{ 
             $GLOBALS['conexion'] = null;
         }
-
+/*
         //resta los vuelos pagados correctamente de la base de datos
         $sentencia = $GLOBALS['conexion']->prepare("UPDATE VUELOS
                                         SET asientos_disponibles = asientos_disponibles	- :cantidad
@@ -67,6 +67,7 @@
         $sentencia->bindParam(':cantidad',$cantidad);
         $sentencia->bindParam(':id_vuelo',$id_vuelo);
         $sentencia->execute();
+        */
     }
 
     
