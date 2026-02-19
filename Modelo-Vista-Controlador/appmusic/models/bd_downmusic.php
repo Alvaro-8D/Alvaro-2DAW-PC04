@@ -70,19 +70,18 @@
     function nuevo_id_1(){ 
         // Devuelve un nuevo ID para la transacción INVOICE
         $sentencia = $GLOBALS['conexion']->prepare("SELECT max(InvoiceId) maximo from invoice order by InvoiceId;");
-        $sentencia->bindParam(':trackId',$id);// ejecuta la sentencia
         $sentencia->execute();// ejecuta la sentencia
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo   
         $nuevo_id = intval($resultado[0]['maximo'])+1;
         return $nuevo_id;
     }
-
+    
     function nuevo_id_2(){ 
         // Devuelve un nuevo ID para la transacción INVOICE_LINE
         $sentencia = $GLOBALS['conexion']->prepare("SELECT max(InvoiceLineId) maximo from invoiceline order by InvoiceLineId;");
-        $sentencia->bindParam(':trackId',$id);// ejecuta la sentencia
         $sentencia->execute();// ejecuta la sentencia
+        var_dump('1111');
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo   
         $nuevo_id = intval($resultado[0]['maximo'])+1;

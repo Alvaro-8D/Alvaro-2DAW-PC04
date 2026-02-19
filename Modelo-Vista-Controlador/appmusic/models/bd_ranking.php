@@ -1,5 +1,5 @@
 <?php
-    function recuperar_hist($id_cliente){
+    function hacer_ranking($id_cliente){
         // Saca los datos del cliente y se los envia al contolador para pueda crear las cookies
         $sentencia = $GLOBALS['conexion']->prepare("SELECT Customerid, InvoiceId, InvoiceDate, BillingAddress, BillingCity, 
                                                     BillingState, BillingCountry, Total 
