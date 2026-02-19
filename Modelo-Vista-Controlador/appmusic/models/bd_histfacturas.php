@@ -3,7 +3,7 @@
         // Saca los datos del cliente y se los envia al contolador para pueda crear las cookies
         $sentencia = $GLOBALS['conexion']->prepare("SELECT Customerid, InvoiceId, InvoiceDate, BillingAddress, BillingCity, 
                                                     BillingState, BillingCountry, Total 
-                                                    FROM invoice WHERE CustomerId = 7
+                                                    FROM invoice WHERE CustomerId = :id_cliente
                                                     order by InvoiceDate desc;");
         $sentencia->bindParam(':id_cliente',$id_cliente);
         $sentencia->execute();

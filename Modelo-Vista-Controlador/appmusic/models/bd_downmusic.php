@@ -81,7 +81,6 @@
         // Devuelve un nuevo ID para la transacción INVOICE_LINE
         $sentencia = $GLOBALS['conexion']->prepare("SELECT max(InvoiceLineId) maximo from invoiceline order by InvoiceLineId;");
         $sentencia->execute();// ejecuta la sentencia
-        var_dump('1111');
         $sentencia->setFetchMode(PDO::FETCH_ASSOC); // modo de recuperar los datos de la select
         $resultado=$sentencia->fetchAll(); // guardar la sida de la select en un Array Asociativo   
         $nuevo_id = intval($resultado[0]['maximo'])+1;

@@ -3,7 +3,7 @@
         // Saca los datos del cliente y se los envia al contolador para pueda crear las cookies
         $sentencia = $GLOBALS['conexion']->prepare("SELECT Customerid, InvoiceId, InvoiceDate, BillingAddress, BillingCity, 
                                                     BillingState, BillingCountry, Total 
-                                                    FROM invoice WHERE CustomerId = 7 and 
+                                                    FROM invoice WHERE CustomerId = :id_cliente and 
                                                     InvoiceDate between :fecha1 and :fecha2
                                                     order by InvoiceDate desc;");
         $sentencia->bindParam(':id_cliente',$id_cliente);
@@ -15,5 +15,13 @@
         // Devuelve el historial de facturas
         return $resultado;
     }  
+
+    /*
+    SELECT Customerid, InvoiceId, InvoiceDate, BillingAddress, BillingCity, 
+                                                    BillingState, BillingCountry, Total 
+                                                    FROM invoice WHERE CustomerId = 7 and 
+                                                    InvoiceDate between '2009-01-01' and '2027-01-01'
+                                                    order by InvoiceDate desc;
+    */
     
 ?>
